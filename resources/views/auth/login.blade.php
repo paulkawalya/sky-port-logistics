@@ -5,7 +5,8 @@
     <div class="row justify-content-center align-items-center min-vh-100">
         <div class="col-md-6 col-lg-5 col-xl-4 py-5">
             <div class="text-center mb-4">
-                <img src="{{ asset('app-assets/img/logo/tonightgroup.png') }}" alt="Logo" style="max-height: 50px;">
+                <!-- <img src="{{ asset('app-assets/img/logo/tonightgroup.png') }}" alt="Logo" style="max-height: 50px;"> -->
+                <img src="https://ik.imagekit.io/kawalya/gruland.png?updatedAt=1748587398384" alt="Logo" style="max-height: 100px;">
             </div>
             
             <form method="POST" action="{{ route('login') }}">
