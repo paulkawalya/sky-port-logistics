@@ -1,0 +1,64 @@
+/* Responsive Tables CSS */
+
+/* Ensure action buttons are always visible */
+.table-responsive {
+    overflow-x: auto;
+    min-height: 0.01%;
+}
+
+/* Make sure the action column doesn't wrap and stays visible */
+.table th.actions-column,
+.table td.actions-column {
+    white-space: nowrap;
+    position: sticky;
+    right: 0;
+    background-color: #fff;
+    z-index: 1;
+    box-shadow: -5px 0 5px -5px rgba(0, 0, 0, 0.15);
+}
+
+/* Add a slight gradient to indicate there's more content */
+.table-responsive::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 30px;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.7));
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Dark mode support */
+.dark-mode .table td.actions-column,
+.dark-mode .table th.actions-column {
+    background-color: #343a40;
+}
+
+/* Ensure buttons in action columns are compact but usable */
+.actions-column .btn {
+    margin: 2px;
+    white-space: nowrap;
+}
+
+/* Make sure the action buttons don't wrap */
+.actions-column .d-flex {
+    flex-wrap: nowrap;
+}
+
+/* Responsive adjustments for small screens */
+@media screen and (max-width: 767px) {
+    .table-responsive {
+        width: 100%;
+        margin-bottom: 15px;
+        overflow-y: hidden;
+        -ms-overflow-style: -ms-autohiding-scrollbar;
+        border: 1px solid #ddd;
+    }
+    
+    /* Make action buttons more compact on small screens */
+    .actions-column .btn {
+        padding: 0.25rem 0.5rem;
+    }
+}

@@ -1,0 +1,1 @@
+php artisan make:migration add_performance_indexes_to_invoices_table --table=invoices

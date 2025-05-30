@@ -1,0 +1,40 @@
+/* Modal backdrop fixes */
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1040;
+    opacity: 1;
+}
+
+.modal {
+    z-index: 1050;
+}
+
+.modal-open {
+    overflow: hidden;
+    padding-right: 0 !important;
+}
+
+.modal-open .modal {
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+/* Fix for multiple backdrops */
+.modal-backdrop + .modal-backdrop {
+    display: none;
+}
+
+/* Ensure modals are visible and on top */
+.modal.show .modal-dialog {
+    z-index: 1055;
+}
+
+/* Fix for body padding */
+body.modal-open {
+    padding-right: 0 !important;
+}

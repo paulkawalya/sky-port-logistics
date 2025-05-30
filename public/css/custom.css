@@ -1,0 +1,50 @@
+/* Custom CSS to override Bootstrap colors */
+
+:root {
+  /* Original success color was #00f7bf - now using a darker shade */
+  --bs-success: #00b78f !important;
+  --bs-success-1: #00b78f !important;
+  --bs-success-rgb: 0, 183, 143 !important;
+  --bs-success-1-rgb: 0, 183, 143 !important;
+}
+
+/* Override success button styles */
+.btn-success {
+  background-color: var(--bs-success) !important;
+  border-color: var(--bs-success) !important;
+}
+
+.btn-success:hover, 
+.btn-success:focus, 
+.btn-success:active {
+  background-color: #009a79 !important;
+  border-color: #009a79 !important;
+}
+
+/* Override success text color */
+.text-success {
+  color: var(--bs-success) !important;
+}
+
+/* Override success background */
+.bg-success {
+  background-color: var(--bs-success) !important;
+}
+
+/* Override success badge */
+.badge.bg-success {
+  background-color: var(--bs-success) !important;
+}
+
+/* Override success alert */
+.alert-success {
+  background-color: rgba(0, 183, 143, 0.1) !important;
+  border-color: rgba(0, 183, 143, 0.2) !important;
+  color: var(--bs-success) !important;
+}
+
+/* Override success subtle background */
+.bg-success-subtle {
+  background-color: rgba(0, 183, 143, 0.1) !important;
+  color: var(--bs-success) !important;
+}
