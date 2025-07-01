@@ -143,7 +143,7 @@
             background-color: white !important;
         }
         .header {
-            border-bottom: 1px solid #dc0000;
+            border-bottom: 1px solid #0F52BA;
             padding-bottom: 5px;
             margin-bottom: 10px;
             position: relative;
@@ -172,7 +172,7 @@
             font-size: 14px;
             font-weight: 500;
             margin: 10px 0;
-            color: #dc0000;
+            color: #0F52BA;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
@@ -272,7 +272,7 @@
         .signature-table td {
             width: 33.33%;
             text-align: center;
-            border-top: 1px solid #dc0000;
+            border-top: 1px solid #0F52BA;
             padding-top: 8px;
             color: #555;
             font-size: 11px;
@@ -296,7 +296,7 @@
         }
         .section-title {
             font-weight: 500;
-            color: #dc0000;
+            color: #0F52BA;
             margin-bottom: 5px;
             text-transform: uppercase;
             font-size: 11px;
@@ -381,8 +381,8 @@
 
     <div class="document-header" style="margin-bottom: 10px; display: flex; justify-content: space-between;">
         <!-- Client Information Box -->
-        <div class="customer-info" style="width: 48%; vertical-align: top; padding: 10px; background-color: #f9f9f9; border-left: 4px solid #dc0000; border-radius: 4px;">
-            <div class="section-title" style="font-weight: bold; margin-bottom: 5px; font-size: 14px; color: #dc0000; text-transform: uppercase;">Client Information</div>
+        <div class="customer-info" style="width: 48%; vertical-align: top; padding: 10px; background-color: #f9f9f9; border-left: 4px solid #0F52BA; border-radius: 4px;">
+            <div class="section-title" style="font-weight: bold; margin-bottom: 5px; font-size: 14px; color: #0F52BA; text-transform: uppercase;">Client Information</div>
             <div class="customer-name" style="margin-bottom: 3px; font-weight: bold; font-size: 14px;">{{ $quotation->customer->name }}</div>
             <div class="customer-address" style="font-size: 12px; line-height: 1.3;">{{ $quotation->customer->address }}</div>
         </div>
@@ -414,7 +414,7 @@
     </div>
 
     <div class="shipping-details" style="margin: 10px 0; padding: 10px; background-color: #f9f9f9; border-radius: 4px; border: 1px solid #eee;">
-        <div class="section-title" style="font-weight: bold; margin-bottom: 5px; font-size: 14px; color: #333; text-transform: uppercase; border-bottom: 2px solid #dc0000; padding-bottom: 3px; display: inline-block;">Shipping Details</div>
+        <div class="section-title" style="font-weight: bold; margin-bottom: 5px; font-size: 14px; color: #333; text-transform: uppercase; border-bottom: 2px solid #0F52BA; padding-bottom: 3px; display: inline-block;">Shipping Details</div>
         <table class="shipping-table" style="width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 5px;">
             <tr style="line-height: 1.2;">
                 <td style="padding: 2px 0; width: 20%;"><strong>Container No:</strong></td>
@@ -446,16 +446,16 @@
     <table class="details-table" style="border-collapse: collapse; margin: 10px 0; font-size: 12px; width: 100%; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
         <thead>
             <tr style="background-color: #f2f2f2;">
-                <th style="padding: 6px 4px; width: 4%; border-bottom: 2px solid #dc0000; text-align: center;"><strong>No.</strong></th>
-                <th style="padding: 6px 4px; width: 30%; border-bottom: 2px solid #dc0000; text-align: left;"><strong>Description</strong></th>
-                <th style="padding: 6px 4px; width: 5%; border-bottom: 2px solid #dc0000; text-align: center;"><strong>Qty</strong></th>
-                <th style="padding: 6px 4px; width: 8%; border-bottom: 2px solid #dc0000; text-align: right;"><strong>Weight</strong></th>
-                <th style="padding: 6px 4px; width: 8%; border-bottom: 2px solid #dc0000; text-align: right;"><strong>Vol</strong></th>
-                <th style="padding: 6px 4px; width: 6%; border-bottom: 2px solid #dc0000; text-align: right;"><strong>Pkg</strong></th>
-                <th style="padding: 6px 4px; width: 10%; border-bottom: 2px solid #dc0000; text-align: right;"><strong>Rate</strong></th>
-                <th style="padding: 6px 4px; width: 12%; border-bottom: 2px solid #dc0000; text-align: right;"><strong>Amount</strong></th>
-                <th style="padding: 6px 4px; width: 5%; border-bottom: 2px solid #dc0000; text-align: center;"><strong>VAT</strong></th>
-                <th style="padding: 6px 4px; width: 12%; border-bottom: 2px solid #dc0000; text-align: right;"><strong>TOTAL</strong></th>
+                <th style="padding: 6px 4px; width: 4%; border-bottom: 2px solid #0F52BA; text-align: center;"><strong>No.</strong></th>
+                <th style="padding: 6px 4px; width: 30%; border-bottom: 2px solid #0F52BA; text-align: left;"><strong>Description</strong></th>
+                <th style="padding: 6px 4px; width: 5%; border-bottom: 2px solid #0F52BA; text-align: center;"><strong>Qty</strong></th>
+                <th style="padding: 6px 4px; width: 8%; border-bottom: 2px solid #0F52BA; text-align: right;"><strong>Weight</strong></th>
+                <th style="padding: 6px 4px; width: 8%; border-bottom: 2px solid #0F52BA; text-align: right;"><strong>Vol</strong></th>
+                <th style="padding: 6px 4px; width: 6%; border-bottom: 2px solid #0F52BA; text-align: right;"><strong>Pkg</strong></th>
+                <th style="padding: 6px 4px; width: 10%; border-bottom: 2px solid #0F52BA; text-align: right;"><strong>Rate</strong></th>
+                <th style="padding: 6px 4px; width: 12%; border-bottom: 2px solid #0F52BA; text-align: right;"><strong>Amount</strong></th>
+                <th style="padding: 6px 4px; width: 5%; border-bottom: 2px solid #0F52BA; text-align: center;"><strong>VAT</strong></th>
+                <th style="padding: 6px 4px; width: 12%; border-bottom: 2px solid #0F52BA; text-align: right;"><strong>TOTAL</strong></th>
             </tr>
         </thead>
         <tbody>
@@ -469,7 +469,7 @@
                 <td style="padding: 5px 4px; text-align: right; border-bottom: 1px solid #e0e0e0;">{{ $item->packages ?? '0' }}</td>
                 <td style="padding: 5px 4px; text-align: right; border-bottom: 1px solid #e0e0e0;">{{ number_format($item->unit_price, 0) }}</td>
                 <td style="padding: 5px 4px; text-align: right; border-bottom: 1px solid #e0e0e0;">{{ number_format($item->quantity * $item->unit_price, 0) }}</td>
-                <td style="padding: 5px 4px; text-align: center; border-bottom: 1px solid #e0e0e0;">@if($item->is_taxable)<span style="color: #dc0000; font-weight: bold;">✓</span>@endif</td>
+                <td style="padding: 5px 4px; text-align: center; border-bottom: 1px solid #e0e0e0;">@if($item->is_taxable)<span style="color: #0F52BA; font-weight: bold;">✓</span>@endif</td>
                 <td style="padding: 5px 4px; text-align: right; border-bottom: 1px solid #e0e0e0;">{{ number_format($item->quantity * $item->unit_price, 0) }}</td>
             </tr>
             @endforeach
@@ -478,9 +478,9 @@
 
     <div style="display: flex; margin: 10px 0;">
         <div style="flex: 1; padding-right: 10px;">
-            <div style="margin-bottom: 10px; padding: 8px; background-color: #f9f9f9; border-left: 4px solid #dc0000; border-radius: 4px;">
+            <div style="margin-bottom: 10px; padding: 8px; background-color: #f9f9f9; border-left: 4px solid #0F52BA; border-radius: 4px;">
                 <div style="font-weight: bold; margin-bottom: 3px; font-size: 12px; color: #333; text-transform: uppercase;">Amount in Words:</div>
-                <div style="font-size: 12px; color: #dc0000; font-weight: bold; text-transform: uppercase;">
+                <div style="font-size: 12px; color: #0F52BA; font-weight: bold; text-transform: uppercase;">
                     {{ \App\Models\Invoice::numberToWords(round($quotation->details->sum(function($item) { return $item->quantity * $item->unit_price; }))) }} {{ $quotation->transaction_currency }} ONLY
                 </div>
             </div>
@@ -499,13 +499,13 @@
                     <td style="padding: 4px; text-align: right; border-bottom: 1px solid #e0e0e0;">{{ number_format($quotation->amount_paid, 0) }} {{ $quotation->transaction_currency }}</td>
                 </tr>
                 <tr style="line-height: 1.5;">
-                    <td style="padding: 4px; text-align: right; font-weight: bold; color: #dc0000; border-top: 2px solid #dc0000; border-bottom: 2px solid #dc0000;">Balance Due:</td>
-                    <td style="padding: 4px; text-align: right; font-weight: bold; color: #dc0000; border-top: 2px solid #dc0000; border-bottom: 2px solid #dc0000;">{{ number_format($quotation->details->sum(function($item) { return $item->quantity * $item->unit_price; }) - $quotation->amount_paid, 0) }} {{ $quotation->transaction_currency }}</td>
+                    <td style="padding: 4px; text-align: right; font-weight: bold; color: #0F52BA; border-top: 2px solid #0F52BA; border-bottom: 2px solid #0F52BA;">Balance Due:</td>
+                    <td style="padding: 4px; text-align: right; font-weight: bold; color: #0F52BA; border-top: 2px solid #0F52BA; border-bottom: 2px solid #0F52BA;">{{ number_format($quotation->details->sum(function($item) { return $item->quantity * $item->unit_price; }) - $quotation->amount_paid, 0) }} {{ $quotation->transaction_currency }}</td>
                 </tr>
                 @else
                 <tr style="line-height: 1.5;">
-                    <td style="padding: 4px; text-align: right; font-weight: bold; color: #dc0000; border-top: 2px solid #dc0000; border-bottom: 2px solid #dc0000;">TOTAL:</td>
-                    <td style="padding: 4px; text-align: right; font-weight: bold; color: #dc0000; border-top: 2px solid #dc0000; border-bottom: 2px solid #dc0000;">{{ number_format($quotation->details->sum(function($item) { return $item->quantity * $item->unit_price; }), 0) }} {{ $quotation->transaction_currency }}</td>
+                    <td style="padding: 4px; text-align: right; font-weight: bold; color: #0F52BA; border-top: 2px solid #0F52BA; border-bottom: 2px solid #0F52BA;">TOTAL:</td>
+                    <td style="padding: 4px; text-align: right; font-weight: bold; color: #0F52BA; border-top: 2px solid #0F52BA; border-bottom: 2px solid #0F52BA;">{{ number_format($quotation->details->sum(function($item) { return $item->quantity * $item->unit_price; }), 0) }} {{ $quotation->transaction_currency }}</td>
                 </tr>
                 @endif
             </table>
@@ -514,10 +514,10 @@
 
     <div class="bank-details" style="margin-top: 10px; padding: 10px; background-color: #f9f9f9; border-radius: 4px; border: 1px solid #e0e0e0;">
         <div style="font-weight: bold; margin-bottom: 5px; font-size: 12px; color: #333;">Bank Details</div>
-        <div style="margin-bottom: 2px; font-size: 12px;"><strong>ACCOUNT NAME:</strong> SIF CARGO FORWARDING & CLEARING LIMITED</div>
-        <div style="margin-bottom: 2px; font-size: 12px;"><strong>BANK:</strong> DFCU</div>
-        <div style="margin-bottom: 2px; font-size: 12px;"><strong>ACCOUNT NUMBER (UGX):</strong> 01070011606048</div>
-        <div style="margin-bottom: 2px; font-size: 12px;"><strong>ACCOUNT NUMBER (USD):</strong> 02070011606093</div>
+        <div style="margin-bottom: 2px; font-size: 12px;"><strong>ACCOUNT NAME:</strong> GRULAND LOGISTICS LTD </div>
+        <div style="margin-bottom: 2px; font-size: 12px;"><strong>BANK:</strong> EQUITY BANK</div>
+        <div style="margin-bottom: 2px; font-size: 12px;"><strong>ACCOUNT NUMBER (UGX):</strong> 1002201945777</div>
+        <div style="margin-bottom: 2px; font-size: 12px;"><strong>ACCOUNT NUMBER (USD):</strong> 1002201945782</div>
         <div style="margin-top: 5px; padding-top: 5px; border-top: 1px solid #e0e0e0; font-style: italic; color: #666; font-size: 10px; line-height: 1.3;">
             All invoices issued by the Company shall be paid by the Client within 2 (two) days of the date of invoice unless otherwise agreed in writing by the Company. Invoices unpaid for more than 30 days after the due date as per invoice will incur a surcharge of 2% per month of the outstanding amount.
         </div>
@@ -525,20 +525,20 @@
 
     <table class="signature-table" style="width: 100%; margin-top: 50px; border-collapse: collapse; font-size: 12px;">
         <tr>
-            <td style="width: 33.33%; text-align: center; border-top: 2px solid #dc0000; padding-top: 5px; font-weight: bold;">Prepared by: {{ $quotation->user->name }}</td>
-            <td style="width: 33.33%; text-align: center; border-top: 2px solid #dc0000; padding-top: 5px; font-weight: bold;">Verified by</td>
-            <td style="width: 33.33%; text-align: center; border-top: 2px solid #dc0000; padding-top: 5px; font-weight: bold;">Received by</td>
+            <td style="width: 33.33%; text-align: center; border-top: 2px solid #0F52BA; padding-top: 5px; font-weight: bold;">Prepared by: {{ $quotation->user->name }}</td>
+            <td style="width: 33.33%; text-align: center; border-top: 2px solid #0F52BA; padding-top: 5px; font-weight: bold;">Verified by</td>
+            <td style="width: 33.33%; text-align: center; border-top: 2px solid #0F52BA; padding-top: 5px; font-weight: bold;">Received by</td>
         </tr>
     </table>
 
     <!--<div style="margin-top: 10px; text-align: center; font-size: 10px; color: #666; border-top: 1px solid #e0e0e0; padding-top: 5px;">
         <div>This is a secure document generated on: {{ date('d M Y H:i:s') }}</div>
         <div>This document is for reference only and does not require a signature.</div>
-        <div style="color: #dc0000; font-weight: bold; margin-top: 5px; font-size: 12px;">SIFCARGO - TONIGHT</div>
+        <div style="color: #0F52BA; font-weight: bold; margin-top: 5px; font-size: 12px;">SIFCARGO - TONIGHT</div>
     </div> -->
 
     <div style="text-align: center; margin-top: 10px;" class="no-print">
-        <button onclick="printDocument()" class="print-button" style="padding: 8px 16px; background-color: #dc0000; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: bold;">
+        <button onclick="printDocument()" class="print-button" style="padding: 8px 16px; background-color: #0F52BA; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: bold;">
             <i style="margin-right: 5px;">🖨️</i> Print Document
         </button>
     </div>

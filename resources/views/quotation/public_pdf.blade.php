@@ -434,10 +434,10 @@
 
         <div class="bank-details">
             <div class="bank-details-title">Bank Details</div>
-            <div class="bank-account"><strong>ACCOUNT NAME:</strong> SIF CARGO FORWARDING & CLEARING LIMITED</div>
-            <div class="bank-account"><strong>BANK:</strong> DFCU</div>
-            <div class="bank-account"><strong>ACCOUNT NUMBER (UGX):</strong> 01070011606048</div>
-            <div class="bank-account"><strong>ACCOUNT NUMBER (USD):</strong> 02070011606093</div>
+            <div class="bank-account"><strong>ACCOUNT NAME:</strong> GRULAND LOGISTICS LTD</div>
+            <div class="bank-account"><strong>BANK:</strong> EQUITY BANK</div>
+            <div class="bank-account"><strong>ACCOUNT NUMBER (UGX):</strong> 1002201945777</div>
+            <div class="bank-account"><strong>ACCOUNT NUMBER (USD):</strong> 1002201945782</div>
             <div class="bank-note">
                 All invoices issued by the Company shall be paid by the Client within 2 (two) days of the date of invoice unless otherwise agreed in writing by the Company. Invoices unpaid for more than 30 days after the due date as per invoice will incur a surcharge of 2% per month of the outstanding amount.
             </div>
