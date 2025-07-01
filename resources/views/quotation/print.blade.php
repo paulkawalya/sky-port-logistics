@@ -509,7 +509,7 @@
                 </tr>
                 <tr style="line-height: 1.5;">
                     <td style="padding: 4px; text-align: right; font-weight: bold; color: #0F52BA; border-top: 2px solid #0F52BA; border-bottom: 2px solid #0F52BA;">Balance Due:</td>
-                    <td style="padding: 4px; text-align: right; font-weight: bold; color: #0F52BA; border-top: 2px solid #0F52BA; border-bottom: 2px solid #0F52BA;">{{ number_format($quotation->details->sum(function($item) { return $item->quantity * $item->unit_price; }) - $quotation->payments->sum('amount_paid'), 0) }} {{ $quotation->transaction_currency }}</td>
+                    <td style="padding: 4px; text-align: right; font-weight: bold; color: #FF0000; border-top: 2px solid #0F52BA; border-bottom: 2px solid #0F52BA;">{{ number_format($quotation->details->sum(function($item) { return $item->quantity * $item->unit_price; }) - $quotation->payments->sum('amount_paid'), 0) }} {{ $quotation->transaction_currency }}</td>
                 </tr>
                 @else
                 <tr style="line-height: 1.5;">
