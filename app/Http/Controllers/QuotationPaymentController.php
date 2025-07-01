@@ -92,7 +92,26 @@ class QuotationPaymentController extends Controller
      */
     public function update(Request $request, QuotationPayment $quotationPayment)
     {
-        //
+        $rules = [
+            'payment_date' => 'required|date',
+            'amount_paid' => 'required|numeric',
+            'mode_of_payment' => 'required|string',
+            'narrative' => 'nullable|string',
+            'quotation_id' => 'required|exists:quotations,id'
+        ];
+    
+        $this->validate($request, $rules);
+    
+        $quotationPayment->payment_date = $request->payment_date;
+        $quotationPayment->amount_paid = $request->amount_paid;
+        $quotationPayment->mode_of_payment = $request->mode_of_payment;
+        $quotationPayment->narrative = $request->narrative;
+        $quotationPayment->user_id = Auth::id();
+        $quotationPayment->quotation_id = $request->quotation_id;
+    
+        $quotationPayment->save();
+    
+        return redirect()->route('quotations.show', $quotationPayment->quotation_id)->with('success', 'Payment updated successfully.');
     }
 
     /**

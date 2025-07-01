@@ -10,10 +10,23 @@ class QuotationPayment extends Model
 {
     use HasFactory;
 
-    
-    function user() : BelongsTo {
+    protected $casts = [
+        'payment_date' => 'date',
+    ];
 
-        return $this->belongsTo(User::class);
+    
+    protected $fillable = [
+        'quotation_id',
+        'user_id',
+        'payment_date',
+        'amount_paid',
+        'mode_of_payment',
+        'payment_account_id',
+    ];
+
+    function recorder() : BelongsTo {
+
+        return $this->belongsTo(User::class, 'user_id');
         
     }
 

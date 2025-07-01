@@ -1,67 +1,44 @@
-
-<div id="edit_payment{{$payment->id}}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog">
+@isset($payment)
+<div class="modal fade" id="editPaymentModal{{$payment->id}}" tabindex="-1" role="dialog" aria-labelledby="editPaymentModalLabel{{$payment->id}}" aria-hidden="true">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Edit Payment</h4>
-                <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true">     
-                </button>
+                <h5 class="modal-title" id="editPaymentModalLabel{{$payment->id}}">Edit Payment</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body p-8">
-                <form action="{{ route('payments.update', $payment->id) }}" method="post">
-                    @csrf
-                    @method('PUT')
-
-                    <input type="hidden" name="invoice_id" value="{{ $invoice->id }}">
-
-                    <div class="row">
-                        <div class="col-md-12 mb-16">
-                            <div class="form-group">
-                                <label for="payment_date" class="control-label">Payment date</label> <br>
-                                <input type="date" name="payment_date" value="{{ old('payment_date', $payment->payment_date) }}" class="form-control">
-                            </div>
-                        </div>
+            <form action="{{ route('quotation_payments.update', $payment->id) }}" method="POST">
+                @csrf
+                @method('PUT')
+                <input type="hidden" name="quotation_id" value="{{ $payment->quotation_id }}">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="payment_date" class="form-label">Payment Date</label>
+                        <input type="date" class="form-control" id="payment_date" name="payment_date" value="{{ \Carbon\Carbon::parse($payment->payment_date)->format('Y-m-d') }}" required>
                     </div>
-
-                    <div class="row">
-                        <div class="col-md-12 mb-16">
-                            <div class="form-group">
-                                <label for="amount_paid" class="control-label">Amount paid in {{ $invoice->transaction_currency }}</label> <br>
-                                <input type="number" name="amount_paid" value="{{ old('amount_paid', $payment->amount_paid) }}" class="form-control">
-                            </div>
-                        </div>
+                    <div class="mb-3">
+                        <label for="amount_paid" class="form-label">Amount Paid</label>
+                        <input type="number" step="0.01" class="form-control" id="amount_paid" name="amount_paid" value="{{ $payment->amount_paid }}" required>
                     </div>
-
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="mode_of_payment" class="control-label">Mode of Payment</label> <br>
-                                <select name="mode_of_payment" id="" class="form-control">
-                                    @foreach($mode_of_payments as $mode_of_payment)
-                                        <option value="{{ $mode_of_payment }}" {{ $payment->mode_of_payment == $mode_of_payment ? 'selected' : '' }}>
-                                            {{ $mode_of_payment }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
+                    <div class="mb-3">
+                        <label for="mode_of_payment" class="form-label">Payment Method</label>
+                        <select class="form-select" id="mode_of_payment" name="mode_of_payment" required>
+                            <option value="Cash" {{ $payment->mode_of_payment == 'Cash' ? 'selected' : '' }}>Cash</option>
+                            <option value="Bank Transfer" {{ $payment->mode_of_payment == 'Bank Transfer' ? 'selected' : '' }}>Bank Transfer</option>
+                            <option value="Mobile Money" {{ $payment->mode_of_payment == 'Mobile Money' ? 'selected' : '' }}>Mobile Money</option>
+                            <option value="Cheque" {{ $payment->mode_of_payment == 'Cheque' ? 'selected' : '' }}>Cheque</option>
+                        </select>
                     </div>
-
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="narrative" class="control-label">Description</label> <br>
-                                <input type="text" name="narrative" value="{{ old('narrative', $payment->narrative) }}" class="form-control">
-                            </div>
-                        </div>
+                    <div class="mb-3">
+                        <label for="narrative" class="form-label">Narrative (Optional)</label>
+                        <input type="text" class="form-control" id="narrative" name="narrative" value="{{ $payment->narrative }}">
                     </div>
-
-                    <hr>
-                    <button class="btn btn-danger" type="submit">Update</button>
-                </form>
-
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Update Payment</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
-
+@endisset

@@ -114,11 +114,13 @@ class QuotationController extends Controller
 
         $taxes = Tax::where('currency',$quotation->transaction_currency)->get();
 
+        $quotation->load('details', 'payments.recorder');
+
         $data = [
-            'quotation'=>$quotation,
-            'title'=>'Add Items to Invoice',
-            'mode_of_payments'=>$mode_of_payments,
-            'taxes'=>$taxes
+            'quotation' => $quotation,
+            'title' => 'Add Items to Invoice',
+            'mode_of_payments' => $mode_of_payments,
+            'taxes' => $taxes
         ];
 
         return view('quotation.quotation_details')->with($data);
@@ -212,7 +214,7 @@ class QuotationController extends Controller
      */
     public function print($id)
     {
-        $quotation = Quotation::with(['customer', 'details', 'taxquotations.tax', 'payments.user', 'user'])->findOrFail($id);
+        $quotation = Quotation::with(['customer', 'details', 'taxquotations.tax', 'payments.recorder', 'user'])->findOrFail($id);
         return view('quotation.print', compact('quotation'));
     }
 
@@ -221,7 +223,7 @@ class QuotationController extends Controller
      */
     public function printQuotation($id)
     {
-        $quotation = Quotation::with(['customer', 'details', 'taxquotations.tax', 'payments.user', 'user'])->findOrFail($id);
+        $quotation = Quotation::with(['customer', 'details', 'taxquotations.tax', 'payments.recorder', 'user'])->findOrFail($id);
         return view('quotation.print', compact('quotation'));
     }
 
@@ -230,7 +232,7 @@ class QuotationController extends Controller
      */
     public function generatePdf($id)
     {
-        $quotation = Quotation::with(['customer', 'details', 'taxquotations.tax', 'payments.user', 'user'])->findOrFail($id);
+        $quotation = Quotation::with(['customer', 'details', 'taxquotations.tax', 'payments.recorder', 'user'])->findOrFail($id);
 
         // Configure PDF options for better print-like output
         $options = [
@@ -339,7 +341,7 @@ class QuotationController extends Controller
                     'customer',
                     'details',
                     'taxquotations.tax',
-                    'payments.user',
+                    'payments.recorder',
                     'user'
                 ])->find($hashedId);
                 \Log::info('Direct lookup ' . ($quotation ? 'succeeded' : 'failed'));
@@ -362,7 +364,7 @@ class QuotationController extends Controller
                             'customer',
                             'details',
                             'taxquotations.tax',
-                            'payments.user',
+                            'payments.recorder',
                             'user'
                         ])->find($id);
                         \Log::info('IdHasher lookup ' . ($quotation ? 'succeeded' : 'failed'));

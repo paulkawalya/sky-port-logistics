@@ -484,6 +484,32 @@
                     {{ \App\Models\Invoice::numberToWords(round($quotation->details->sum(function($item) { return $item->quantity * $item->unit_price; }))) }} {{ $quotation->transaction_currency }} ONLY
                 </div>
             </div>
+            
+            @if($quotation->transaction_type == 'invoice' && $quotation->payments->count() > 0)
+            <div style="margin-top: 15px; padding: 8px; background-color: #f9f9f9; border-left: 4px solid #28a745; border-radius: 4px;">
+                <div style="font-weight: bold; margin-bottom: 5px; font-size: 12px; color: #333; text-transform: uppercase; border-bottom: 1px solid #28a745; padding-bottom: 3px;">Payment History</div>
+                <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
+                    <thead>
+                        <tr style="background-color: #f2f2f2;">
+                            <th style="padding: 4px; text-align: left; border-bottom: 1px solid #ddd;">Date</th>
+                            <th style="padding: 4px; text-align: right; border-bottom: 1px solid #ddd;">Amount</th>
+                            <th style="padding: 4px; text-align: left; border-bottom: 1px solid #ddd;">Method</th>
+                            <th style="padding: 4px; text-align: left; border-bottom: 1px solid #ddd;">Recorded By</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($quotation->payments as $payment)
+                        <tr>
+                            <td style="padding: 4px; border-bottom: 1px solid #eee;">{{ \Carbon\Carbon::parse($payment->payment_date)->format('d M Y') }}</td>
+                            <td style="padding: 4px; text-align: right; border-bottom: 1px solid #eee;">{{ number_format($payment->amount_paid, 0) }}</td>
+                            <td style="padding: 4px; border-bottom: 1px solid #eee;">{{ $payment->mode_of_payment }}</td>
+                            <td style="padding: 4px; border-bottom: 1px solid #eee;">{{ $payment->recorder ? $payment->recorder->name : 'N/A' }}</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+            @endif
         </div>
 
         <div style="width: 40%;">
@@ -493,14 +519,14 @@
                     <td style="padding: 4px; text-align: right; border-bottom: 1px solid #e0e0e0;">{{ number_format($quotation->details->sum(function($item) { return $item->quantity * $item->unit_price; }), 0) }} {{ $quotation->transaction_currency }}</td>
                 </tr>
 
-                @if($quotation->amount_paid > 0)
+                @if($quotation->transaction_type == 'invoice' && $quotation->payments->sum('amount_paid') > 0)
                 <tr style="line-height: 1.5;">
                     <td style="padding: 4px; text-align: right; font-weight: bold; border-bottom: 1px solid #e0e0e0;">Amount Paid:</td>
-                    <td style="padding: 4px; text-align: right; border-bottom: 1px solid #e0e0e0;">{{ number_format($quotation->amount_paid, 0) }} {{ $quotation->transaction_currency }}</td>
+                    <td style="padding: 4px; text-align: right; border-bottom: 1px solid #e0e0e0;">{{ number_format($quotation->payments->sum('amount_paid'), 0) }} {{ $quotation->transaction_currency }}</td>
                 </tr>
                 <tr style="line-height: 1.5;">
                     <td style="padding: 4px; text-align: right; font-weight: bold; color: #0F52BA; border-top: 2px solid #0F52BA; border-bottom: 2px solid #0F52BA;">Balance Due:</td>
-                    <td style="padding: 4px; text-align: right; font-weight: bold; color: #0F52BA; border-top: 2px solid #0F52BA; border-bottom: 2px solid #0F52BA;">{{ number_format($quotation->details->sum(function($item) { return $item->quantity * $item->unit_price; }) - $quotation->amount_paid, 0) }} {{ $quotation->transaction_currency }}</td>
+                    <td style="padding: 4px; text-align: right; font-weight: bold; color: #0F52BA; border-top: 2px solid #0F52BA; border-bottom: 2px solid #0F52BA;">{{ number_format($quotation->details->sum(function($item) { return $item->quantity * $item->unit_price; }) - $quotation->payments->sum('amount_paid'), 0) }} {{ $quotation->transaction_currency }}</td>
                 </tr>
                 @else
                 <tr style="line-height: 1.5;">

@@ -165,7 +165,7 @@
                     </tr>
 
                     <tr>
-                        <td><span class="badge p-8">{{$quotation->user->name}} <br> {{ now() }} </span></td>                        
+                        <td><span class="badge p-8">{{$quotation->user ? $quotation->user->name : 'N/A'}} <br> {{ now() }} </span></td>                        
                     </tr>               
                 </tbody>
             </table>

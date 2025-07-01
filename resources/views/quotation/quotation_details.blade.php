@@ -280,120 +280,153 @@
 
       <div class="row">
         <div class="col-md-12">
-          <!-- Items Table -->
           <div class="card border-0 shadow-sm mb-4">
-            <div class="card-header bg-primary bg-opacity-10 py-3 border-0">
-              <div class="d-flex align-items-center justify-content-between">
-                <div class="d-flex align-items-center">
-                  <div class="avatar avatar-sm bg-primary text-white rounded-circle me-8">
-                    <i class="ri-list-check-3"></i>
+            <div class="card-header bg-light border-bottom">
+              <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link active" id="items-tab" data-bs-toggle="tab" data-bs-target="#items-tab-pane" type="button" role="tab" aria-controls="items-tab-pane" aria-selected="true">Items & Services</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" id="payments-tab" data-bs-toggle="tab" data-bs-target="#payments-tab-pane" type="button" role="tab" aria-controls="payments-tab-pane" aria-selected="false">Payment History</button>
+                </li>
+              </ul>
+            </div>
+            <div class="card-body p-0">
+              <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="items-tab-pane" role="tabpanel" aria-labelledby="items-tab" tabindex="0">
+                  <div class="table-responsive">
+                    <table class="table table-sm table-hover mb-0">
+                      <thead class="bg-light">
+                        <tr>
+                          <th class="text-center border-0" width="5%">#</th>
+                          <th class="border-0" width="45%">Description</th>
+                          <th class="text-center border-0" width="10%">Quantity</th>
+                          <th class="text-end border-0" width="15%">Unit Price</th>
+                          <th class="text-end border-0" width="15%">Amount</th>
+                          @if(Auth::user()->canDo(['edit_quotations']))
+                          <th class="text-center border-0" width="10%">Actions</th>
+                          @endif
+                        </tr>
+                      </thead>
+                      <tbody>
+                        @forelse($quotation->details as $row => $detail)
+                        <tr class="border-top-8">
+                          <td class="text-center align-middle">
+                            <span class="badge bg-primary bg-opacity-10 text-primary rounded-pill px-2 py-1">{{$row+1}}</span>
+                          </td>
+                          <td class="align-middle">
+                            <div class="fw-medium">{{ $detail->particular }}</div>
+                          </td>
+                          <td class="text-center align-middle">
+                            <span class="badge bg-light text-dark rounded-pill px-3 py-2">
+                              {{ number_format($detail->quantity) }}
+                            </span>
+                          </td>
+                          <td class="text-end align-middle">
+                            <div class="d-flex flex-column">
+                              <span class="fw-medium">{{ number_format($detail->unit_price, 2) }}</span>
+                            </div>
+                          </td>
+                          <td class="text-end align-middle">
+                            <div class="d-flex flex-column">
+                              <span class="fw-semibold">{{ number_format($detail->quantity * $detail->unit_price, 2) }}</span>
+                            </div>
+                          </td>
+                          @if(Auth::user()->canDo(['edit_quotations']))
+                          <td class="text-center align-middle">
+                            <div class="d-flex justify-content-center gap-8">
+                              <button type="button" class="btn btn-sm btn-primary btn-icon rounded-circle" style="width: 32px; height: 32px; padding: 0; display: inline-flex; align-items: center; justify-content: center;" data-toggle="modal" data-target="#edit_item{{$detail->id}}" data-bs-toggle="tooltip" title="Edit Item">
+                                <i class="ri-pencil-fill"></i>
+                              </button>
+                              @if(Auth::user()->canDo(['delete_quotations']))
+                              <form action="{{ route('quotation_details.destroy', $detail->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this item?');" style="display: inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-sm btn-danger btn-icon rounded-circle" style="width: 32px; height: 32px; padding: 0; display: inline-flex; align-items: center; justify-content: center;" data-bs-toggle="tooltip" title="Delete Item">
+                                  <i class="ri-delete-bin-2-line"></i>
+                                </button>
+                              </form>
+                              @endif
+                            </div>
+                          </td>
+                          @endif
+                        </tr>
+                        @include("models.edit_item")
+                        @empty
+                        <tr>
+                          <td colspan="{{ Auth::user()->canDo(['edit_quotations']) ? '6' : '5' }}" class="text-center py-5">
+                            <div class="py-5">
+                              <div class="avatar avatar-lg bg-light text-primary rounded-circle mb-3 mx-auto">
+                                <i class="ri-file-list-3-line fs-3"></i>
+                              </div>
+                              <h6 class="mb-2">No Items Added Yet</h6>
+                              <p class="mb-4 text-muted">This {{ strtolower($quotation->transaction_type) }} doesn't have any items yet.</p>
+                              @if(Auth::user()->canDo(['create_quotations']))
+                              <button type="button" class="btn btn-primary px-4 py-2" data-toggle="modal" data-target="#add_item">
+                                <i class="ri-add-line me-8"></i> Add First Item
+                              </button>
+                              @endif
+                            </div>
+                          </td>
+                        </tr>
+                        @endforelse
+                      </tbody>
+                    </table>
                   </div>
-                  <h6 class="mb-0 text-primary">Items & Services</h6>
+                  @if(count($quotation->details) > 0)
+                  <div class="card-footer bg-light py-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                      <div class="d-flex align-items-center">
+                        <i class="ri-list-check-3 text-primary me-8"></i>
+                        <span class="text-muted">Total Items: <span class="fw-semibold">{{ count($quotation->details) }}</span></span>
+                      </div>
+                      <div class="d-flex align-items-center">
+                        <i class="ri-money-dollar-circle-line text-primary me-8"></i>
+                        <span class="text-muted">Subtotal: <span class="fw-semibold">{{ number_format($quotation->amount($quotation->id), 2) }} {{$quotation->transaction_currency}}</span></span>
+                      </div>
+                    </div>
+                  </div>
+                  @endif
                 </div>
-                @if(Auth::user()->canDo(['create_quotations']) && count($quotation->details) > 0)
-                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#add_item">
-                  <i class="ri-add-line me-8"></i> Add Item
-                </button>
-                @endif
-              </div>
-            </div>
-            <div class="card-body p-8">
-              <div class="table-responsive">
-                <table class="table table-sm table-hover mb-0">
-                  <thead class="bg-light">
-                    <tr>
-                      <th class="text-center border-0" width="5%">#</th>
-                      <th class="border-0" width="45%">Description</th>
-                      <th class="text-center border-0" width="10%">Quantity</th>
-                      <th class="text-end border-0" width="15%">Unit Price</th>
-                      <th class="text-end border-0" width="15%">Amount</th>
-                      @if(Auth::user()->canDo(['edit_quotations']))
-                      <th class="text-center border-0" width="10%">Actions</th>
-                      @endif
-                    </tr>
-                  </thead>
-                  <tbody>
-                    @foreach($quotation->details as $row => $detail)
-                    <tr class="border-top-8">
-                      <td class="text-center align-middle">
-                        <span class="badge bg-primary bg-opacity-10 text-primary rounded-pill px-2 py-1">{{$row+1}}</span>
-                      </td>
-                      <td class="align-middle">
-                        <div class="fw-medium">{{ $detail->particular }}</div>
-                      </td>
-                      <td class="text-center align-middle">
-                        <span class="badge bg-light text-dark rounded-pill px-3 py-2">
-                          {{ number_format($detail->quantity) }}
-                        </span>
-                      </td>
-                      <td class="text-end align-middle">
-                        <div class="d-flex flex-column">
-                          <span class="fw-medium">{{ number_format($detail->unit_price, 2) }}</span>
-                        </div>
-                      </td>
-                      <td class="text-end align-middle">
-                        <div class="d-flex flex-column">
-                          <span class="fw-semibold">{{ number_format($detail->quantity * $detail->unit_price, 2) }}</span>
-                        </div>
-                      </td>
-                      @if(Auth::user()->canDo(['edit_quotations']))
-                      <td class="text-center align-middle">
-                        <div class="d-flex justify-content-center gap-8">
-                          <button type="button" class="btn btn-sm btn-primary btn-icon rounded-circle" style="width: 32px; height: 32px; padding: 0; display: inline-flex; align-items: center; justify-content: center;" data-toggle="modal" data-target="#edit_item{{$detail->id}}" data-bs-toggle="tooltip" title="Edit Item">
-                            <i class="ri-pencil-fill"></i>
-                          </button>
-                          @if(Auth::user()->canDo(['delete_quotations']))
-                          <form action="{{ route('quotation_details.destroy', $detail->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this item?');" style="display: inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-sm btn-danger btn-icon rounded-circle" style="width: 32px; height: 32px; padding: 0; display: inline-flex; align-items: center; justify-content: center;" data-bs-toggle="tooltip" title="Delete Item">
-                              <i class="ri-delete-bin-2-line"></i>
-                            </button>
-                          </form>
-                          @endif
-                        </div>
-                      </td>
-                      @endif
-                    </tr>
-                    @include("models.edit_item")
-                    @endforeach
-
-                    @if(count($quotation->details) == 0)
-                    <tr>
-                      <td colspan="{{ Auth::user()->canDo(['edit_quotations']) ? '6' : '5' }}" class="text-center py-5">
-                        <div class="py-5">
-                          <div class="avatar avatar-lg bg-light text-primary rounded-circle mb-3 mx-auto">
-                            <i class="ri-file-list-3-line fs-3"></i>
-                          </div>
-                          <h6 class="mb-2">No Items Added Yet</h6>
-                          <p class="mb-4 text-muted">This {{ strtolower($quotation->transaction_type) }} doesn't have any items yet.</p>
-                          @if(Auth::user()->canDo(['create_quotations']))
-                          <button type="button" class="btn btn-primary px-4 py-2" data-toggle="modal" data-target="#add_item">
-                            <i class="ri-add-line me-8"></i> Add First Item
-                          </button>
-                          @endif
-                        </div>
-                      </td>
-                    </tr>
-                    @endif
-                  </tbody>
-                </table>
-              </div>
-            </div>
-            @if(count($quotation->details) > 0)
-            <div class="card-footer bg-light py-3">
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="d-flex align-items-center">
-                  <i class="ri-list-check-3 text-primary me-8"></i>
-                  <span class="text-muted">Total Items: <span class="fw-semibold">{{ count($quotation->details) }}</span></span>
-                </div>
-                <div class="d-flex align-items-center">
-                  <i class="ri-money-dollar-circle-line text-primary me-8"></i>
-                  <span class="text-muted">Subtotal: <span class="fw-semibold">{{ number_format($quotation->amount($quotation->id), 2) }} {{$quotation->transaction_currency}}</span></span>
+                <div class="tab-pane fade" id="payments-tab-pane" role="tabpanel" aria-labelledby="payments-tab" tabindex="0">
+                  <div class="table-responsive">
+                    <table class="table table-sm table-hover mb-0">
+                      <thead class="bg-light">
+                        <tr>
+                          <th class="border-0">Date</th>
+                          <th class="border-0">Amount</th>
+                          <th class="border-0">Payment Mode</th>
+                          <th class="border-0">Recorded By</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        @forelse($quotation->payments as $payment)
+                          <tr>
+                            <td>{{ $payment->payment_date->format('d M, Y') }}</td>
+                            <td>{{ number_format($payment->amount_paid) }} {{ $quotation->transaction_currency }}</td>
+                            <td>{{ $payment->mode_of_payment }}</td>
+                            <td>
+                              @if($payment->recorder)
+                                {{ $payment->recorder->name }}
+                              @else
+                                <span class="text-muted">N/A</span>
+                              @endif
+                            </td>
+                          </tr>
+                        @empty
+                          <tr>
+                            <td colspan="4" class="text-center text-muted py-4">
+                              <i class="ri-information-line fs-4 mb-2 d-block"></i>
+                              No payments recorded yet.
+                            </td>
+                          </tr>
+                        @endforelse
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
             </div>
-            @endif
           </div>
           <hr>
 
@@ -424,6 +457,7 @@
                             <th class="text-end">Amount</th>
                             <th>Method</th>
                             <th>Recorded By</th>
+                            <th>Actions</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -449,10 +483,22 @@
                             <td>
                               <div class="d-flex align-items-center">
                                 <i class="ri-user-line text-muted me-8"></i>
-                                <span>{{ $payment->user->name }}</span>
+                                <span>
+                                  @if($payment->recorder)
+                                    {{ $payment->recorder->name }}
+                                  @else
+                                    <span class="text-muted">N/A</span>
+                                  @endif
+                                </span>
                               </div>
                             </td>
+                            <td class="text-center">
+                              <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#editPaymentModal{{$payment->id}}">
+                                <i class="ri-edit-line"></i>
+                              </button>
+                            </td>
                           </tr>
+                          @include('models.edit_payment', ['payment' => $payment])
                           @endforeach
                         </tbody>
                       </table>
