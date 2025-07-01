@@ -419,20 +419,13 @@
             <tr style="line-height: 1.2;">
                 <td style="padding: 2px 0; width: 20%;"><strong>Container No:</strong></td>
                 <td style="padding: 2px 0; width: 30%;">{{ $quotation->container_air_no ?? '—' }}</td>
-                <td style="padding: 2px 0; width: 20%;"><strong>Entry No:</strong></td>
-                <td style="padding: 2px 0; width: 30%;">{{ $quotation->entry_no ?? '—' }}</td>
-            </tr>
-            <tr style="line-height: 1.2;">
-                <td style="padding: 2px 0;"><strong>Weight (KG):</strong></td>
-                <td style="padding: 2px 0;">{{ $quotation->weight ? number_format($quotation->weight, 1) : '0.0' }}</td>
-                <td style="padding: 2px 0;"><strong>Volume:</strong></td>
-                <td style="padding: 2px 0;">{{ $quotation->volume ? number_format($quotation->volume, 1) : '0.0' }}</td>
-            </tr>
-            <tr style="line-height: 1.2;">
-                <td style="padding: 2px 0;"><strong>Packages:</strong></td>
-                <td style="padding: 2px 0;">{{ $quotation->packages ?? '0' }}</td>
-                <td style="padding: 2px 0;"><strong>Reference:</strong></td>
-                <td style="padding: 2px 0;"></td>
+                <td style="padding: 2px 0; width: 20%;"><strong>Entry No / Ref:</strong></td>
+                <td style="padding: 2px 0; width: 30%;">
+                    {{ $quotation->entry_no ?? '—' }}
+                    @if($quotation->reference)
+                        / {{ $quotation->reference }}
+                    @endif
+                </td>
             </tr>
             @if($quotation->description)
             <tr style="line-height: 1.2;">
@@ -447,15 +440,10 @@
         <thead>
             <tr style="background-color: #f2f2f2;">
                 <th style="padding: 6px 4px; width: 4%; border-bottom: 2px solid #0F52BA; text-align: center;"><strong>No.</strong></th>
-                <th style="padding: 6px 4px; width: 30%; border-bottom: 2px solid #0F52BA; text-align: left;"><strong>Description</strong></th>
-                <th style="padding: 6px 4px; width: 5%; border-bottom: 2px solid #0F52BA; text-align: center;"><strong>Qty</strong></th>
-                <th style="padding: 6px 4px; width: 8%; border-bottom: 2px solid #0F52BA; text-align: right;"><strong>Weight</strong></th>
-                <th style="padding: 6px 4px; width: 8%; border-bottom: 2px solid #0F52BA; text-align: right;"><strong>Vol</strong></th>
-                <th style="padding: 6px 4px; width: 6%; border-bottom: 2px solid #0F52BA; text-align: right;"><strong>Pkg</strong></th>
-                <th style="padding: 6px 4px; width: 10%; border-bottom: 2px solid #0F52BA; text-align: right;"><strong>Rate</strong></th>
-                <th style="padding: 6px 4px; width: 12%; border-bottom: 2px solid #0F52BA; text-align: right;"><strong>Amount</strong></th>
-                <th style="padding: 6px 4px; width: 5%; border-bottom: 2px solid #0F52BA; text-align: center;"><strong>VAT</strong></th>
-                <th style="padding: 6px 4px; width: 12%; border-bottom: 2px solid #0F52BA; text-align: right;"><strong>TOTAL</strong></th>
+                <th style="padding: 6px 4px; width: 50%; border-bottom: 2px solid #0F52BA; text-align: left;"><strong>Description</strong></th>
+                <th style="padding: 6px 4px; width: 10%; border-bottom: 2px solid #0F52BA; text-align: right;"><strong>Quantity</strong></th>
+                <th style="padding: 6px 4px; width: 15%; border-bottom: 2px solid #0F52BA; text-align: right;"><strong>Rate</strong></th>
+                <th style="padding: 6px 4px; width: 20%; border-bottom: 2px solid #0F52BA; text-align: right;"><strong>Amount</strong></th>
             </tr>
         </thead>
         <tbody>
@@ -463,13 +451,8 @@
             <tr style="line-height: 1.3; {{ $index % 2 == 0 ? '' : 'background-color: #f9f9f9;' }}">
                 <td style="padding: 5px 4px; text-align: center; border-bottom: 1px solid #e0e0e0;">{{ $index + 1 }}</td>
                 <td style="padding: 5px 4px; border-bottom: 1px solid #e0e0e0;">{{ $item->particular }}</td>
-                <td style="padding: 5px 4px; text-align: center; border-bottom: 1px solid #e0e0e0;">{{ number_format($item->quantity, 0) }}</td>
-                <td style="padding: 5px 4px; text-align: right; border-bottom: 1px solid #e0e0e0;">{{ $item->weight ? number_format($item->weight, 1) : '0.0' }}</td>
-                <td style="padding: 5px 4px; text-align: right; border-bottom: 1px solid #e0e0e0;">{{ $item->volume ? number_format($item->volume, 1) : '0.0' }}</td>
-                <td style="padding: 5px 4px; text-align: right; border-bottom: 1px solid #e0e0e0;">{{ $item->packages ?? '0' }}</td>
+                <td style="padding: 5px 4px; text-align: right; border-bottom: 1px solid #e0e0e0;">{{ number_format($item->quantity, 0) }}</td>
                 <td style="padding: 5px 4px; text-align: right; border-bottom: 1px solid #e0e0e0;">{{ number_format($item->unit_price, 0) }}</td>
-                <td style="padding: 5px 4px; text-align: right; border-bottom: 1px solid #e0e0e0;">{{ number_format($item->quantity * $item->unit_price, 0) }}</td>
-                <td style="padding: 5px 4px; text-align: center; border-bottom: 1px solid #e0e0e0;">@if($item->is_taxable)<span style="color: #0F52BA; font-weight: bold;">✓</span>@endif</td>
                 <td style="padding: 5px 4px; text-align: right; border-bottom: 1px solid #e0e0e0;">{{ number_format($item->quantity * $item->unit_price, 0) }}</td>
             </tr>
             @endforeach
