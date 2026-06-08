@@ -1,7 +1,9 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
+import useEmblaCarousel from "embla-carousel-react";
+import Autoplay from "embla-carousel-autoplay";
 import {
   Plane,
   Ship,
@@ -19,6 +21,7 @@ import {
   Menu,
   X,
   ChevronRight,
+  ChevronLeft,
   CheckCircle,
   BarChart3,
   Zap,
@@ -28,6 +31,7 @@ import {
   Navigation,
   Anchor,
   Container,
+  TrendingUp,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -199,131 +203,261 @@ function Navbar() {
   );
 }
 
-// Hero Section
+// Hero Slide Data
+const heroSlides = [
+  {
+    image: "/hero-bg.png",
+    gradient: "from-[#005B96]/90 via-[#003D66]/80 to-[#005B96]/60",
+    badge: { icon: Zap, text: "#1 Global Logistics Partner" },
+    title: ["Your Gateway to ", "Global Shipping", " Excellence"],
+    description:
+      "Sky Port Logistics delivers seamless freight solutions across air, ocean, and road. From warehouse to doorstep, we connect your business to the world with unmatched speed and reliability.",
+    primaryCta: { text: "Our Services", href: "#services" },
+    secondaryCta: { text: "Track Shipment", href: "#tracking", icon: Navigation },
+  },
+  {
+    image: "/hero-ocean.png",
+    gradient: "from-[#003D66]/90 via-[#005B96]/80 to-[#003D66]/70",
+    badge: { icon: Ship, text: "Ocean Freight Specialists" },
+    title: ["Navigate the Seas ", "With Confidence", " & Precision"],
+    description:
+      "We combine speed, security, and savings to deliver a logistics experience that sets your supply chain apart. Full container or consolidated — your cargo, our commitment.",
+    primaryCta: { text: "Ocean Solutions", href: "#services" },
+    secondaryCta: { text: "Get a Quote", href: "#contact", icon: ArrowRight },
+  },
+  {
+    image: "/hero-warehouse.png",
+    gradient: "from-[#005B96]/85 via-[#0078C8]/75 to-[#003D66]/80",
+    badge: { icon: TrendingUp, text: "Smart Supply Chain Solutions" },
+    title: ["Where Speed Meets ", "Security & Savings", " Every Time"],
+    description:
+      "We combine speed, security, and savings to deliver a logistics experience that sets your supply chain apart. State-of-the-art warehousing, real-time tracking, and end-to-end visibility.",
+    primaryCta: { text: "Explore Solutions", href: "#services" },
+    secondaryCta: { text: "Track Shipment", href: "#tracking", icon: Navigation },
+  },
+  {
+    image: "/cargo-plane.png",
+    gradient: "from-[#003D66]/90 via-[#005B96]/75 to-[#003D66]/65",
+    badge: { icon: Plane, text: "Express Air Cargo" },
+    title: ["Deliver Faster, ", "Fly Higher", " Worldwide"],
+    description:
+      "Priority air freight with guaranteed timelines. Temperature-controlled, charter-ready, and connected to every major hub on the planet. Your urgent shipments, delivered on schedule.",
+    primaryCta: { text: "Air Freight", href: "#services" },
+    secondaryCta: { text: "Get a Quote", href: "#contact", icon: ArrowRight },
+  },
+];
+
+// Hero Section with Slider
 function HeroSection() {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [
+    Autoplay({ delay: 6000, stopOnInteraction: false }),
+  ]);
+
+  const scrollTo = useCallback(
+    (index: number) => emblaApi && emblaApi.scrollTo(index),
+    [emblaApi]
+  );
+
+  const scrollPrev = useCallback(() => emblaApi && emblaApi.scrollPrev(), [emblaApi]);
+  const scrollNext = useCallback(() => emblaApi && emblaApi.scrollNext(), [emblaApi]);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+    const onSelect = () => setCurrentSlide(emblaApi.selectedScrollSnap());
+    emblaApi.on("select", onSelect);
+    onSelect();
+    return () => { emblaApi.off("select", onSelect); };
+  }, [emblaApi]);
+
   return (
     <section
       id="home"
       className="relative min-h-screen flex items-center overflow-hidden"
     >
-      {/* Background */}
-      <div className="absolute inset-0">
-        <img
-          src="/hero-bg.png"
-          alt="Cargo port aerial view"
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#005B96]/90 via-[#003D66]/80 to-[#005B96]/60" />
+      {/* Embla Carousel */}
+      <div className="absolute inset-0" ref={emblaRef}>
+        <div className="flex h-full">
+          {heroSlides.map((slide, idx) => (
+            <div key={idx} className="flex-[0_0_100%] min-w-0 relative h-screen">
+              {/* Background Image */}
+              <img
+                src={slide.image}
+                alt={slide.title.join(" ")}
+                className="w-full h-full object-cover hero-slide-img"
+              />
+              <div className={`absolute inset-0 bg-gradient-to-r ${slide.gradient}`} />
+
+              {/* Animated particles */}
+              <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                <motion.div
+                  className="absolute top-20 right-20 w-64 h-64 rounded-full bg-[#FF7F00]/10 blur-3xl"
+                  animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
+                  transition={{ duration: 4, repeat: Infinity }}
+                />
+                <motion.div
+                  className="absolute bottom-20 left-10 w-48 h-48 rounded-full bg-[#FF7F00]/10 blur-3xl"
+                  animate={{ scale: [1, 1.3, 1], opacity: [0.2, 0.4, 0.2] }}
+                  transition={{ duration: 5, repeat: Infinity }}
+                />
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
 
-      {/* Animated particles/decorations */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <motion.div
-          className="absolute top-20 right-20 w-64 h-64 rounded-full bg-[#FF7F00]/10 blur-3xl"
-          animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
-          transition={{ duration: 4, repeat: Infinity }}
-        />
-        <motion.div
-          className="absolute bottom-20 left-10 w-48 h-48 rounded-full bg-[#FF7F00]/10 blur-3xl"
-          animate={{ scale: [1, 1.3, 1], opacity: [0.2, 0.4, 0.2] }}
-          transition={{ duration: 5, repeat: Infinity }}
-        />
-      </div>
-
-      {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
-        <div className="max-w-3xl">
+      {/* Slide Content Overlay */}
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 w-full">
+        <AnimatePresence mode="wait">
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <span className="inline-flex items-center gap-2 bg-[#FF7F00]/20 text-[#FFA040] border border-[#FF7F00]/30 rounded-full px-4 py-2 text-sm font-medium mb-6">
-              <Zap size={16} />
-              #1 Global Logistics Partner
-            </span>
-          </motion.div>
-
-          <motion.h1
-            className="text-4xl sm:text-5xl lg:text-7xl font-bold text-white leading-tight mb-6"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            Your Gateway to{" "}
-            <span className="text-[#FF7F00]">Global Shipping</span>{" "}
-            Excellence
-          </motion.h1>
-
-          <motion.p
-            className="text-lg sm:text-xl text-white/80 mb-8 max-w-2xl leading-relaxed"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-          >
-            Sky Port Logistics delivers seamless freight solutions across air,
-            ocean, and road. From warehouse to doorstep, we connect your
-            business to the world with unmatched speed and reliability.
-          </motion.p>
-
-          <motion.div
-            className="flex flex-col sm:flex-row gap-4"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-          >
-            <a href="#services">
-              <Button
-                size="lg"
-                className="bg-[#FF7F00] hover:bg-[#CC6600] text-white font-semibold px-8 py-6 text-lg rounded-full shadow-xl hover:shadow-2xl transition-all group"
-              >
-                Our Services
-                <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-              </Button>
-            </a>
-            <a href="#tracking">
-              <Button
-                size="lg"
-                variant="outline"
-                className="border-white/30 text-white hover:bg-white/10 font-semibold px-8 py-6 text-lg rounded-full backdrop-blur-sm"
-              >
-                Track Shipment
-                <Navigation className="ml-2" />
-              </Button>
-            </a>
-          </motion.div>
-
-          {/* Trust badges */}
-          <motion.div
-            className="mt-12 flex flex-wrap items-center gap-6"
+            key={currentSlide}
+            className="max-w-3xl"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.8 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
           >
-            <div className="flex items-center gap-2 text-white/70">
-              <Shield className="text-[#FF7F00]" size={20} />
-              <span className="text-sm">ISO 9001 Certified</span>
-            </div>
-            <div className="flex items-center gap-2 text-white/70">
-              <Clock className="text-[#FF7F00]" size={20} />
-              <span className="text-sm">24/7 Support</span>
-            </div>
-            <div className="flex items-center gap-2 text-white/70">
-              <Globe className="text-[#FF7F00]" size={20} />
-              <span className="text-sm">150+ Countries</span>
-            </div>
+            {/* Badge */}
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+            >
+              <span className="inline-flex items-center gap-2 bg-[#FF7F00]/20 text-[#FFA040] border border-[#FF7F00]/30 rounded-full px-4 py-2 text-sm font-medium mb-6">
+                {(() => { const Icon = heroSlides[currentSlide].badge.icon; return <Icon size={16} />; })()}
+                {heroSlides[currentSlide].badge.text}
+              </span>
+            </motion.div>
+
+            {/* Title */}
+            <motion.h1
+              className="text-4xl sm:text-5xl lg:text-7xl font-bold text-white leading-tight mb-6"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.2 }}
+            >
+              {heroSlides[currentSlide].title[0]}
+              <span className="text-[#FF7F00]">{heroSlides[currentSlide].title[1]}</span>{" "}
+              {heroSlides[currentSlide].title[2]}
+            </motion.h1>
+
+            {/* Description */}
+            <motion.p
+              className="text-lg sm:text-xl text-white/80 mb-8 max-w-2xl leading-relaxed"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.35 }}
+            >
+              {heroSlides[currentSlide].description}
+            </motion.p>
+
+            {/* CTAs */}
+            <motion.div
+              className="flex flex-col sm:flex-row gap-4"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.5 }}
+            >
+              <a href={heroSlides[currentSlide].primaryCta.href}>
+                <Button
+                  size="lg"
+                  className="bg-[#FF7F00] hover:bg-[#CC6600] text-white font-semibold px-8 py-6 text-lg rounded-full shadow-xl hover:shadow-2xl transition-all group"
+                >
+                  {heroSlides[currentSlide].primaryCta.text}
+                  <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </a>
+              <a href={heroSlides[currentSlide].secondaryCta.href}>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="border-white/30 text-white hover:bg-white/10 font-semibold px-8 py-6 text-lg rounded-full backdrop-blur-sm"
+                >
+                  {heroSlides[currentSlide].secondaryCta.text}
+                  {(() => { const Icon = heroSlides[currentSlide].secondaryCta.icon; return <Icon className="ml-2" />; })()}
+                </Button>
+              </a>
+            </motion.div>
+
+            {/* Trust badges */}
+            <motion.div
+              className="mt-12 flex flex-wrap items-center gap-6"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.7, delay: 0.65 }}
+            >
+              <div className="flex items-center gap-2 text-white/70">
+                <Shield className="text-[#FF7F00]" size={20} />
+                <span className="text-sm">ISO 9001 Certified</span>
+              </div>
+              <div className="flex items-center gap-2 text-white/70">
+                <Clock className="text-[#FF7F00]" size={20} />
+                <span className="text-sm">24/7 Support</span>
+              </div>
+              <div className="flex items-center gap-2 text-white/70">
+                <Globe className="text-[#FF7F00]" size={20} />
+                <span className="text-sm">150+ Countries</span>
+              </div>
+            </motion.div>
           </motion.div>
-        </div>
+        </AnimatePresence>
+      </div>
+
+      {/* Slider Navigation Arrows */}
+      <div className="absolute z-20 left-4 sm:left-8 top-1/2 -translate-y-1/2">
+        <button
+          onClick={scrollPrev}
+          className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-white/20 transition-all hover:scale-110"
+          aria-label="Previous slide"
+        >
+          <ChevronLeft size={24} />
+        </button>
+      </div>
+      <div className="absolute z-20 right-4 sm:right-8 top-1/2 -translate-y-1/2">
+        <button
+          onClick={scrollNext}
+          className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-white/20 transition-all hover:scale-110"
+          aria-label="Next slide"
+        >
+          <ChevronRight size={24} />
+        </button>
+      </div>
+
+      {/* Slider Dots */}
+      <div className="absolute z-20 bottom-20 left-1/2 -translate-x-1/2 flex items-center gap-3">
+        {heroSlides.map((_, idx) => (
+          <button
+            key={idx}
+            onClick={() => scrollTo(idx)}
+            className={`transition-all duration-500 rounded-full ${
+              currentSlide === idx
+                ? "w-10 h-3 bg-[#FF7F00] shadow-lg shadow-[#FF7F00]/40"
+                : "w-3 h-3 bg-white/40 hover:bg-white/60"
+            }`}
+            aria-label={`Go to slide ${idx + 1}`}
+          />
+        ))}
+      </div>
+
+      {/* Progress Bar */}
+      <div className="absolute z-20 bottom-0 left-0 right-0 h-1 bg-white/10">
+        <motion.div
+          className="h-full bg-gradient-to-r from-[#FF7F00] to-[#FFA040]"
+          initial={{ width: "0%" }}
+          animate={{ width: "100%" }}
+          transition={{ duration: 6, ease: "linear", repeat: Infinity }}
+          key={currentSlide}
+        />
       </div>
 
       {/* Scroll indicator */}
       <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2"
-        animate={{ y: [0, 10, 0] }}
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20"
+        animate={{ y: [0, 8, 0] }}
         transition={{ duration: 2, repeat: Infinity }}
       >
-        <div className="w-8 h-12 rounded-full border-2 border-white/30 flex justify-center pt-2">
-          <div className="w-1.5 h-3 bg-white/60 rounded-full" />
+        <div className="w-7 h-10 rounded-full border-2 border-white/30 flex justify-center pt-2">
+          <div className="w-1 h-2.5 bg-white/60 rounded-full" />
         </div>
       </motion.div>
     </section>
