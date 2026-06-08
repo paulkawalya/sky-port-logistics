@@ -23,7 +23,8 @@ import {
   BookOpen,
   FileText,
   Newspaper,
-  ChevronRight,
+  Phone,
+  Navigation,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -39,32 +40,19 @@ const navItems = [
     type: "mega" as const,
     columns: [
       {
-        title: "Our Services",
+        title: "Transport Solutions",
         links: [
-          {
-            icon: Plane,
-            title: "Air Freight",
-            description: "Express air cargo with guaranteed delivery",
-            href: "/services/air-freight",
-          },
-          {
-            icon: Ship,
-            title: "Ocean Freight",
-            description: "FCL & LCL ocean shipping solutions",
-            href: "/services/ocean-freight",
-          },
-          {
-            icon: Truck,
-            title: "Road Transport",
-            description: "GPS-tracked road freight & last-mile",
-            href: "/services/road-transport",
-          },
-          {
-            icon: Warehouse,
-            title: "Warehousing",
-            description: "State-of-the-art storage & distribution",
-            href: "/services/warehousing",
-          },
+          { icon: Plane, title: "Air Freight", description: "Express air cargo worldwide", href: "/services/air-freight" },
+          { icon: Ship, title: "Ocean Freight", description: "FCL & LCL ocean shipping", href: "/services/ocean-freight" },
+          { icon: Truck, title: "Road Transport", description: "GPS-tracked road freight", href: "/services/road-transport" },
+        ],
+      },
+      {
+        title: "Supply Chain",
+        links: [
+          { icon: Warehouse, title: "Warehousing", description: "Storage & distribution", href: "/services/warehousing" },
+          { icon: Zap, title: "Express Delivery", description: "Time-critical shipments", href: "/services" },
+          { icon: Globe, title: "Customs Brokerage", description: "Import & export clearance", href: "/services" },
         ],
       },
       {
@@ -72,8 +60,7 @@ const navItems = [
         featured: {
           image: "/cargo-plane.png",
           title: "End-to-End Logistics",
-          description:
-            "From pickup to delivery, customs to warehousing — we handle it all with precision and care.",
+          description: "From pickup to delivery, customs to warehousing — we handle it all with precision and care.",
           cta: { text: "Explore All Services", href: "/services" },
         },
       },
@@ -97,47 +84,17 @@ const navItems = [
       {
         title: "Industries",
         links: [
-          {
-            icon: Factory,
-            title: "Automotive",
-            description: "Vehicle & parts logistics worldwide",
-            href: "/industries/automotive",
-          },
-          {
-            icon: Pill,
-            title: "Pharmaceutical",
-            description: "Temperature-controlled pharma transport",
-            href: "/industries/pharmaceutical",
-          },
-          {
-            icon: Cpu,
-            title: "Technology",
-            description: "Secure high-value tech shipments",
-            href: "/industries/technology",
-          },
+          { icon: Factory, title: "Automotive", description: "Vehicle & parts logistics", href: "/industries/automotive" },
+          { icon: Pill, title: "Pharmaceutical", description: "Temperature-controlled pharma", href: "/industries/pharmaceutical" },
+          { icon: Cpu, title: "Technology", description: "Secure high-value tech", href: "/industries/technology" },
         ],
       },
       {
         title: "More Industries",
         links: [
-          {
-            icon: ShoppingBag,
-            title: "Retail & E-Commerce",
-            description: "Fast fulfillment & last-mile delivery",
-            href: "/industries/retail",
-          },
-          {
-            icon: Zap,
-            title: "Energy & Mining",
-            description: "Heavy equipment & hazardous materials",
-            href: "/industries/energy",
-          },
-          {
-            icon: UtensilsCrossed,
-            title: "Food & Beverage",
-            description: "Cold chain & perishable goods logistics",
-            href: "/industries/food-beverage",
-          },
+          { icon: ShoppingBag, title: "Retail & E-Commerce", description: "Fast fulfillment & delivery", href: "/industries/retail" },
+          { icon: Zap, title: "Energy & Mining", description: "Heavy equipment transport", href: "/industries/energy" },
+          { icon: UtensilsCrossed, title: "Food & Beverage", description: "Cold chain logistics", href: "/industries/food-beverage" },
         ],
       },
       {
@@ -145,8 +102,7 @@ const navItems = [
         featured: {
           image: "/global-network.png",
           title: "Industry Solutions",
-          description:
-            "Tailored logistics solutions designed for the unique challenges of your industry.",
+          description: "Tailored logistics solutions designed for the unique challenges of your industry.",
           cta: { text: "View All Industries", href: "/industries" },
         },
       },
@@ -178,7 +134,7 @@ export default function Header() {
   const [mobileAccordion, setMobileAccordion] = useState<string | null>(null);
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 50);
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -188,36 +144,67 @@ export default function Header() {
     setMobileAccordion(null);
   };
 
-  const isSolid = !isHome || isScrolled;
-  const textColor = isSolid ? "text-[#005B96]" : "text-white";
-  const accentColor = isSolid ? "text-[#FF7F00]" : "text-[#FFA040]";
+  const isSolid = !isHome || isScrolled || isMobileMenuOpen;
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isSolid
-          ? "bg-white/95 backdrop-blur-md shadow-lg"
+          ? "bg-white/90 backdrop-blur-xl shadow-[0_1px_3px_rgba(0,0,0,0.05),0_20px_50px_rgba(0,61,102,0.08)] border-b border-white/20"
           : "bg-transparent"
       }`}
     >
+      {/* Top Bar - visible on scroll */}
+      <AnimatePresence>
+        {isSolid && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="overflow-hidden bg-[#003D66] text-white"
+          >
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between py-2 text-xs">
+              <div className="flex items-center gap-6">
+                <a href="tel:+18005571234" className="flex items-center gap-1.5 hover:text-[#FFA040] transition-colors">
+                  <Phone size={12} />
+                  <span>+1 (800) 557-1234</span>
+                </a>
+                <span className="hidden sm:flex items-center gap-1.5">
+                  <Navigation size={12} />
+                  <span>150+ Countries</span>
+                </span>
+              </div>
+              <div className="flex items-center gap-4">
+                <span className="hidden sm:inline text-white/60">24/7 Support</span>
+                <Link href="/tracking" className="hover:text-[#FFA040] transition-colors font-medium">
+                  Track Shipment
+                </Link>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-3">
-            <img
-              src="/logo.jpeg"
-              alt="Sky Port Logistics"
-              className="h-12 w-12 rounded-full object-cover ring-2 ring-[#FF7F00]"
-            />
+          <Link href="/" className="flex items-center gap-3 group">
+            <div className="relative">
+              <img
+                src="/logo.jpeg"
+                alt="Sky Port Logistics"
+                className="h-11 w-11 rounded-xl object-cover ring-2 ring-[#FF7F00]/50 group-hover:ring-[#FF7F00] transition-all shadow-lg"
+              />
+              <div className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-[#FF7F00] rounded-full border-2 border-white flex items-center justify-center">
+                <div className="w-1 h-1 bg-white rounded-full" />
+              </div>
+            </div>
             <div>
-              <span
-                className={`text-xl font-bold tracking-tight ${textColor}`}
-              >
-                SKY PORT
+              <span className={`text-xl font-extrabold tracking-tight transition-colors duration-300 ${isSolid ? "text-[#003D66]" : "text-white"}`}>
+                SKY<span className="text-[#FF7F00]">PORT</span>
               </span>
-              <span
-                className={`block text-[10px] tracking-[0.3em] uppercase ${accentColor}`}
-              >
+              <span className={`block text-[9px] tracking-[0.35em] uppercase font-medium transition-colors duration-300 ${isSolid ? "text-[#005B96]/60" : "text-white/50"}`}>
                 Logistics
               </span>
             </div>
@@ -231,13 +218,20 @@ export default function Header() {
                   <Link
                     key={item.label}
                     href={item.href}
-                    className={`px-4 py-2 text-sm font-medium transition-colors hover:text-[#FF7F00] rounded-lg ${
+                    className={`relative px-4 py-2 text-[13px] font-semibold tracking-wide transition-colors rounded-lg group ${
                       pathname === item.href
                         ? "text-[#FF7F00]"
-                        : textColor
+                        : isSolid ? "text-[#003D66] hover:text-[#FF7F00]" : "text-white/90 hover:text-white"
                     }`}
                   >
                     {item.label}
+                    {pathname === item.href && (
+                      <motion.div
+                        layoutId="nav-indicator"
+                        className="absolute bottom-0 left-2 right-2 h-0.5 bg-[#FF7F00] rounded-full"
+                      />
+                    )}
+                    <span className="absolute bottom-0 left-2 right-2 h-0.5 bg-[#FF7F00]/0 group-hover:bg-[#FF7F00] rounded-full transition-all duration-300" />
                   </Link>
                 );
               }
@@ -251,18 +245,16 @@ export default function Header() {
                 >
                   <Link
                     href={item.href}
-                    className={`px-4 py-2 text-sm font-medium transition-colors hover:text-[#FF7F00] rounded-lg flex items-center gap-1 ${
+                    className={`px-4 py-2 text-[13px] font-semibold tracking-wide transition-colors rounded-lg flex items-center gap-1.5 ${
                       pathname.startsWith(item.href)
                         ? "text-[#FF7F00]"
-                        : textColor
+                        : isSolid ? "text-[#003D66] hover:text-[#FF7F00]" : "text-white/90 hover:text-white"
                     }`}
                   >
                     {item.label}
                     <ChevronDown
-                      size={14}
-                      className={`transition-transform duration-200 ${
-                        activeDropdown === item.label ? "rotate-180" : ""
-                      }`}
+                      size={12}
+                      className={`transition-transform duration-300 ${activeDropdown === item.label ? "rotate-180" : ""}`}
                     />
                   </Link>
 
@@ -270,18 +262,21 @@ export default function Header() {
                   <AnimatePresence>
                     {activeDropdown === item.label && (
                       <motion.div
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: 10 }}
-                        transition={{ duration: 0.2 }}
+                        initial={{ opacity: 0, y: 12, scale: 0.98 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: 12, scale: 0.98 }}
+                        transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
                         className={
                           item.type === "mega"
-                            ? "absolute left-1/2 -translate-x-1/2 top-full pt-2"
-                            : "absolute left-0 top-full pt-2"
+                            ? "absolute left-1/2 -translate-x-1/2 top-full pt-3"
+                            : "absolute left-0 top-full pt-3"
                         }
                       >
+                        {/* Arrow */}
+                        <div className={`w-4 h-4 bg-white rotate-45 shadow-sm border-l border-t border-gray-100 mx-auto mb-[-8px] ${item.type === "mega" ? "" : "ml-6"}`} />
+
                         {item.type === "mega" && item.columns ? (
-                          <div className="bg-white rounded-2xl shadow-2xl border border-gray-100 p-6 w-[720px]">
+                          <div className="bg-white rounded-2xl shadow-[0_25px_60px_-12px_rgba(0,61,102,0.15)] border border-gray-100/80 p-6 w-[740px]">
                             <div className="grid grid-cols-3 gap-6">
                               {item.columns.map((col, colIdx) => {
                                 if ("featured" in col && col.featured) {
@@ -293,22 +288,22 @@ export default function Header() {
                                       <img
                                         src={col.featured.image}
                                         alt={col.featured.title}
-                                        className="w-full h-full object-cover min-h-[240px] group-hover:scale-105 transition-transform duration-500"
+                                        className="w-full h-full object-cover min-h-[260px] group-hover:scale-105 transition-transform duration-700"
                                       />
-                                      <div className="absolute inset-0 bg-gradient-to-t from-[#003D66]/90 via-[#005B96]/60 to-transparent" />
+                                      <div className="absolute inset-0 bg-gradient-to-t from-[#003D66] via-[#003D66]/60 to-transparent" />
                                       <div className="absolute inset-0 p-5 flex flex-col justify-end">
                                         <h4 className="text-white font-bold text-lg mb-2">
                                           {col.featured.title}
                                         </h4>
-                                        <p className="text-white/80 text-sm mb-4">
+                                        <p className="text-white/70 text-sm mb-4 leading-relaxed">
                                           {col.featured.description}
                                         </p>
                                         <Link
                                           href={col.featured.cta.href}
-                                          className="inline-flex items-center gap-1 text-[#FFA040] text-sm font-semibold hover:text-[#FF7F00] transition-colors"
+                                          className="inline-flex items-center gap-1.5 text-[#FF7F00] text-sm font-semibold hover:text-[#FFA040] transition-colors"
                                         >
                                           {col.featured.cta.text}
-                                          <ArrowRight size={14} />
+                                          <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
                                         </Link>
                                       </div>
                                     </div>
@@ -318,30 +313,27 @@ export default function Header() {
                                 return (
                                   <div key={colIdx}>
                                     {col.title && (
-                                      <h4 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
+                                      <h4 className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em] mb-3 pb-2 border-b border-gray-100">
                                         {col.title}
                                       </h4>
                                     )}
-                                    <div className="space-y-1">
+                                    <div className="space-y-0.5">
                                       {col.links?.map((link) => {
                                         const Icon = link.icon;
                                         return (
                                           <Link
                                             key={link.href}
                                             href={link.href}
-                                            className="flex items-start gap-3 p-3 rounded-xl hover:bg-gray-50 transition-colors group"
+                                            className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-gradient-to-r hover:from-[#005B96]/5 hover:to-transparent transition-all duration-200 group"
                                           >
-                                            <div className="bg-[#005B96]/10 rounded-lg p-2 mt-0.5 group-hover:bg-[#005B96]/20 transition-colors">
-                                              <Icon
-                                                className="text-[#005B96]"
-                                                size={18}
-                                              />
+                                            <div className="bg-[#005B96]/8 rounded-lg p-2 mt-0.5 group-hover:bg-[#FF7F00]/10 transition-colors duration-200">
+                                              <Icon className="text-[#005B96] group-hover:text-[#FF7F00] transition-colors duration-200" size={16} />
                                             </div>
                                             <div>
-                                              <div className="font-semibold text-[#005B96] text-sm group-hover:text-[#0078C8] transition-colors">
+                                              <div className="font-semibold text-[#003D66] text-sm group-hover:text-[#FF7F00] transition-colors duration-200">
                                                 {link.title}
                                               </div>
-                                              <div className="text-gray-500 text-xs mt-0.5">
+                                              <div className="text-gray-400 text-xs mt-0.5">
                                                 {link.description}
                                               </div>
                                             </div>
@@ -355,20 +347,17 @@ export default function Header() {
                             </div>
                           </div>
                         ) : (
-                          <div className="bg-white rounded-xl shadow-2xl border border-gray-100 p-2 min-w-[220px]">
+                          <div className="bg-white rounded-xl shadow-[0_25px_60px_-12px_rgba(0,61,102,0.15)] border border-gray-100/80 p-1.5 min-w-[220px]">
                             {item.links?.map((link) => {
                               const Icon = link.icon;
                               return (
                                 <Link
                                   key={link.href}
                                   href={link.href}
-                                  className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-50 transition-colors group"
+                                  className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gradient-to-r hover:from-[#005B96]/5 hover:to-transparent transition-all duration-200 group"
                                 >
-                                  <Icon
-                                    className="text-[#005B96] group-hover:text-[#FF7F00] transition-colors"
-                                    size={18}
-                                  />
-                                  <span className="font-medium text-[#005B96] text-sm group-hover:text-[#FF7F00] transition-colors">
+                                  <Icon className="text-[#005B96] group-hover:text-[#FF7F00] transition-colors duration-200" size={16} />
+                                  <span className="font-medium text-[#003D66] text-sm group-hover:text-[#FF7F00] transition-colors duration-200">
                                     {link.title}
                                   </span>
                                 </Link>
@@ -383,24 +372,37 @@ export default function Header() {
               );
             })}
 
-            <Link href="/contact">
-              <Button className="bg-[#FF7F00] hover:bg-[#CC6600] text-white font-semibold px-6 rounded-full shadow-lg hover:shadow-xl transition-all ml-4">
-                Contact Us
-              </Button>
-            </Link>
+            <div className="ml-4 flex items-center gap-3">
+              <Link href="/tracking">
+                <Button variant="ghost" className={`text-[13px] font-semibold rounded-full px-4 ${isSolid ? "text-[#005B96] hover:text-[#FF7F00] hover:bg-[#FF7F00]/5" : "text-white/80 hover:text-white hover:bg-white/10"}`}>
+                  Track
+                </Button>
+              </Link>
+              <Link href="/contact">
+                <Button className="bg-[#FF7F00] hover:bg-[#CC6600] text-white font-semibold px-6 rounded-full shadow-lg shadow-[#FF7F00]/25 hover:shadow-[#FF7F00]/40 transition-all btn-glow h-10 text-[13px]">
+                  Get a Quote
+                </Button>
+              </Link>
+            </div>
           </nav>
 
           {/* Mobile Menu Toggle */}
           <button
-            className="lg:hidden"
+            className="lg:hidden relative w-10 h-10 flex items-center justify-center rounded-xl transition-colors"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle menu"
           >
-            {isMobileMenuOpen ? (
-              <X className={isSolid ? "text-[#005B96]" : "text-white"} size={28} />
-            ) : (
-              <Menu className={isSolid ? "text-[#005B96]" : "text-white"} size={28} />
-            )}
+            <AnimatePresence mode="wait">
+              {isMobileMenuOpen ? (
+                <motion.div key="close" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.2 }}>
+                  <X className={isSolid ? "text-[#003D66]" : "text-white"} size={24} />
+                </motion.div>
+              ) : (
+                <motion.div key="menu" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.2 }}>
+                  <Menu className={isSolid ? "text-[#003D66]" : "text-white"} size={24} />
+                </motion.div>
+              )}
+            </AnimatePresence>
           </button>
         </div>
       </div>
@@ -412,40 +414,43 @@ export default function Header() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden bg-white shadow-xl border-t"
+            transition={{ duration: 0.3 }}
+            className="lg:hidden bg-white border-t border-gray-100 shadow-2xl"
           >
-            <div className="max-h-[80vh] overflow-y-auto px-4 py-6 space-y-2">
-              {navItems.map((item) => {
+            <div className="max-h-[80vh] overflow-y-auto px-4 py-6 space-y-1">
+              {navItems.map((item, idx) => {
                 if (item.type === "link") {
                   return (
-                    <Link
+                    <motion.div
                       key={item.label}
-                      href={item.href}
-                      onClick={closeMobileMenu}
-                      className="block text-[#005B96] font-medium py-3 px-3 hover:text-[#FF7F00] hover:bg-gray-50 rounded-lg transition-colors"
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: idx * 0.05 }}
                     >
-                      {item.label}
-                    </Link>
+                      <Link
+                        href={item.href}
+                        onClick={closeMobileMenu}
+                        className="block text-[#003D66] font-semibold py-3.5 px-4 hover:text-[#FF7F00] hover:bg-[#FF7F00]/5 rounded-xl transition-all"
+                      >
+                        {item.label}
+                      </Link>
+                    </motion.div>
                   );
                 }
 
                 return (
-                  <div key={item.label}>
+                  <motion.div
+                    key={item.label}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: idx * 0.05 }}
+                  >
                     <button
-                      onClick={() =>
-                        setMobileAccordion(
-                          mobileAccordion === item.label ? null : item.label
-                        )
-                      }
-                      className="w-full flex items-center justify-between text-[#005B96] font-medium py-3 px-3 hover:text-[#FF7F00] hover:bg-gray-50 rounded-lg transition-colors"
+                      onClick={() => setMobileAccordion(mobileAccordion === item.label ? null : item.label)}
+                      className="w-full flex items-center justify-between text-[#003D66] font-semibold py-3.5 px-4 hover:text-[#FF7F00] hover:bg-[#FF7F00]/5 rounded-xl transition-all"
                     >
                       {item.label}
-                      <ChevronDown
-                        size={16}
-                        className={`transition-transform ${
-                          mobileAccordion === item.label ? "rotate-180" : ""
-                        }`}
-                      />
+                      <ChevronDown size={16} className={`transition-transform duration-300 ${mobileAccordion === item.label ? "rotate-180" : ""}`} />
                     </button>
                     <AnimatePresence>
                       {mobileAccordion === item.label && (
@@ -456,7 +461,7 @@ export default function Header() {
                           transition={{ duration: 0.2 }}
                           className="overflow-hidden"
                         >
-                          <div className="pl-4 pb-2 space-y-1">
+                          <div className="pl-4 pb-2 space-y-0.5">
                             {(() => {
                               const links = item.type === "mega" && item.columns
                                 ? item.columns.flatMap((col) => col.links ?? [])
@@ -468,7 +473,7 @@ export default function Header() {
                                     key={link.href}
                                     href={link.href}
                                     onClick={closeMobileMenu}
-                                    className="flex items-center gap-3 py-2 px-3 text-sm text-gray-600 hover:text-[#FF7F00] hover:bg-gray-50 rounded-lg transition-colors"
+                                    className="flex items-center gap-3 py-2.5 px-3 text-sm text-gray-600 hover:text-[#FF7F00] hover:bg-[#FF7F00]/5 rounded-lg transition-all"
                                   >
                                     <Icon size={16} className="text-[#005B96]" />
                                     {link.title}
@@ -479,22 +484,27 @@ export default function Header() {
                             <Link
                               href={item.href}
                               onClick={closeMobileMenu}
-                              className="flex items-center gap-2 py-2 px-3 text-sm font-semibold text-[#FF7F00] hover:bg-orange-50 rounded-lg transition-colors"
+                              className="flex items-center gap-2 py-2.5 px-3 text-sm font-semibold text-[#FF7F00] hover:bg-[#FF7F00]/5 rounded-lg transition-all"
                             >
                               View All
-                              <ChevronRight size={14} />
+                              <ArrowRight size={14} />
                             </Link>
                           </div>
                         </motion.div>
                       )}
                     </AnimatePresence>
-                  </div>
+                  </motion.div>
                 );
               })}
-              <div className="pt-4">
+              <div className="pt-4 space-y-3">
+                <Link href="/tracking" onClick={closeMobileMenu}>
+                  <Button variant="outline" className="w-full border-[#005B96]/20 text-[#005B96] font-semibold rounded-xl h-12 hover:bg-[#005B96]/5">
+                    Track Shipment
+                  </Button>
+                </Link>
                 <Link href="/contact" onClick={closeMobileMenu}>
-                  <Button className="w-full bg-[#FF7F00] hover:bg-[#CC6600] text-white font-semibold rounded-full h-12">
-                    Contact Us
+                  <Button className="w-full bg-[#FF7F00] hover:bg-[#CC6600] text-white font-semibold rounded-xl h-12 btn-glow">
+                    Get a Quote
                   </Button>
                 </Link>
               </div>

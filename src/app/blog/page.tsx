@@ -112,23 +112,20 @@ export default function BlogPage() {
   return (
     <div className="pt-20">
       {/* Hero */}
-      <section className="relative py-24 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-[#005B96] to-[#003D66]" />
-        <div
-          className="absolute inset-0 opacity-10"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-          }}
-        />
+      <section className="relative py-28 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#003D66] via-[#005B96] to-[#003D66]" />
+        <div className="absolute inset-0 grid-pattern opacity-20" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <AnimatedSection>
-            <span className="inline-flex items-center gap-2 bg-[#FF7F00]/20 text-[#FFA040] border border-[#FF7F00]/30 rounded-full px-4 py-2 text-sm font-medium mb-6">
+            <span className="inline-flex items-center gap-2 text-[#FF7F00] font-bold text-xs tracking-[0.25em] uppercase bg-[#FF7F00]/8 rounded-full px-5 py-2 mb-8">
+              <div className="w-1.5 h-1.5 bg-[#FF7F00] rounded-full" />
               Insights
             </span>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">
-              Logistics <span className="text-[#FF7F00]">Insights</span>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white mb-6 tracking-tight">
+              Logistics{" "}
+              <span className="bg-gradient-to-r from-[#FF7F00] to-[#FFA040] bg-clip-text text-transparent">Insights</span>
             </h1>
-            <p className="text-white/80 text-lg max-w-2xl mx-auto">
+            <p className="text-white/70 text-lg max-w-2xl mx-auto leading-relaxed">
               Stay informed with the latest industry news, expert guides, case
               studies, and company updates from the world of logistics.
             </p>
@@ -137,7 +134,7 @@ export default function BlogPage() {
       </section>
 
       {/* Category Filter */}
-      <section className="py-8 bg-white border-b sticky top-20 z-30">
+      <section className="py-6 bg-white border-b border-gray-100 sticky top-20 z-30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
             {categories.map((cat) => {
@@ -146,10 +143,10 @@ export default function BlogPage() {
                 <button
                   key={cat.id}
                   onClick={() => setActiveCategory(cat.id)}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap ${
+                  className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all whitespace-nowrap ${
                     activeCategory === cat.id
-                      ? "bg-[#005B96] text-white shadow-md"
-                      : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                      ? "bg-[#005B96] text-white shadow-md shadow-[#005B96]/20"
+                      : "bg-gray-50 text-gray-600 hover:bg-gray-100 border border-gray-100/80"
                   }`}
                 >
                   <CatIcon size={16} />
@@ -162,47 +159,48 @@ export default function BlogPage() {
       </section>
 
       {/* Blog Grid */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-28 bg-gray-50 relative">
+        <div className="absolute inset-0 dot-pattern" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {filteredPosts.length === 0 ? (
             <div className="text-center py-16">
-              <p className="text-gray-500 text-lg">No posts found in this category.</p>
+              <p className="text-gray-400 text-lg">No posts found in this category.</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredPosts.map((post, idx) => (
                 <AnimatedSection key={post.id} delay={idx * 0.05}>
-                  <Card className="group border-0 shadow-lg hover:shadow-2xl transition-all duration-500 h-full overflow-hidden cursor-pointer">
+                  <div className="group bg-white rounded-2xl shadow-sm hover:shadow-xl hover:shadow-[#005B96]/5 transition-all duration-500 h-full overflow-hidden cursor-pointer border border-gray-100/80 card-border-glow">
                     <div className="relative h-48 overflow-hidden">
                       <img
                         src={post.image}
                         alt={post.title}
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
-                      <Badge className="absolute top-4 left-4 bg-[#FF7F00] text-white border-0 text-xs">
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#003D66]/40 to-transparent" />
+                      <Badge className="absolute top-4 left-4 bg-[#FF7F00] text-white border-0 text-xs shadow-md shadow-[#FF7F00]/20 rounded-lg">
                         {categories.find((c) => c.id === post.category)?.label}
                       </Badge>
                     </div>
-                    <CardContent className="p-5">
-                      <div className="flex items-center gap-3 text-xs text-gray-500 mb-3">
+                    <div className="p-6">
+                      <div className="flex items-center gap-3 text-xs text-gray-400 mb-3">
                         <span>{post.date}</span>
                         <span className="flex items-center gap-1">
                           <Clock size={12} />
                           {post.readTime}
                         </span>
                       </div>
-                      <h3 className="font-bold text-[#005B96] mb-2 leading-snug group-hover:text-[#0078C8] transition-colors line-clamp-2">
+                      <h3 className="font-bold text-[#003D66] mb-2 leading-snug group-hover:text-[#005B96] transition-colors line-clamp-2">
                         {post.title}
                       </h3>
-                      <p className="text-gray-600 text-sm leading-relaxed line-clamp-3">
+                      <p className="text-gray-500 text-sm leading-relaxed line-clamp-3">
                         {post.excerpt}
                       </p>
                       <span className="inline-flex items-center gap-1 text-[#FF7F00] text-sm font-semibold mt-4 group-hover:gap-2 transition-all">
                         Read More <ArrowRight size={14} />
                       </span>
-                    </CardContent>
-                  </Card>
+                    </div>
+                  </div>
                 </AnimatedSection>
               ))}
             </div>
@@ -211,32 +209,35 @@ export default function BlogPage() {
       </section>
 
       {/* Newsletter */}
-      <section className="py-20 bg-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-28 bg-white relative">
+        <div className="absolute inset-0 diagonal-stripes" />
+        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
-            <Card className="border-0 shadow-xl overflow-hidden">
-              <CardContent className="p-0">
-                <div className="bg-gradient-to-r from-[#005B96] to-[#003D66] p-8 sm:p-12 text-center">
-                  <Send className="text-[#FF7F00] mx-auto mb-4" size={40} />
-                  <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3">
-                    Subscribe to Our Newsletter
-                  </h2>
-                  <p className="text-white/80 mb-6 max-w-lg mx-auto">
-                    Get the latest logistics insights, industry news, and expert
-                    guides delivered to your inbox every week.
-                  </p>
-                  <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-                    <Input
-                      placeholder="Enter your email address"
-                      className="flex-1 h-12 bg-white/10 border-white/20 text-white placeholder:text-white/50 rounded-full px-6"
-                    />
-                    <Button className="h-12 bg-[#FF7F00] hover:bg-[#CC6600] text-white font-semibold px-6 rounded-full">
-                      Subscribe
-                    </Button>
-                  </div>
+            <div className="relative overflow-hidden rounded-2xl">
+              <div className="absolute inset-0 bg-gradient-to-br from-[#003D66] via-[#005B96] to-[#003D66]" />
+              <div className="absolute inset-0 grid-pattern opacity-10" />
+              <div className="relative z-10 p-8 sm:p-12 text-center">
+                <div className="w-14 h-14 rounded-xl bg-[#FF7F00]/15 flex items-center justify-center mx-auto mb-6 border border-[#FF7F00]/20">
+                  <Send className="text-[#FF7F00]" size={28} />
                 </div>
-              </CardContent>
-            </Card>
+                <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-3 tracking-tight">
+                  Subscribe to Our Newsletter
+                </h2>
+                <p className="text-white/70 mb-8 max-w-lg mx-auto leading-relaxed">
+                  Get the latest logistics insights, industry news, and expert
+                  guides delivered to your inbox every week.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+                  <Input
+                    placeholder="Enter your email address"
+                    className="flex-1 h-12 bg-white/8 border-white/15 text-white placeholder:text-white/30 rounded-xl px-6 backdrop-blur-sm focus:ring-[#FF7F00]/50"
+                  />
+                  <Button className="h-12 bg-[#FF7F00] hover:bg-[#CC6600] text-white font-bold px-6 rounded-xl shadow-lg shadow-[#FF7F00]/25 btn-glow">
+                    Subscribe
+                  </Button>
+                </div>
+              </div>
+            </div>
           </AnimatedSection>
         </div>
       </section>

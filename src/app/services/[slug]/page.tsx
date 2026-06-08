@@ -170,10 +170,10 @@ export default function ServicePage() {
     return (
       <div className="pt-20 min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-4xl font-bold text-[#005B96] mb-4">Service Not Found</h1>
+          <h1 className="text-4xl font-extrabold text-[#003D66] mb-4 tracking-tight">Service Not Found</h1>
           <p className="text-gray-600 mb-6">The service you are looking for does not exist.</p>
           <Link href="/services">
-            <Button className="bg-[#FF7F00] hover:bg-[#CC6600] text-white rounded-full px-6">
+            <Button className="bg-[#FF7F00] hover:bg-[#CC6600] text-white rounded-xl px-6 btn-glow shadow-lg shadow-[#FF7F00]/25">
               Back to Services
             </Button>
           </Link>
@@ -188,7 +188,7 @@ export default function ServicePage() {
   return (
     <div className="pt-20">
       {/* Hero */}
-      <section className="relative py-24 overflow-hidden">
+      <section className="relative py-28 overflow-hidden">
         <div className="absolute inset-0">
           <img
             src={service.image}
@@ -197,28 +197,29 @@ export default function ServicePage() {
           />
           <div className={`absolute inset-0 bg-gradient-to-r ${service.heroGradient}`} />
         </div>
+        <div className="absolute inset-0 grid-pattern opacity-10" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
             <div className="max-w-3xl">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="bg-white/20 backdrop-blur-sm rounded-full p-3">
+              <div className="flex items-center gap-3 mb-8">
+                <div className="bg-white/15 backdrop-blur-md rounded-xl p-3 border border-white/20">
                   <Icon className="text-white" size={32} />
                 </div>
                 <span className="text-white/80 text-lg">{service.subtitle}</span>
               </div>
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white mb-6 tracking-tight">
                 {service.title}
               </h1>
-              <p className="text-white/80 text-lg mb-8 max-w-2xl">
+              <p className="text-white/70 text-lg mb-10 max-w-2xl leading-relaxed">
                 {service.description}
               </p>
               <Link href="/contact">
                 <Button
                   size="lg"
-                  className="bg-[#FF7F00] hover:bg-[#CC6600] text-white font-semibold px-8 py-6 text-lg rounded-full shadow-xl group"
+                  className="bg-[#FF7F00] hover:bg-[#CC6600] text-white font-bold px-8 py-7 text-lg rounded-xl shadow-xl shadow-[#FF7F00]/25 btn-glow group"
                 >
                   Get a Quote
-                  <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" size={18} />
                 </Button>
               </Link>
             </div>
@@ -227,35 +228,35 @@ export default function ServicePage() {
       </section>
 
       {/* Key Features */}
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <AnimatedSection className="text-center mb-16">
-            <span className="text-[#FF7F00] font-semibold text-sm tracking-wider uppercase">
+      <section className="py-28 bg-white relative">
+        <div className="absolute inset-0 dot-pattern" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <AnimatedSection className="text-center mb-20">
+            <span className="inline-flex items-center gap-2 text-[#FF7F00] font-bold text-xs tracking-[0.25em] uppercase bg-[#FF7F00]/8 rounded-full px-5 py-2">
+              <div className="w-1.5 h-1.5 bg-[#FF7F00] rounded-full" />
               Key Features
             </span>
-            <h2 className="text-3xl sm:text-4xl font-bold text-[#005B96] mt-3">
+            <h2 className="text-4xl sm:text-5xl font-extrabold text-[#003D66] mt-5 tracking-tight">
               What Sets Us Apart
             </h2>
           </AnimatedSection>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {service.features.map((feature, idx) => {
               const FeatureIcon = feature.icon;
               return (
                 <AnimatedSection key={feature.title} delay={idx * 0.1}>
-                  <Card className="border-0 shadow-md hover:shadow-xl transition-all duration-300 h-full text-center">
-                    <CardContent className="p-6">
-                      <div className={`bg-gradient-to-br ${service.color} rounded-xl w-14 h-14 flex items-center justify-center mx-auto mb-5`}>
-                        <FeatureIcon className="text-white" size={24} />
-                      </div>
-                      <h3 className="text-lg font-bold text-[#005B96] mb-2">
-                        {feature.title}
-                      </h3>
-                      <p className="text-gray-600 text-sm leading-relaxed">
-                        {feature.description}
-                      </p>
-                    </CardContent>
-                  </Card>
+                  <div className="group relative bg-white rounded-2xl p-7 shadow-sm hover:shadow-xl hover:shadow-[#005B96]/5 transition-all duration-400 border border-gray-100/80 card-border-glow h-full text-center">
+                    <div className="bg-gradient-to-br from-[#005B96] to-[#0078C8] rounded-xl w-14 h-14 flex items-center justify-center mx-auto mb-5 shadow-md shadow-[#005B96]/20 group-hover:scale-110 transition-all duration-300">
+                      <FeatureIcon className="text-white" size={24} />
+                    </div>
+                    <h3 className="text-lg font-bold text-[#003D66] mb-2">
+                      {feature.title}
+                    </h3>
+                    <p className="text-gray-500 text-sm leading-relaxed">
+                      {feature.description}
+                    </p>
+                  </div>
                 </AnimatedSection>
               );
             })}
@@ -264,13 +265,15 @@ export default function ServicePage() {
       </section>
 
       {/* Service Details */}
-      <section className="py-24 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <AnimatedSection className="text-center mb-16">
-            <span className="text-[#FF7F00] font-semibold text-sm tracking-wider uppercase">
+      <section className="py-28 bg-gray-50 relative">
+        <div className="absolute inset-0 grid-pattern opacity-30" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <AnimatedSection className="text-center mb-20">
+            <span className="inline-flex items-center gap-2 text-[#FF7F00] font-bold text-xs tracking-[0.25em] uppercase bg-[#FF7F00]/8 rounded-full px-5 py-2">
+              <div className="w-1.5 h-1.5 bg-[#FF7F00] rounded-full" />
               In Detail
             </span>
-            <h2 className="text-3xl sm:text-4xl font-bold text-[#005B96] mt-3">
+            <h2 className="text-4xl sm:text-5xl font-extrabold text-[#003D66] mt-5 tracking-tight">
               Service Details
             </h2>
           </AnimatedSection>
@@ -290,10 +293,10 @@ export default function ServicePage() {
                     </div>
                   </div>
                   <div className={idx % 2 === 1 ? "lg:order-1" : ""}>
-                    <h3 className="text-2xl font-bold text-[#005B96] mb-4">
+                    <h3 className="text-2xl font-extrabold text-[#003D66] mb-4 tracking-tight">
                       {detail.title}
                     </h3>
-                    <p className="text-gray-600 leading-relaxed">
+                    <p className="text-gray-500 leading-relaxed text-[15px]">
                       {detail.content}
                     </p>
                   </div>
@@ -305,14 +308,16 @@ export default function ServicePage() {
       </section>
 
       {/* Benefits */}
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-28 bg-white relative">
+        <div className="absolute inset-0 diagonal-stripes" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <AnimatedSection>
-              <span className="text-[#FF7F00] font-semibold text-sm tracking-wider uppercase">
+              <span className="inline-flex items-center gap-2 text-[#FF7F00] font-bold text-xs tracking-[0.25em] uppercase bg-[#FF7F00]/8 rounded-full px-5 py-2">
+                <div className="w-1.5 h-1.5 bg-[#FF7F00] rounded-full" />
                 Benefits
               </span>
-              <h2 className="text-3xl sm:text-4xl font-bold text-[#005B96] mt-3 mb-8">
+              <h2 className="text-4xl sm:text-5xl font-extrabold text-[#003D66] mt-5 mb-8 tracking-tight">
                 Why Choose Our {service.title}
               </h2>
               <ul className="space-y-4">
@@ -340,19 +345,16 @@ export default function ServicePage() {
       </section>
 
       {/* CTA */}
-      <section className="py-20 bg-gradient-to-r from-[#005B96] to-[#003D66] relative overflow-hidden">
-        <div
-          className="absolute inset-0 opacity-10"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='1' fill-rule='evenodd'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40'/%3E%3C/g%3E%3C/svg%3E")`,
-          }}
-        />
+      <section className="py-24 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#FF7F00] via-[#CC6600] to-[#FF7F00]" />
+        <div className="absolute inset-0 animate-gradient-shift" style={{ backgroundImage: "radial-gradient(circle at 30% 50%, rgba(255,160,64,0.4) 0%, transparent 50%), radial-gradient(circle at 70% 50%, rgba(204,102,0,0.4) 0%, transparent 50%)" }} />
+        <div className="absolute inset-0 grid-pattern opacity-5" />
         <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <AnimatedSection>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6">
+            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white mb-8 tracking-tight">
               Ready to Ship with {service.title}?
             </h2>
-            <p className="text-white/80 text-lg mb-8 max-w-2xl mx-auto">
+            <p className="text-white/80 text-lg mb-10 max-w-2xl mx-auto leading-relaxed">
               Get a customized quote for your {service.title.toLowerCase()} needs. Our experts
               are ready to design the perfect solution for your business.
             </p>
@@ -360,17 +362,17 @@ export default function ServicePage() {
               <Link href="/contact">
                 <Button
                   size="lg"
-                  className="bg-[#FF7F00] hover:bg-[#CC6600] text-white font-bold px-8 py-6 text-lg rounded-full shadow-xl group"
+                  className="bg-white text-[#FF7F00] hover:bg-gray-50 font-bold px-8 py-7 text-lg rounded-xl shadow-xl group"
                 >
                   Get Free Quote
-                  <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" size={20} />
                 </Button>
               </Link>
               <Link href="/services">
                 <Button
                   size="lg"
                   variant="outline"
-                  className="border-white/30 text-white hover:bg-white/10 font-bold px-8 py-6 text-lg rounded-full"
+                  className="border-white/25 text-white hover:bg-white/10 font-bold px-8 py-7 text-lg rounded-xl backdrop-blur-sm"
                 >
                   View All Services
                 </Button>
@@ -381,34 +383,34 @@ export default function ServicePage() {
       </section>
 
       {/* Related Services */}
-      <section className="py-24 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-28 bg-gray-50 relative">
+        <div className="absolute inset-0 dot-pattern" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatedSection className="text-center mb-12">
-            <span className="text-[#FF7F00] font-semibold text-sm tracking-wider uppercase">
+            <span className="inline-flex items-center gap-2 text-[#FF7F00] font-bold text-xs tracking-[0.25em] uppercase bg-[#FF7F00]/8 rounded-full px-5 py-2">
+              <div className="w-1.5 h-1.5 bg-[#FF7F00] rounded-full" />
               Explore More
             </span>
-            <h2 className="text-3xl sm:text-4xl font-bold text-[#005B96] mt-3">
+            <h2 className="text-4xl sm:text-5xl font-extrabold text-[#003D66] mt-5 tracking-tight">
               Related Services
             </h2>
           </AnimatedSection>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
             {relatedServices.map((related, idx) => (
               <AnimatedSection key={related.slug} delay={idx * 0.1}>
                 <Link href={`/services/${related.slug}`}>
-                  <Card className="group border-0 shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer">
-                    <CardContent className="p-6 text-center">
-                      <div className="bg-gradient-to-br from-[#005B96] to-[#0078C8] rounded-xl w-14 h-14 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-                        <related.icon className="text-white" size={24} />
-                      </div>
-                      <h3 className="text-lg font-bold text-[#005B96] mb-2">
-                        {related.title}
-                      </h3>
-                      <span className="inline-flex items-center gap-1 text-[#FF7F00] text-sm font-semibold group-hover:gap-2 transition-all">
-                        Learn More <ArrowRight size={14} />
-                      </span>
-                    </CardContent>
-                  </Card>
+                  <div className="group bg-white rounded-2xl p-7 shadow-sm hover:shadow-xl hover:shadow-[#005B96]/5 transition-all duration-400 cursor-pointer border border-gray-100/80 card-border-glow text-center">
+                    <div className="bg-gradient-to-br from-[#005B96] to-[#0078C8] rounded-xl w-14 h-14 flex items-center justify-center mx-auto mb-4 shadow-md shadow-[#005B96]/20 group-hover:scale-110 transition-all duration-300">
+                      <related.icon className="text-white" size={24} />
+                    </div>
+                    <h3 className="text-lg font-bold text-[#003D66] mb-2">
+                      {related.title}
+                    </h3>
+                    <span className="inline-flex items-center gap-1 text-[#FF7F00] text-sm font-semibold group-hover:gap-2 transition-all">
+                      Learn More <ArrowRight size={14} />
+                    </span>
+                  </div>
                 </Link>
               </AnimatedSection>
             ))}

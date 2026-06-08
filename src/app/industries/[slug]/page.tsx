@@ -201,10 +201,10 @@ export default function IndustryPage() {
     return (
       <div className="pt-20 min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-4xl font-bold text-[#005B96] mb-4">Industry Not Found</h1>
+          <h1 className="text-4xl font-extrabold text-[#003D66] mb-4 tracking-tight">Industry Not Found</h1>
           <p className="text-gray-600 mb-6">The industry you are looking for does not exist.</p>
           <Link href="/industries">
-            <Button className="bg-[#FF7F00] hover:bg-[#CC6600] text-white rounded-full px-6">
+            <Button className="bg-[#FF7F00] hover:bg-[#CC6600] text-white rounded-xl px-6 btn-glow shadow-lg shadow-[#FF7F00]/25">
               Back to Industries
             </Button>
           </Link>
@@ -219,30 +219,31 @@ export default function IndustryPage() {
   return (
     <div className="pt-20">
       {/* Hero */}
-      <section className="relative py-24 overflow-hidden">
+      <section className="relative py-28 overflow-hidden">
         <div className={`absolute inset-0 bg-gradient-to-r ${industry.heroGradient}`} />
+        <div className="absolute inset-0 grid-pattern opacity-10" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
             <div className="max-w-3xl">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="bg-white/20 backdrop-blur-sm rounded-full p-3">
+              <div className="flex items-center gap-3 mb-8">
+                <div className="bg-white/15 backdrop-blur-md rounded-xl p-3 border border-white/20">
                   <Icon className="text-white" size={32} />
                 </div>
                 <span className="text-white/80 text-lg">{industry.subtitle}</span>
               </div>
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white mb-6 tracking-tight">
                 {industry.title} Logistics
               </h1>
-              <p className="text-white/80 text-lg mb-8 max-w-2xl">
+              <p className="text-white/70 text-lg mb-10 max-w-2xl leading-relaxed">
                 {industry.description}
               </p>
               <Link href="/contact">
                 <Button
                   size="lg"
-                  className="bg-[#FF7F00] hover:bg-[#CC6600] text-white font-semibold px-8 py-6 text-lg rounded-full shadow-xl group"
+                  className="bg-[#FF7F00] hover:bg-[#CC6600] text-white font-bold px-8 py-7 text-lg rounded-xl shadow-xl shadow-[#FF7F00]/25 btn-glow group"
                 >
                   Get a Quote
-                  <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" size={18} />
                 </Button>
               </Link>
             </div>
@@ -251,25 +252,27 @@ export default function IndustryPage() {
       </section>
 
       {/* Overview */}
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-28 bg-white relative">
+        <div className="absolute inset-0 dot-pattern" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <AnimatedSection>
-              <span className="text-[#FF7F00] font-semibold text-sm tracking-wider uppercase">
+              <span className="inline-flex items-center gap-2 text-[#FF7F00] font-bold text-xs tracking-[0.25em] uppercase bg-[#FF7F00]/8 rounded-full px-5 py-2">
+                <div className="w-1.5 h-1.5 bg-[#FF7F00] rounded-full" />
                 Industry Overview
               </span>
-              <h2 className="text-3xl sm:text-4xl font-bold text-[#005B96] mt-3 mb-6">
+              <h2 className="text-4xl sm:text-5xl font-extrabold text-[#003D66] mt-5 mb-8 tracking-tight leading-tight">
                 Specialized Solutions for {industry.title}
               </h2>
-              <p className="text-gray-600 leading-relaxed">
+              <p className="text-gray-500 leading-relaxed text-[15px]">
                 {industry.longDescription}
               </p>
             </AnimatedSection>
             <AnimatedSection delay={0.2}>
-              <div className={`relative rounded-2xl overflow-hidden h-80 bg-gradient-to-br ${industry.color} flex items-center justify-center`}>
+              <div className={`relative rounded-2xl overflow-hidden h-80 bg-gradient-to-br ${industry.color} flex items-center justify-center shadow-xl`}>
                 <Icon className="text-white/20" size={200} />
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="bg-white/20 backdrop-blur-sm rounded-full p-8">
+                  <div className="bg-white/15 backdrop-blur-md rounded-xl p-8 border border-white/20">
                     <Icon className="text-white" size={64} />
                   </div>
                 </div>
@@ -280,29 +283,29 @@ export default function IndustryPage() {
       </section>
 
       {/* Challenges */}
-      <section className="py-24 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <AnimatedSection className="text-center mb-16">
-            <span className="text-[#FF7F00] font-semibold text-sm tracking-wider uppercase">
+      <section className="py-28 bg-gray-50 relative">
+        <div className="absolute inset-0 grid-pattern opacity-30" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <AnimatedSection className="text-center mb-20">
+            <span className="inline-flex items-center gap-2 text-[#FF7F00] font-bold text-xs tracking-[0.25em] uppercase bg-[#FF7F00]/8 rounded-full px-5 py-2">
+              <div className="w-1.5 h-1.5 bg-[#FF7F00] rounded-full" />
               Challenges
             </span>
-            <h2 className="text-3xl sm:text-4xl font-bold text-[#005B96] mt-3">
+            <h2 className="text-4xl sm:text-5xl font-extrabold text-[#003D66] mt-5 tracking-tight">
               Industry Challenges We Solve
             </h2>
           </AnimatedSection>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {industry.challenges.map((challenge, idx) => (
               <AnimatedSection key={challenge.title} delay={idx * 0.1}>
-                <Card className="border-0 shadow-lg h-full">
-                  <CardContent className="p-6">
-                    <div className="bg-[#FF7F00]/10 rounded-xl w-12 h-12 flex items-center justify-center mb-4">
-                      <span className="text-[#FF7F00] font-bold text-xl">{idx + 1}</span>
-                    </div>
-                    <h3 className="text-lg font-bold text-[#005B96] mb-3">{challenge.title}</h3>
-                    <p className="text-gray-600 leading-relaxed text-sm">{challenge.description}</p>
-                  </CardContent>
-                </Card>
+                <div className="group bg-white rounded-2xl p-7 shadow-sm hover:shadow-xl hover:shadow-[#005B96]/5 transition-all duration-400 border border-gray-100/80 card-border-glow h-full">
+                  <div className="bg-[#FF7F00]/10 rounded-xl w-12 h-12 flex items-center justify-center mb-5 group-hover:scale-110 transition-all duration-300">
+                    <span className="text-[#FF7F00] font-bold text-xl">{idx + 1}</span>
+                  </div>
+                  <h3 className="text-lg font-bold text-[#003D66] mb-3">{challenge.title}</h3>
+                  <p className="text-gray-500 leading-relaxed text-sm">{challenge.description}</p>
+                </div>
               </AnimatedSection>
             ))}
           </div>
@@ -310,31 +313,31 @@ export default function IndustryPage() {
       </section>
 
       {/* Solutions */}
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <AnimatedSection className="text-center mb-16">
-            <span className="text-[#FF7F00] font-semibold text-sm tracking-wider uppercase">
+      <section className="py-28 bg-white relative">
+        <div className="absolute inset-0 diagonal-stripes" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <AnimatedSection className="text-center mb-20">
+            <span className="inline-flex items-center gap-2 text-[#FF7F00] font-bold text-xs tracking-[0.25em] uppercase bg-[#FF7F00]/8 rounded-full px-5 py-2">
+              <div className="w-1.5 h-1.5 bg-[#FF7F00] rounded-full" />
               Our Solutions
             </span>
-            <h2 className="text-3xl sm:text-4xl font-bold text-[#005B96] mt-3">
+            <h2 className="text-4xl sm:text-5xl font-extrabold text-[#003D66] mt-5 tracking-tight">
               How We Help
             </h2>
           </AnimatedSection>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {industry.solutions.map((solution, idx) => {
               const SolIcon = solution.icon;
               return (
                 <AnimatedSection key={solution.title} delay={idx * 0.1}>
-                  <Card className="border-0 shadow-md hover:shadow-xl transition-all duration-300 h-full">
-                    <CardContent className="p-6">
-                      <div className="bg-gradient-to-br from-[#005B96] to-[#0078C8] rounded-xl w-14 h-14 flex items-center justify-center mb-5">
-                        <SolIcon className="text-white" size={24} />
-                      </div>
-                      <h3 className="text-lg font-bold text-[#005B96] mb-3">{solution.title}</h3>
-                      <p className="text-gray-600 leading-relaxed text-sm">{solution.description}</p>
-                    </CardContent>
-                  </Card>
+                  <div className="group bg-white rounded-2xl p-7 shadow-sm hover:shadow-xl hover:shadow-[#005B96]/5 transition-all duration-400 border border-gray-100/80 card-border-glow h-full">
+                    <div className="bg-gradient-to-br from-[#005B96] to-[#0078C8] rounded-xl w-14 h-14 flex items-center justify-center mb-5 shadow-md shadow-[#005B96]/20 group-hover:scale-110 transition-all duration-300">
+                      <SolIcon className="text-white" size={24} />
+                    </div>
+                    <h3 className="text-lg font-bold text-[#003D66] mb-3">{solution.title}</h3>
+                    <p className="text-gray-500 leading-relaxed text-sm">{solution.description}</p>
+                  </div>
                 </AnimatedSection>
               );
             })}
@@ -343,44 +346,41 @@ export default function IndustryPage() {
       </section>
 
       {/* Case Study */}
-      <section className="py-24 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-28 bg-gray-50 relative">
+        <div className="absolute inset-0 dot-pattern" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
-            <Card className="border-0 shadow-xl overflow-hidden">
-              <CardContent className="p-0">
-                <div className="grid grid-cols-1 lg:grid-cols-2">
-                  <div className={`bg-gradient-to-br ${industry.color} p-8 sm:p-12 flex items-center`}>
-                    <div className="text-white">
-                      <span className="bg-white/20 text-white text-sm font-medium px-3 py-1 rounded-full">Case Study</span>
-                      <h3 className="text-2xl sm:text-3xl font-bold mt-4 mb-3">{industry.caseStudy.title}</h3>
-                      <p className="text-white/80 mb-2">Client: {industry.caseStudy.client}</p>
-                      <div className="text-[#FFA040] font-bold text-xl">Result: {industry.caseStudy.result}</div>
-                    </div>
-                  </div>
-                  <div className="p-8 sm:p-12 flex items-center">
-                    <p className="text-gray-600 leading-relaxed">{industry.caseStudy.description}</p>
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-100/80 overflow-hidden">
+              <div className="grid grid-cols-1 lg:grid-cols-2">
+                <div className={`bg-gradient-to-br ${industry.color} p-8 sm:p-12 flex items-center relative`}>
+                  <div className="absolute inset-0 grid-pattern opacity-10" />
+                  <div className="relative z-10 text-white">
+                    <span className="bg-white/15 backdrop-blur-md text-white text-sm font-medium px-4 py-1.5 rounded-xl border border-white/20">Case Study</span>
+                    <h3 className="text-2xl sm:text-3xl font-extrabold mt-6 mb-3 tracking-tight">{industry.caseStudy.title}</h3>
+                    <p className="text-white/70 mb-2">Client: {industry.caseStudy.client}</p>
+                    <div className="text-[#FFA040] font-bold text-xl">Result: {industry.caseStudy.result}</div>
                   </div>
                 </div>
-              </CardContent>
-            </Card>
+                <div className="p-8 sm:p-12 flex items-center">
+                  <p className="text-gray-500 leading-relaxed text-[15px]">{industry.caseStudy.description}</p>
+                </div>
+              </div>
+            </div>
           </AnimatedSection>
         </div>
       </section>
 
       {/* CTA */}
-      <section className="py-20 bg-gradient-to-r from-[#005B96] to-[#003D66] relative overflow-hidden">
-        <div
-          className="absolute inset-0 opacity-10"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='1' fill-rule='evenodd'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40'/%3E%3C/g%3E%3C/svg%3E")`,
-          }}
-        />
+      <section className="py-24 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#FF7F00] via-[#CC6600] to-[#FF7F00]" />
+        <div className="absolute inset-0 animate-gradient-shift" style={{ backgroundImage: "radial-gradient(circle at 30% 50%, rgba(255,160,64,0.4) 0%, transparent 50%), radial-gradient(circle at 70% 50%, rgba(204,102,0,0.4) 0%, transparent 50%)" }} />
+        <div className="absolute inset-0 grid-pattern opacity-5" />
         <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <AnimatedSection>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6">
+            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white mb-8 tracking-tight">
               Need {industry.title} Logistics?
             </h2>
-            <p className="text-white/80 text-lg mb-8 max-w-2xl mx-auto">
+            <p className="text-white/80 text-lg mb-10 max-w-2xl mx-auto leading-relaxed">
               Our industry specialists will design a tailored solution for your
               specific challenges. Get a free consultation today.
             </p>
@@ -388,17 +388,17 @@ export default function IndustryPage() {
               <Link href="/contact">
                 <Button
                   size="lg"
-                  className="bg-[#FF7F00] hover:bg-[#CC6600] text-white font-bold px-8 py-6 text-lg rounded-full shadow-xl group"
+                  className="bg-white text-[#FF7F00] hover:bg-gray-50 font-bold px-8 py-7 text-lg rounded-xl shadow-xl group"
                 >
                   Get Free Quote
-                  <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" size={20} />
                 </Button>
               </Link>
               <Link href="/industries">
                 <Button
                   size="lg"
                   variant="outline"
-                  className="border-white/30 text-white hover:bg-white/10 font-bold px-8 py-6 text-lg rounded-full"
+                  className="border-white/25 text-white hover:bg-white/10 font-bold px-8 py-7 text-lg rounded-xl backdrop-blur-sm"
                 >
                   View All Industries
                 </Button>
@@ -409,34 +409,34 @@ export default function IndustryPage() {
       </section>
 
       {/* Related Industries */}
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-28 bg-white relative">
+        <div className="absolute inset-0 dot-pattern" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatedSection className="text-center mb-12">
-            <span className="text-[#FF7F00] font-semibold text-sm tracking-wider uppercase">
+            <span className="inline-flex items-center gap-2 text-[#FF7F00] font-bold text-xs tracking-[0.25em] uppercase bg-[#FF7F00]/8 rounded-full px-5 py-2">
+              <div className="w-1.5 h-1.5 bg-[#FF7F00] rounded-full" />
               Explore More
             </span>
-            <h2 className="text-3xl sm:text-4xl font-bold text-[#005B96] mt-3">
+            <h2 className="text-4xl sm:text-5xl font-extrabold text-[#003D66] mt-5 tracking-tight">
               Related Industries
             </h2>
           </AnimatedSection>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
             {relatedIndustries.map((related, idx) => (
               <AnimatedSection key={related.slug} delay={idx * 0.1}>
                 <Link href={`/industries/${related.slug}`}>
-                  <Card className="group border-0 shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer">
-                    <CardContent className="p-6 text-center">
-                      <div className="bg-gradient-to-br from-[#005B96] to-[#0078C8] rounded-xl w-14 h-14 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-                        <related.icon className="text-white" size={24} />
-                      </div>
-                      <h3 className="text-lg font-bold text-[#005B96] mb-2">
-                        {related.title}
-                      </h3>
-                      <span className="inline-flex items-center gap-1 text-[#FF7F00] text-sm font-semibold group-hover:gap-2 transition-all">
-                        Learn More <ArrowRight size={14} />
-                      </span>
-                    </CardContent>
-                  </Card>
+                  <div className="group bg-white rounded-2xl p-7 shadow-sm hover:shadow-xl hover:shadow-[#005B96]/5 transition-all duration-400 cursor-pointer border border-gray-100/80 card-border-glow text-center">
+                    <div className="bg-gradient-to-br from-[#005B96] to-[#0078C8] rounded-xl w-14 h-14 flex items-center justify-center mx-auto mb-4 shadow-md shadow-[#005B96]/20 group-hover:scale-110 transition-all duration-300">
+                      <related.icon className="text-white" size={24} />
+                    </div>
+                    <h3 className="text-lg font-bold text-[#003D66] mb-2">
+                      {related.title}
+                    </h3>
+                    <span className="inline-flex items-center gap-1 text-[#FF7F00] text-sm font-semibold group-hover:gap-2 transition-all">
+                      Learn More <ArrowRight size={14} />
+                    </span>
+                  </div>
                 </Link>
               </AnimatedSection>
             ))}

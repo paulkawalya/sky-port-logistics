@@ -69,24 +69,20 @@ export default function IndustriesPage() {
   return (
     <div className="pt-20">
       {/* Hero */}
-      <section className="relative py-24 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-[#005B96] to-[#003D66]" />
-        <div
-          className="absolute inset-0 opacity-10"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-          }}
-        />
+      <section className="relative py-28 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#003D66] via-[#005B96] to-[#003D66]" />
+        <div className="absolute inset-0 grid-pattern opacity-20" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <AnimatedSection>
-            <span className="inline-flex items-center gap-2 bg-[#FF7F00]/20 text-[#FFA040] border border-[#FF7F00]/30 rounded-full px-4 py-2 text-sm font-medium mb-6">
+            <span className="inline-flex items-center gap-2 text-[#FF7F00] font-bold text-xs tracking-[0.25em] uppercase bg-[#FF7F00]/8 rounded-full px-5 py-2 mb-8">
+              <div className="w-1.5 h-1.5 bg-[#FF7F00] rounded-full" />
               Industry Solutions
             </span>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white mb-6 tracking-tight">
               Tailored Solutions for{" "}
-              <span className="text-[#FF7F00]">Every Industry</span>
+              <span className="bg-gradient-to-r from-[#FF7F00] to-[#FFA040] bg-clip-text text-transparent">Every Industry</span>
             </h1>
-            <p className="text-white/80 text-lg max-w-2xl mx-auto">
+            <p className="text-white/70 text-lg max-w-2xl mx-auto leading-relaxed">
               We understand that every industry has unique logistics challenges.
               Our specialized teams design solutions that address the specific
               needs of your sector.
@@ -96,31 +92,32 @@ export default function IndustriesPage() {
       </section>
 
       {/* Industries Grid */}
-      <section className="py-24 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      <section className="py-28 bg-gray-50 relative">
+        <div className="absolute inset-0 dot-pattern" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {industries.map((industry, idx) => (
               <AnimatedSection key={industry.slug} delay={idx * 0.1}>
                 <Link href={`/industries/${industry.slug}`}>
-                  <Card className="group border-0 shadow-lg hover:shadow-2xl transition-all duration-500 h-full cursor-pointer overflow-hidden">
+                  <div className="group relative bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl hover:shadow-[#005B96]/8 transition-all duration-500 h-full cursor-pointer border border-gray-100/80 card-border-glow">
                     <div className={`relative h-40 bg-gradient-to-br ${industry.color} flex items-center justify-center`}>
                       <industry.icon className="text-white/30 absolute" size={120} />
-                      <div className="relative bg-white/20 backdrop-blur-sm rounded-full p-5 group-hover:scale-110 transition-transform">
+                      <div className="relative bg-white/15 backdrop-blur-md rounded-xl p-5 border border-white/20 group-hover:scale-110 transition-transform duration-300">
                         <industry.icon className="text-white" size={40} />
                       </div>
                     </div>
-                    <CardContent className="p-6">
-                      <h3 className="text-xl font-bold text-[#005B96] mb-3">
+                    <div className="p-6">
+                      <h3 className="text-xl font-bold text-[#003D66] mb-3">
                         {industry.title}
                       </h3>
-                      <p className="text-gray-600 leading-relaxed mb-4 text-sm">
+                      <p className="text-gray-500 leading-relaxed mb-4 text-sm">
                         {industry.description}
                       </p>
                       <span className="inline-flex items-center gap-2 text-[#FF7F00] font-semibold text-sm group-hover:gap-3 transition-all">
                         Learn More <ArrowRight size={16} />
                       </span>
-                    </CardContent>
-                  </Card>
+                    </div>
+                  </div>
                 </Link>
               </AnimatedSection>
             ))}
@@ -129,29 +126,26 @@ export default function IndustriesPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-20 bg-gradient-to-r from-[#FF7F00] to-[#CC6600] relative overflow-hidden">
-        <div
-          className="absolute inset-0 opacity-10"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='1' fill-rule='evenodd'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40'/%3E%3C/g%3E%3C/svg%3E")`,
-          }}
-        />
+      <section className="py-24 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#FF7F00] via-[#CC6600] to-[#FF7F00]" />
+        <div className="absolute inset-0 animate-gradient-shift" style={{ backgroundImage: "radial-gradient(circle at 30% 50%, rgba(255,160,64,0.4) 0%, transparent 50%), radial-gradient(circle at 70% 50%, rgba(204,102,0,0.4) 0%, transparent 50%)" }} />
+        <div className="absolute inset-0 grid-pattern opacity-5" />
         <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <AnimatedSection>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6">
+            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white mb-8 tracking-tight">
               Don&apos;t See Your Industry?
             </h2>
-            <p className="text-white/90 text-lg mb-8 max-w-2xl mx-auto">
+            <p className="text-white/80 text-lg mb-10 max-w-2xl mx-auto leading-relaxed">
               We serve businesses across every sector. Contact us to discuss
               your specific logistics challenges and discover how we can help.
             </p>
             <Link href="/contact">
               <Button
                 size="lg"
-                className="bg-white text-[#FF7F00] hover:bg-gray-100 font-bold px-8 py-6 text-lg rounded-full shadow-xl group"
+                className="bg-white text-[#FF7F00] hover:bg-gray-50 font-bold px-8 py-7 text-lg rounded-xl shadow-xl group"
               >
                 Contact Our Team
-                <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" size={20} />
               </Button>
             </Link>
           </AnimatedSection>

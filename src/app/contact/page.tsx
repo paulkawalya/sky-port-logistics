@@ -40,23 +40,20 @@ export default function ContactPage() {
   return (
     <div className="pt-20">
       {/* Hero */}
-      <section className="relative py-24 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-[#005B96] to-[#003D66]" />
-        <div
-          className="absolute inset-0 opacity-10"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-          }}
-        />
+      <section className="relative py-28 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#003D66] via-[#005B96] to-[#003D66]" />
+        <div className="absolute inset-0 grid-pattern opacity-20" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <AnimatedSection>
-            <span className="inline-flex items-center gap-2 bg-[#FF7F00]/20 text-[#FFA040] border border-[#FF7F00]/30 rounded-full px-4 py-2 text-sm font-medium mb-6">
+            <span className="inline-flex items-center gap-2 text-[#FF7F00] font-bold text-xs tracking-[0.25em] uppercase bg-[#FF7F00]/8 rounded-full px-5 py-2 mb-8">
+              <div className="w-1.5 h-1.5 bg-[#FF7F00] rounded-full" />
               Get In Touch
             </span>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">
-              Contact <span className="text-[#FF7F00]">Us</span>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white mb-6 tracking-tight">
+              Contact{" "}
+              <span className="bg-gradient-to-r from-[#FF7F00] to-[#FFA040] bg-clip-text text-transparent">Us</span>
             </h1>
-            <p className="text-white/80 text-lg max-w-2xl mx-auto">
+            <p className="text-white/70 text-lg max-w-2xl mx-auto leading-relaxed">
               Have a shipment need or a question? Our team is ready to help you
               find the perfect logistics solution, 24/7.
             </p>
@@ -65,17 +62,18 @@ export default function ContactPage() {
       </section>
 
       {/* Contact Form + Info */}
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-28 bg-white relative">
+        <div className="absolute inset-0 dot-pattern" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
             {/* Contact Info */}
             <AnimatedSection className="lg:col-span-2">
               <div className="space-y-6">
                 <div>
-                  <h2 className="text-2xl font-bold text-[#005B96] mb-2">
+                  <h2 className="text-3xl font-extrabold text-[#003D66] mb-2 tracking-tight">
                     Let&apos;s Start a Conversation
                   </h2>
-                  <p className="text-gray-600">
+                  <p className="text-gray-500 text-[15px] leading-relaxed">
                     Fill out the form and our team will respond within 2 business
                     hours. For urgent requests, call us directly.
                   </p>
@@ -112,25 +110,27 @@ export default function ContactPage() {
                     ],
                   },
                 ].map((item) => (
-                  <div key={item.title} className="flex gap-4">
-                    <div className="bg-[#005B96] rounded-xl p-3 h-fit">
-                      <item.icon className="text-white" size={22} />
-                    </div>
-                    <div>
-                      <div className="font-semibold text-[#005B96]">
-                        {item.title}
+                  <div key={item.title} className="bg-gray-50 rounded-xl p-4 border border-gray-100/80">
+                    <div className="flex gap-4">
+                      <div className="bg-gradient-to-br from-[#005B96] to-[#0078C8] rounded-xl p-3 h-fit shadow-md shadow-[#005B96]/20">
+                        <item.icon className="text-white" size={20} />
                       </div>
-                      {item.lines.map((line) => (
-                        <div key={line} className="text-gray-600 text-sm">
-                          {line}
+                      <div>
+                        <div className="font-semibold text-[#003D66] text-sm">
+                          {item.title}
                         </div>
-                      ))}
+                        {item.lines.map((line) => (
+                          <div key={line} className="text-gray-500 text-sm">
+                            {line}
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 ))}
 
                 <div className="pt-4">
-                  <h3 className="font-semibold text-[#005B96] mb-3">Why Choose Sky Port</h3>
+                  <h3 className="font-semibold text-[#003D66] mb-3">Why Choose Sky Port</h3>
                   <div className="space-y-3">
                     {[
                       { icon: Shield, text: "ISO 9001 & IATA Certified" },
@@ -139,7 +139,7 @@ export default function ContactPage() {
                     ].map((item) => (
                       <div key={item.text} className="flex items-center gap-3">
                         <item.icon className="text-[#FF7F00]" size={18} />
-                        <span className="text-gray-600 text-sm">{item.text}</span>
+                        <span className="text-gray-500 text-sm">{item.text}</span>
                       </div>
                     ))}
                   </div>
@@ -149,9 +149,9 @@ export default function ContactPage() {
 
             {/* Contact Form */}
             <AnimatedSection className="lg:col-span-3" delay={0.2}>
-              <Card className="border-0 shadow-xl">
-                <CardContent className="p-6 sm:p-8">
-                  <h3 className="text-xl font-bold text-[#005B96] mb-6">
+              <div className="bg-white rounded-2xl shadow-sm border border-gray-100/80 overflow-hidden">
+                <div className="p-6 sm:p-8">
+                  <h3 className="text-xl font-bold text-[#003D66] mb-6">
                     Request a Free Quote
                   </h3>
                   <form
@@ -163,7 +163,7 @@ export default function ContactPage() {
                   >
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                       <div>
-                        <label className="text-sm font-medium text-gray-700 mb-1 block">
+                        <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5 block">
                           Full Name *
                         </label>
                         <Input
@@ -172,12 +172,12 @@ export default function ContactPage() {
                           onChange={(e) =>
                             setFormData({ ...formData, name: e.target.value })
                           }
-                          className="h-12 rounded-xl"
+                          className="h-12 rounded-xl border-gray-200 focus:ring-[#FF7F00]/30"
                           required
                         />
                       </div>
                       <div>
-                        <label className="text-sm font-medium text-gray-700 mb-1 block">
+                        <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5 block">
                           Email Address *
                         </label>
                         <Input
@@ -187,14 +187,14 @@ export default function ContactPage() {
                           onChange={(e) =>
                             setFormData({ ...formData, email: e.target.value })
                           }
-                          className="h-12 rounded-xl"
+                          className="h-12 rounded-xl border-gray-200 focus:ring-[#FF7F00]/30"
                           required
                         />
                       </div>
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                       <div>
-                        <label className="text-sm font-medium text-gray-700 mb-1 block">
+                        <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5 block">
                           Phone Number
                         </label>
                         <Input
@@ -203,11 +203,11 @@ export default function ContactPage() {
                           onChange={(e) =>
                             setFormData({ ...formData, phone: e.target.value })
                           }
-                          className="h-12 rounded-xl"
+                          className="h-12 rounded-xl border-gray-200 focus:ring-[#FF7F00]/30"
                         />
                       </div>
                       <div>
-                        <label className="text-sm font-medium text-gray-700 mb-1 block">
+                        <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5 block">
                           Company Name
                         </label>
                         <Input
@@ -216,12 +216,12 @@ export default function ContactPage() {
                           onChange={(e) =>
                             setFormData({ ...formData, company: e.target.value })
                           }
-                          className="h-12 rounded-xl"
+                          className="h-12 rounded-xl border-gray-200 focus:ring-[#FF7F00]/30"
                         />
                       </div>
                     </div>
                     <div>
-                      <label className="text-sm font-medium text-gray-700 mb-1 block">
+                      <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5 block">
                         Service Needed
                       </label>
                       <Input
@@ -230,11 +230,11 @@ export default function ContactPage() {
                         onChange={(e) =>
                           setFormData({ ...formData, service: e.target.value })
                         }
-                        className="h-12 rounded-xl"
+                        className="h-12 rounded-xl border-gray-200 focus:ring-[#FF7F00]/30"
                       />
                     </div>
                     <div>
-                      <label className="text-sm font-medium text-gray-700 mb-1 block">
+                      <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5 block">
                         Message *
                       </label>
                       <Textarea
@@ -244,13 +244,13 @@ export default function ContactPage() {
                         onChange={(e) =>
                           setFormData({ ...formData, message: e.target.value })
                         }
-                        className="rounded-xl"
+                        className="rounded-xl border-gray-200 focus:ring-[#FF7F00]/30"
                         required
                       />
                     </div>
                     <Button
                       type="submit"
-                      className="w-full bg-[#FF7F00] hover:bg-[#CC6600] text-white font-semibold h-12 rounded-full text-lg group"
+                      className="w-full bg-[#FF7F00] hover:bg-[#CC6600] text-white font-bold h-12 rounded-xl text-lg shadow-lg shadow-[#FF7F00]/25 btn-glow group"
                     >
                       Send Message
                       <Send className="ml-2 group-hover:translate-x-1 transition-transform" />
@@ -259,8 +259,8 @@ export default function ContactPage() {
                       By submitting this form, you agree to our Privacy Policy and Terms of Service.
                     </p>
                   </form>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
             </AnimatedSection>
           </div>
         </div>
@@ -268,26 +268,29 @@ export default function ContactPage() {
 
       {/* Map Placeholder */}
       <section className="bg-gray-100">
-        <div className="relative h-80 bg-gradient-to-br from-[#005B96]/10 to-[#003D66]/5 flex items-center justify-center">
+        <div className="relative h-80 bg-gradient-to-br from-[#005B96]/10 to-[#003D66]/5 flex items-center justify-center dot-pattern">
           <div className="text-center">
             <MapPin className="text-[#FF7F00] mx-auto mb-3" size={40} />
-            <h3 className="text-[#005B96] font-bold text-xl mb-1">Global Headquarters</h3>
-            <p className="text-gray-600">Sky Port Tower, 1200 Harbor Blvd, Los Angeles, CA 90012</p>
+            <h3 className="text-[#003D66] font-extrabold text-xl mb-1 tracking-tight">Global Headquarters</h3>
+            <p className="text-gray-500">Sky Port Tower, 1200 Harbor Blvd, Los Angeles, CA 90012</p>
           </div>
         </div>
       </section>
 
       {/* Office Locations */}
-      <section className="py-24 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <AnimatedSection className="text-center mb-16">
-            <span className="text-[#FF7F00] font-semibold text-sm tracking-wider uppercase">
+      <section className="py-28 bg-gray-50 relative">
+        <div className="absolute inset-0 grid-pattern opacity-30" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <AnimatedSection className="text-center mb-20">
+            <span className="inline-flex items-center gap-2 text-[#FF7F00] font-bold text-xs tracking-[0.25em] uppercase bg-[#FF7F00]/8 rounded-full px-5 py-2">
+              <div className="w-1.5 h-1.5 bg-[#FF7F00] rounded-full" />
               Global Presence
             </span>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#005B96] mt-3">
-              Our Offices Worldwide
+            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#003D66] mt-5 tracking-tight">
+              Our Offices{" "}
+              <span className="bg-gradient-to-r from-[#005B96] to-[#FF7F00] bg-clip-text text-transparent">Worldwide</span>
             </h2>
-            <p className="mt-4 text-gray-600 max-w-2xl mx-auto text-lg">
+            <p className="mt-5 text-gray-500 max-w-2xl mx-auto text-lg leading-relaxed">
               With strategically located offices across six continents, we&apos;re
               always close to where you need us.
             </p>
@@ -296,29 +299,27 @@ export default function ContactPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {offices.map((office, idx) => (
               <AnimatedSection key={office.city} delay={idx * 0.08}>
-                <Card className="border-0 shadow-md hover:shadow-xl transition-all duration-300 h-full">
-                  <CardContent className="p-6">
-                    <div className="flex items-start gap-4">
-                      <div className="bg-[#005B96] rounded-lg p-2 flex-shrink-0">
-                        <MapPin className="text-white" size={20} />
-                      </div>
-                      <div>
-                        <h3 className="font-bold text-[#005B96]">
-                          {office.city}
-                        </h3>
-                        <p className="text-[#FF7F00] text-sm font-medium">
-                          {office.country}
-                        </p>
-                        <p className="text-gray-600 text-sm mt-2">
-                          {office.address}
-                        </p>
-                        <p className="text-gray-500 text-sm mt-1">
-                          {office.phone}
-                        </p>
-                      </div>
+                <div className="group bg-white rounded-2xl p-6 shadow-sm hover:shadow-xl hover:shadow-[#005B96]/5 transition-all duration-400 border border-gray-100/80 card-border-glow h-full">
+                  <div className="flex items-start gap-4">
+                    <div className="bg-gradient-to-br from-[#005B96] to-[#0078C8] rounded-xl p-2.5 flex-shrink-0 shadow-md shadow-[#005B96]/20 group-hover:scale-110 transition-all duration-300">
+                      <MapPin className="text-white" size={20} />
                     </div>
-                  </CardContent>
-                </Card>
+                    <div>
+                      <h3 className="font-bold text-[#003D66]">
+                        {office.city}
+                      </h3>
+                      <p className="text-[#FF7F00] text-sm font-medium">
+                        {office.country}
+                      </p>
+                      <p className="text-gray-500 text-sm mt-2">
+                        {office.address}
+                      </p>
+                      <p className="text-gray-400 text-sm mt-1">
+                        {office.phone}
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </AnimatedSection>
             ))}
           </div>
