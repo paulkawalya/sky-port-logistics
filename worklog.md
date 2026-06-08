@@ -16,3 +16,28 @@ Stage Summary:
 - New design language: extrabold typography, tracking-tight, rounded-xl buttons, glassmorphism effects, animated gradient backgrounds, card-border-glow hover effects, pill-style section labels with dots, decorative blur circles, dot-pattern/grid-pattern/diagonal-stripes backgrounds
 - All pages consistent with new design system
 - Build passes successfully
+
+---
+Task ID: hero-slider-improvements
+Agent: main
+Task: Improve the hero section slider with better transitions and navigation
+
+Work Log:
+- Removed Embla Carousel dependency from hero section (replaced with custom crossfade implementation)
+- Implemented smooth crossfade transitions between slides (1200ms ease-out opacity)
+- Added directional content animations (content slides in from left/right based on navigation direction)
+- Added sweep light effect on slide changes (diagonal light beam sweeps across)
+- Added animated slide counter with rolling number transition
+- Replaced dot indicators with image thumbnail navigation (shows mini preview of each slide)
+- Added progress bar inside active thumbnail
+- Implemented JS-driven progress tracking (more reliable than Framer Motion animation)
+- Added pause-on-hover for autoplay
+- Added vignette overlay for cinematic depth
+- Enhanced ambient particles (larger, more visible)
+- Updated globals.css to replace Embla styles with crossfade styles
+- Verified build compiles successfully
+
+Stage Summary:
+- Hero slider now uses custom crossfade carousel instead of Embla horizontal sliding
+- Key visual improvements: crossfade, sweep light, thumbnail nav, animated counter, vignette
+- Build verified: npx next build compiled successfully

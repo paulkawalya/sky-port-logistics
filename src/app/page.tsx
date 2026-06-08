@@ -2,8 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
-import useEmblaCarousel from "embla-carousel-react";
-import Autoplay from "embla-carousel-autoplay";
+
 import {
   Plane, Ship, Truck, Warehouse, Globe, Shield, Clock, HeadphonesIcon,
   Package, ArrowRight, ChevronRight, ChevronLeft, CheckCircle, BarChart3,
@@ -85,62 +84,125 @@ const heroZoomClasses = [
 
 function HeroSection() {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [
-    Autoplay({ delay: 6000, stopOnInteraction: false, stopOnMouseEnter: true }),
-  ]);
+  const [direction, setDirection] = useState(1);
+  const [isPaused, setIsPaused] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const progressRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const SLIDE_DURATION = 6000;
 
-  const scrollTo = useCallback((index: number) => emblaApi && emblaApi.scrollTo(index), [emblaApi]);
-  const scrollPrev = useCallback(() => emblaApi && emblaApi.scrollPrev(), [emblaApi]);
-  const scrollNext = useCallback(() => emblaApi && emblaApi.scrollNext(), [emblaApi]);
-
+  // Autoplay with progress tracking
   useEffect(() => {
-    if (!emblaApi) return;
-    const onSelect = () => setCurrentSlide(emblaApi.selectedScrollSnap());
-    emblaApi.on("select", onSelect);
-    onSelect();
-    return () => { emblaApi.off("select", onSelect); };
-  }, [emblaApi]);
+    if (isPaused) {
+      if (progressRef.current) clearInterval(progressRef.current);
+      if (timerRef.current) clearTimeout(timerRef.current);
+      return;
+    }
+
+    setProgress(0);
+    const startTime = Date.now();
+
+    progressRef.current = setInterval(() => {
+      const elapsed = Date.now() - startTime;
+      setProgress(Math.min((elapsed / SLIDE_DURATION) * 100, 100));
+    }, 50);
+
+    timerRef.current = setTimeout(() => {
+      setDirection(1);
+      setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+    }, SLIDE_DURATION);
+
+    return () => {
+      if (progressRef.current) clearInterval(progressRef.current);
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
+  }, [currentSlide, isPaused]);
+
+  const goToSlide = useCallback((index: number) => {
+    setDirection(index > currentSlide ? 1 : -1);
+    setCurrentSlide(index);
+  }, [currentSlide]);
+
+  const goNext = useCallback(() => {
+    setDirection(1);
+    setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+  }, []);
+
+  const goPrev = useCallback(() => {
+    setDirection(-1);
+    setCurrentSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length);
+  }, []);
 
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden">
-      {/* Embla Carousel */}
-      <div className="absolute inset-0" ref={emblaRef}>
-        <div className="flex h-full">
-          {heroSlides.map((slide, idx) => (
-            <div key={idx} className="flex-[0_0_100%] min-w-0 relative h-screen">
-              <img
-                key={`img-${idx}-${idx === currentSlide ? "active" : "idle"}`}
-                src={slide.image}
-                alt={slide.title.join(" ")}
-                className={`w-full h-full object-cover ${idx === currentSlide ? heroZoomClasses[idx] : ""}`}
-                style={idx !== currentSlide ? { transform: "scale(1.12)" } : undefined}
-              />
-              <div className={`absolute inset-0 bg-gradient-to-r ${slide.gradient}`} />
-              {/* Diagonal light streak */}
-              <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                <div className="absolute -top-1/2 -right-1/4 w-[120%] h-[200%] bg-gradient-to-bl from-white/[0.03] via-transparent to-transparent rotate-12" />
-              </div>
-              {/* Animated ambient particles */}
-              <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                <motion.div className="absolute top-1/4 right-1/4 w-96 h-96 rounded-full bg-[#FF7F00]/8 blur-[100px]" animate={{ scale: [1, 1.3, 1], opacity: [0.3, 0.5, 0.3] }} transition={{ duration: 6, repeat: Infinity }} />
-                <motion.div className="absolute bottom-1/3 left-1/6 w-64 h-64 rounded-full bg-[#FF7F00]/6 blur-[80px]" animate={{ scale: [1, 1.4, 1], opacity: [0.2, 0.4, 0.2] }} transition={{ duration: 8, repeat: Infinity }} />
-                <motion.div className="absolute top-1/2 right-1/3 w-48 h-48 rounded-full bg-[#0078C8]/10 blur-[60px]" animate={{ scale: [1, 1.2, 1], x: [0, 30, 0] }} transition={{ duration: 7, repeat: Infinity }} />
-              </div>
+    <section
+      className="relative min-h-screen flex items-center overflow-hidden"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+    >
+      {/* Background Slides - Crossfade */}
+      {heroSlides.map((slide, idx) => (
+        <div
+          key={idx}
+          className={`absolute inset-0 transition-all duration-[1200ms] ease-out ${
+            idx === currentSlide ? "opacity-100" : "opacity-0"
+          }`}
+        >
+          <img
+            src={slide.image}
+            alt={slide.title.join(" ")}
+            className={`w-full h-full object-cover ${
+              idx === currentSlide ? heroZoomClasses[idx] : ""
+            }`}
+            style={idx !== currentSlide ? { transform: "scale(1.05)" } : undefined}
+          />
+          <div className={`absolute inset-0 bg-gradient-to-r ${slide.gradient}`} />
+          {/* Vignette overlay for cinematic depth */}
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,rgba(0,61,102,0.4)_100%)]" />
+          {/* Diagonal light streak */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <div className="absolute -top-1/2 -right-1/4 w-[120%] h-[200%] bg-gradient-to-bl from-white/[0.04] via-transparent to-transparent rotate-12" />
+          </div>
+          {/* Animated ambient particles - only on active slide */}
+          {idx === currentSlide && (
+            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+              <motion.div className="absolute top-1/4 right-1/4 w-96 h-96 rounded-full bg-[#FF7F00]/10 blur-[120px]" animate={{ scale: [1, 1.4, 1], opacity: [0.3, 0.6, 0.3] }} transition={{ duration: 6, repeat: Infinity }} />
+              <motion.div className="absolute bottom-1/3 left-1/6 w-72 h-72 rounded-full bg-[#FF7F00]/8 blur-[100px]" animate={{ scale: [1, 1.5, 1], opacity: [0.2, 0.45, 0.2] }} transition={{ duration: 8, repeat: Infinity }} />
+              <motion.div className="absolute top-1/2 right-1/3 w-56 h-56 rounded-full bg-[#0078C8]/12 blur-[80px]" animate={{ scale: [1, 1.3, 1], x: [0, 40, 0] }} transition={{ duration: 7, repeat: Infinity }} />
             </div>
-          ))}
+          )}
         </div>
-      </div>
+      ))}
+
+      {/* Sweep Light Effect on slide change */}
+      <AnimatePresence>
+        <motion.div
+          key={`sweep-${currentSlide}`}
+          className="absolute inset-0 pointer-events-none"
+          style={{ zIndex: 15 }}
+          initial={{ x: "-100%" }}
+          animate={{ x: "200%" }}
+          transition={{ duration: 1.5, ease: [0.25, 0.46, 0.45, 0.94] }}
+        >
+          <div className="w-1/4 h-full bg-gradient-to-r from-transparent via-white/[0.06] to-transparent skew-x-[-20deg]" />
+        </motion.div>
+      </AnimatePresence>
 
       {/* Content Overlay */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 w-full">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 w-full" style={{ zIndex: 20 }}>
         <AnimatePresence mode="wait">
-          <motion.div key={currentSlide} className="max-w-3xl">
+          <motion.div
+            key={currentSlide}
+            className="max-w-3xl"
+            initial={{ opacity: 0, x: direction * 80 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: direction * -40 }}
+            transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
+          >
             {/* Badge */}
             <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, y: -15 }}
-              transition={{ duration: 0.5, delay: 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
+              initial={{ opacity: 0, y: 20, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.15, ease: [0.25, 0.46, 0.45, 0.94] }}
             >
               <span className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md text-white border border-white/15 rounded-full px-5 py-2.5 text-sm font-medium mb-8 shadow-lg">
                 {(() => { const Icon = heroSlides[currentSlide].badge.icon; return <Icon size={14} className="text-[#FF7F00]" />; })()}
@@ -153,10 +215,9 @@ function HeroSection() {
               {heroSlides[currentSlide].title.map((line, lineIdx) => (
                 <div key={lineIdx} className="overflow-hidden">
                   <motion.div
-                    initial={{ y: "100%" }}
-                    animate={{ y: 0 }}
-                    exit={{ y: "-110%" }}
-                    transition={{ duration: 0.55, delay: 0.2 + lineIdx * 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
+                    initial={{ y: "100%", opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ duration: 0.6, delay: 0.25 + lineIdx * 0.12, ease: [0.25, 0.46, 0.45, 0.94] }}
                   >
                     {lineIdx === 1 ? (
                       <span className="bg-gradient-to-r from-[#FF7F00] to-[#FFA040] bg-clip-text text-transparent">{line}</span>
@@ -173,8 +234,7 @@ function HeroSection() {
               className="text-lg sm:text-xl text-white/75 mb-10 max-w-2xl leading-relaxed"
               initial={{ opacity: 0, y: 25 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -15 }}
-              transition={{ duration: 0.5, delay: 0.55, ease: [0.25, 0.46, 0.45, 0.94] }}
+              transition={{ duration: 0.5, delay: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
             >
               {heroSlides[currentSlide].description}
             </motion.p>
@@ -184,8 +244,7 @@ function HeroSection() {
               className="flex flex-col sm:flex-row gap-4"
               initial={{ opacity: 0, y: 25 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -15 }}
-              transition={{ duration: 0.5, delay: 0.65, ease: [0.25, 0.46, 0.45, 0.94] }}
+              transition={{ duration: 0.5, delay: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
             >
               <Link href={heroSlides[currentSlide].primaryCta.href}>
                 <Button size="lg" className="bg-[#FF7F00] hover:bg-[#CC6600] text-white font-bold px-8 py-7 text-base rounded-xl shadow-xl shadow-[#FF7F00]/25 hover:shadow-[#FF7F00]/40 transition-all btn-glow group">
@@ -206,8 +265,7 @@ function HeroSection() {
               className="mt-14 flex flex-wrap items-center gap-8"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.5, delay: 0.8 }}
+              transition={{ duration: 0.5, delay: 0.9 }}
             >
               {[
                 { icon: Shield, text: "ISO 9001 Certified" },
@@ -227,83 +285,91 @@ function HeroSection() {
       </div>
 
       {/* Vertical side text - company branding */}
-      <div className="hidden xl:flex absolute left-6 top-1/2 -translate-y-1/2 z-20 flex-col items-center gap-4">
+      <div className="hidden xl:flex absolute left-6 top-1/2 -translate-y-1/2 flex-col items-center gap-4" style={{ zIndex: 25 }}>
         <div className="w-px h-16 bg-gradient-to-b from-transparent via-white/20 to-transparent" />
         <span className="text-white/25 text-[10px] font-bold tracking-[0.3em] uppercase [writing-mode:vertical-lr] rotate-180">Sky Port Logistics</span>
         <div className="w-px h-16 bg-gradient-to-b from-transparent via-white/20 to-transparent" />
       </div>
 
-      {/* Slide number counter - top right, avoids arrow overlap */}
-      <div className="hidden lg:flex absolute right-8 xl:right-12 top-28 z-20 flex-col items-center gap-2">
-        <div className="relative flex flex-col items-center">
-          <span className="text-white text-2xl xl:text-3xl font-extrabold tabular-nums leading-none">{String(currentSlide + 1).padStart(2, "0")}</span>
-          <div className="w-10 h-px bg-gradient-to-r from-transparent via-[#FF7F00]/60 to-transparent mt-2" />
+      {/* Animated Slide Counter - top right */}
+      <div className="hidden lg:flex absolute right-8 xl:right-12 top-28 flex-col items-center gap-2" style={{ zIndex: 25 }}>
+        <div className="relative h-12 w-16 overflow-hidden">
+          <AnimatePresence mode="popLayout">
+            <motion.span
+              key={currentSlide}
+              className="absolute inset-0 flex items-center justify-center text-white text-3xl font-extrabold tabular-nums"
+              initial={{ y: direction > 0 ? -48 : 48, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: direction > 0 ? 48 : -48, opacity: 0 }}
+              transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+            >
+              {String(currentSlide + 1).padStart(2, "0")}
+            </motion.span>
+          </AnimatePresence>
         </div>
+        <div className="w-10 h-px bg-gradient-to-r from-transparent via-[#FF7F00]/60 to-transparent" />
         <span className="text-white/35 text-xs font-bold tabular-nums">{String(heroSlides.length).padStart(2, "0")}</span>
         <div className="mt-1 text-[#FF7F00]/35 text-[9px] font-bold tracking-[0.2em] uppercase [writing-mode:vertical-lr] rotate-180">
           {heroSlides[currentSlide].badge.text.split(" ").slice(-1)[0]}
         </div>
       </div>
 
-      {/* Navigation Arrows - larger, premium glass style */}
-      <div className="absolute z-20 left-3 sm:left-6 lg:left-10 top-1/2 -translate-y-1/2">
-        <button onClick={scrollPrev} className="group w-11 h-11 sm:w-14 sm:h-14 rounded-2xl glass text-white hover:bg-white/15 transition-all duration-300 hover:scale-110 flex items-center justify-center" aria-label="Previous slide">
+      {/* Navigation Arrows - premium glass style */}
+      <div className="absolute left-3 sm:left-6 lg:left-10 top-1/2 -translate-y-1/2" style={{ zIndex: 25 }}>
+        <button onClick={goPrev} className="group w-11 h-11 sm:w-14 sm:h-14 rounded-2xl glass text-white hover:bg-white/15 transition-all duration-300 hover:scale-110 flex items-center justify-center" aria-label="Previous slide">
           <ChevronLeft size={22} className="group-hover:-translate-x-0.5 transition-transform" />
         </button>
       </div>
-      <div className="absolute z-20 right-3 sm:right-6 lg:right-10 top-1/2 -translate-y-1/2">
-        <button onClick={scrollNext} className="group w-11 h-11 sm:w-14 sm:h-14 rounded-2xl glass text-white hover:bg-white/15 transition-all duration-300 hover:scale-110 flex items-center justify-center" aria-label="Next slide">
+      <div className="absolute right-3 sm:right-6 lg:right-10 top-1/2 -translate-y-1/2" style={{ zIndex: 25 }}>
+        <button onClick={goNext} className="group w-11 h-11 sm:w-14 sm:h-14 rounded-2xl glass text-white hover:bg-white/15 transition-all duration-300 hover:scale-110 flex items-center justify-center" aria-label="Next slide">
           <ChevronRight size={22} className="group-hover:translate-x-0.5 transition-transform" />
         </button>
       </div>
 
-      {/* Bottom navigation bar: indicators + counter */}
-      <div className="absolute z-20 bottom-16 sm:bottom-20 left-1/2 -translate-x-1/2 flex items-center gap-5">
-        {/* Animated pill indicators with fill effect */}
-        {heroSlides.map((_, idx) => (
+      {/* Bottom Navigation: Slide Thumbnails */}
+      <div className="absolute bottom-16 sm:bottom-20 left-1/2 -translate-x-1/2 flex items-center gap-3" style={{ zIndex: 25 }}>
+        {heroSlides.map((slide, idx) => (
           <button
             key={idx}
-            onClick={() => scrollTo(idx)}
-            className={`relative h-2.5 rounded-full transition-all duration-500 overflow-hidden ${
+            onClick={() => goToSlide(idx)}
+            className={`relative rounded-lg overflow-hidden transition-all duration-500 group/thumb ${
               currentSlide === idx
-                ? "w-10 sm:w-12 bg-white/15"
-                : "w-2.5 bg-white/25 hover:bg-white/40"
+                ? "w-20 h-12 sm:w-24 sm:h-14 ring-2 ring-[#FF7F00] shadow-lg shadow-[#FF7F00]/20"
+                : "w-14 h-9 sm:w-16 sm:h-10 opacity-40 hover:opacity-70 ring-1 ring-white/20 hover:ring-white/40"
             }`}
             aria-label={`Go to slide ${idx + 1}`}
           >
+            <img src={slide.image} alt="" className="w-full h-full object-cover" />
+            <div className={`absolute inset-0 ${
+              currentSlide === idx
+                ? "bg-gradient-to-t from-[#FF7F00]/30 to-transparent"
+                : "bg-black/30 group-hover/thumb:bg-black/20"
+            }`} />
+            {/* Progress fill inside active thumbnail */}
             {currentSlide === idx && (
               <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-[#FF7F00] to-[#FFA040] rounded-full"
-                initial={{ x: "-100%" }}
-                animate={{ x: "0%" }}
-                transition={{ duration: 6, ease: "linear" }}
+                className="absolute bottom-0 left-0 h-[3px] bg-[#FF7F00]"
+                initial={{ width: "0%" }}
+                animate={{ width: `${progress}%` }}
+                transition={{ duration: 0.1, ease: "linear" }}
               />
             )}
           </button>
         ))}
-
-        {/* Divider + counter */}
-        <div className="hidden sm:flex items-center gap-2 ml-2 pl-4 border-l border-white/10">
-          <span className="text-white text-lg font-extrabold tabular-nums leading-none">{String(currentSlide + 1).padStart(2, "0")}</span>
-          <span className="text-white/25 text-xs">/</span>
-          <span className="text-white/40 text-sm font-bold tabular-nums">{String(heroSlides.length).padStart(2, "0")}</span>
-        </div>
       </div>
 
-      {/* Progress bar - thicker with glow */}
-      <div className="absolute z-20 bottom-0 left-0 right-0 h-1.5 bg-white/5">
-        <motion.div
-          className="h-full bg-gradient-to-r from-[#FF7F00] to-[#FFA040] shadow-[0_0_10px_rgba(255,127,0,0.4)]"
-          initial={{ width: "0%" }}
-          animate={{ width: "100%" }}
-          transition={{ duration: 6, ease: "linear" }}
-          key={currentSlide}
+      {/* Progress bar at bottom */}
+      <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-white/5" style={{ zIndex: 25 }}>
+        <div
+          className="h-full bg-gradient-to-r from-[#FF7F00] to-[#FFA040] shadow-[0_0_10px_rgba(255,127,0,0.4)] transition-all duration-100 ease-linear"
+          style={{ width: `${progress}%` }}
         />
       </div>
 
       {/* Scroll indicator */}
       <motion.div
-        className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 hidden sm:block"
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 hidden sm:block"
+        style={{ zIndex: 25 }}
         animate={{ y: [0, 6, 0] }}
         transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
       >
@@ -317,11 +383,10 @@ function HeroSection() {
       </motion.div>
 
       {/* Bottom fade for smooth section transition */}
-      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#ffffff] via-[#ffffff]/30 to-transparent z-10 pointer-events-none" />
+      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#ffffff] via-[#ffffff]/30 to-transparent pointer-events-none" style={{ zIndex: 12 }} />
     </section>
   );
 }
-
 // =================== PARTNERS MARQUEE ===================
 function PartnersMarquee() {
   const partners = ["MAERSK", "DHL", "FEDEX", "COSCO", "MSC", "CMA CGM", "HAPAG-LLOYD", "EVERGREEN", "ONE", "YANG MING"];
