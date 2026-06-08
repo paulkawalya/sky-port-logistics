@@ -15,11 +15,6 @@ import {
   HeadphonesIcon,
   Package,
   ArrowRight,
-  MapPin,
-  Phone,
-  Mail,
-  Menu,
-  X,
   ChevronRight,
   ChevronLeft,
   CheckCircle,
@@ -32,11 +27,16 @@ import {
   Anchor,
   Container,
   TrendingUp,
+  MapPin,
+  Phone,
+  Mail,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import Link from "next/link";
+import AnimatedSection from "@/components/AnimatedSection";
 
 // Animated counter hook
 function useCounter(target: number, duration: number = 2000, start: boolean = false) {
@@ -55,154 +55,6 @@ function useCounter(target: number, duration: number = 2000, start: boolean = fa
   return count;
 }
 
-// Section wrapper with scroll animation
-function AnimatedSection({
-  children,
-  className = "",
-  delay = 0,
-}: {
-  children: React.ReactNode;
-  className?: string;
-  delay?: number;
-}) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 40 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
-      transition={{ duration: 0.7, delay, ease: "easeOut" }}
-      className={className}
-    >
-      {children}
-    </motion.div>
-  );
-}
-
-// Navbar
-function Navbar() {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const navLinks = [
-    { label: "Home", href: "#home" },
-    { label: "Services", href: "#services" },
-    { label: "About", href: "#about" },
-    { label: "Network", href: "#network" },
-    { label: "Testimonials", href: "#testimonials" },
-    { label: "Contact", href: "#contact" },
-  ];
-
-  return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? "bg-white/95 backdrop-blur-md shadow-lg"
-          : "bg-transparent"
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
-          {/* Logo */}
-          <a href="#home" className="flex items-center gap-3">
-            <img
-              src="/logo.jpeg"
-              alt="Sky Port Logistics"
-              className="h-12 w-12 rounded-full object-cover ring-2 ring-[#FF7F00]"
-            />
-            <div>
-              <span
-                className={`text-xl font-bold tracking-tight ${
-                  isScrolled ? "text-[#005B96]" : "text-white"
-                }`}
-              >
-                SKY PORT
-              </span>
-              <span
-                className={`block text-[10px] tracking-[0.3em] uppercase ${
-                  isScrolled ? "text-[#FF7F00]" : "text-[#FFA040]"
-                }`}
-              >
-                Logistics
-              </span>
-            </div>
-          </a>
-
-          {/* Desktop Nav */}
-          <div className="hidden md:flex items-center gap-8">
-            {navLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                className={`text-sm font-medium transition-colors hover:text-[#FF7F00] ${
-                  isScrolled ? "text-[#005B96]" : "text-white"
-                }`}
-              >
-                {link.label}
-              </a>
-            ))}
-            <a href="#contact">
-              <Button className="bg-[#FF7F00] hover:bg-[#CC6600] text-white font-semibold px-6 rounded-full shadow-lg hover:shadow-xl transition-all">
-                Get Quote
-              </Button>
-            </a>
-          </div>
-
-          {/* Mobile Menu Toggle */}
-          <button
-            className="md:hidden"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          >
-            {isMobileMenuOpen ? (
-              <X className={isScrolled ? "text-[#005B96]" : "text-white"} size={28} />
-            ) : (
-              <Menu className={isScrolled ? "text-[#005B96]" : "text-white"} size={28} />
-            )}
-          </button>
-        </div>
-      </div>
-
-      {/* Mobile Menu */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-white shadow-xl border-t"
-          >
-            <div className="px-4 py-6 space-y-4">
-              {navLinks.map((link) => (
-                <a
-                  key={link.label}
-                  href={link.href}
-                  className="block text-[#005B96] font-medium py-2 hover:text-[#FF7F00] transition-colors"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  {link.label}
-                </a>
-              ))}
-              <a href="#contact" onClick={() => setIsMobileMenuOpen(false)}>
-                <Button className="w-full bg-[#FF7F00] hover:bg-[#CC6600] text-white font-semibold rounded-full">
-                  Get Quote
-                </Button>
-              </a>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </nav>
-  );
-}
-
 // Hero Slide Data
 const heroSlides = [
   {
@@ -212,8 +64,8 @@ const heroSlides = [
     title: ["Your Gateway to ", "Global Shipping", " Excellence"],
     description:
       "Sky Port Logistics delivers seamless freight solutions across air, ocean, and road. From warehouse to doorstep, we connect your business to the world with unmatched speed and reliability.",
-    primaryCta: { text: "Our Services", href: "#services" },
-    secondaryCta: { text: "Track Shipment", href: "#tracking", icon: Navigation },
+    primaryCta: { text: "Our Services", href: "/services" },
+    secondaryCta: { text: "Track Shipment", href: "/tracking", icon: Navigation },
   },
   {
     image: "/hero-ocean.png",
@@ -222,8 +74,8 @@ const heroSlides = [
     title: ["Navigate the Seas ", "With Confidence", " & Precision"],
     description:
       "We combine speed, security, and savings to deliver a logistics experience that sets your supply chain apart. Full container or consolidated — your cargo, our commitment.",
-    primaryCta: { text: "Ocean Solutions", href: "#services" },
-    secondaryCta: { text: "Get a Quote", href: "#contact", icon: ArrowRight },
+    primaryCta: { text: "Ocean Solutions", href: "/services/ocean-freight" },
+    secondaryCta: { text: "Get a Quote", href: "/contact", icon: ArrowRight },
   },
   {
     image: "/hero-warehouse.png",
@@ -232,8 +84,8 @@ const heroSlides = [
     title: ["Where Speed Meets ", "Security & Savings", " Every Time"],
     description:
       "We combine speed, security, and savings to deliver a logistics experience that sets your supply chain apart. State-of-the-art warehousing, real-time tracking, and end-to-end visibility.",
-    primaryCta: { text: "Explore Solutions", href: "#services" },
-    secondaryCta: { text: "Track Shipment", href: "#tracking", icon: Navigation },
+    primaryCta: { text: "Explore Solutions", href: "/services" },
+    secondaryCta: { text: "Track Shipment", href: "/tracking", icon: Navigation },
   },
   {
     image: "/cargo-plane.png",
@@ -242,8 +94,8 @@ const heroSlides = [
     title: ["Deliver Faster, ", "Fly Higher", " Worldwide"],
     description:
       "Priority air freight with guaranteed timelines. Temperature-controlled, charter-ready, and connected to every major hub on the planet. Your urgent shipments, delivered on schedule.",
-    primaryCta: { text: "Air Freight", href: "#services" },
-    secondaryCta: { text: "Get a Quote", href: "#contact", icon: ArrowRight },
+    primaryCta: { text: "Air Freight", href: "/services/air-freight" },
+    secondaryCta: { text: "Get a Quote", href: "/contact", icon: ArrowRight },
   },
 ];
 
@@ -280,15 +132,12 @@ function HeroSection() {
         <div className="flex h-full">
           {heroSlides.map((slide, idx) => (
             <div key={idx} className="flex-[0_0_100%] min-w-0 relative h-screen">
-              {/* Background Image */}
               <img
                 src={slide.image}
                 alt={slide.title.join(" ")}
                 className="w-full h-full object-cover hero-slide-img"
               />
               <div className={`absolute inset-0 bg-gradient-to-r ${slide.gradient}`} />
-
-              {/* Animated particles */}
               <div className="absolute inset-0 overflow-hidden pointer-events-none">
                 <motion.div
                   className="absolute top-20 right-20 w-64 h-64 rounded-full bg-[#FF7F00]/10 blur-3xl"
@@ -317,7 +166,6 @@ function HeroSection() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
           >
-            {/* Badge */}
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
@@ -329,7 +177,6 @@ function HeroSection() {
               </span>
             </motion.div>
 
-            {/* Title */}
             <motion.h1
               className="text-4xl sm:text-5xl lg:text-7xl font-bold text-white leading-tight mb-6"
               initial={{ opacity: 0, y: 30 }}
@@ -341,7 +188,6 @@ function HeroSection() {
               {heroSlides[currentSlide].title[2]}
             </motion.h1>
 
-            {/* Description */}
             <motion.p
               className="text-lg sm:text-xl text-white/80 mb-8 max-w-2xl leading-relaxed"
               initial={{ opacity: 0, y: 30 }}
@@ -351,14 +197,13 @@ function HeroSection() {
               {heroSlides[currentSlide].description}
             </motion.p>
 
-            {/* CTAs */}
             <motion.div
               className="flex flex-col sm:flex-row gap-4"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.5 }}
             >
-              <a href={heroSlides[currentSlide].primaryCta.href}>
+              <Link href={heroSlides[currentSlide].primaryCta.href}>
                 <Button
                   size="lg"
                   className="bg-[#FF7F00] hover:bg-[#CC6600] text-white font-semibold px-8 py-6 text-lg rounded-full shadow-xl hover:shadow-2xl transition-all group"
@@ -366,8 +211,8 @@ function HeroSection() {
                   {heroSlides[currentSlide].primaryCta.text}
                   <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
                 </Button>
-              </a>
-              <a href={heroSlides[currentSlide].secondaryCta.href}>
+              </Link>
+              <Link href={heroSlides[currentSlide].secondaryCta.href}>
                 <Button
                   size="lg"
                   variant="outline"
@@ -376,10 +221,9 @@ function HeroSection() {
                   {heroSlides[currentSlide].secondaryCta.text}
                   {(() => { const Icon = heroSlides[currentSlide].secondaryCta.icon; return <Icon className="ml-2" />; })()}
                 </Button>
-              </a>
+              </Link>
             </motion.div>
 
-            {/* Trust badges */}
             <motion.div
               className="mt-12 flex flex-wrap items-center gap-6"
               initial={{ opacity: 0 }}
@@ -475,6 +319,7 @@ function ServicesSection() {
       features: ["Same-day delivery options", "Temperature-controlled cargo", "Charter flight services"],
       image: "/cargo-plane.png",
       color: "from-sky-500 to-blue-600",
+      href: "/services/air-freight",
     },
     {
       icon: Ship,
@@ -484,6 +329,7 @@ function ServicesSection() {
       features: ["FCL & LCL options", "Competitive global rates", "Refrigerated containers"],
       image: "/cargo-ship.png",
       color: "from-blue-600 to-indigo-700",
+      href: "/services/ocean-freight",
     },
     {
       icon: Truck,
@@ -493,6 +339,7 @@ function ServicesSection() {
       features: ["GPS-tracked fleet", "Refrigerated transport", "Cross-border solutions"],
       image: "/warehouse.png",
       color: "from-[#005B96] to-[#003D66]",
+      href: "/services/road-transport",
     },
     {
       icon: Warehouse,
@@ -502,6 +349,7 @@ function ServicesSection() {
       features: ["Inventory management", "Bonded facilities", "24/7 security"],
       image: "/warehouse.png",
       color: "from-[#FF7F00] to-[#CC6600]",
+      href: "/services/warehousing",
     },
   ];
 
@@ -524,42 +372,44 @@ function ServicesSection() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {services.map((service, idx) => (
             <AnimatedSection key={service.title} delay={idx * 0.15}>
-              <Card className="group overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-all duration-500 h-full">
-                <div className="relative h-48 overflow-hidden">
-                  <img
-                    src={service.image}
-                    alt={service.title}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                  />
-                  <div
-                    className={`absolute inset-0 bg-gradient-to-t ${service.color} opacity-70`}
-                  />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="bg-white/20 backdrop-blur-sm rounded-full p-4">
-                      <service.icon className="text-white" size={40} />
+              <Link href={service.href}>
+                <Card className="group overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-all duration-500 h-full cursor-pointer">
+                  <div className="relative h-48 overflow-hidden">
+                    <img
+                      src={service.image}
+                      alt={service.title}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                    />
+                    <div
+                      className={`absolute inset-0 bg-gradient-to-t ${service.color} opacity-70`}
+                    />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="bg-white/20 backdrop-blur-sm rounded-full p-4">
+                        <service.icon className="text-white" size={40} />
+                      </div>
                     </div>
                   </div>
-                </div>
-                <CardContent className="p-6">
-                  <h3 className="text-xl font-bold text-[#005B96] mb-3">
-                    {service.title}
-                  </h3>
-                  <p className="text-gray-600 leading-relaxed mb-4">
-                    {service.description}
-                  </p>
-                  <ul className="space-y-2">
-                    {service.features.map((feature) => (
-                      <li
-                        key={feature}
-                        className="flex items-center gap-2 text-sm text-gray-500"
-                      >
-                        <CheckCircle className="text-[#FF7F00] flex-shrink-0" size={16} />
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
+                  <CardContent className="p-6">
+                    <h3 className="text-xl font-bold text-[#005B96] mb-3">
+                      {service.title}
+                    </h3>
+                    <p className="text-gray-600 leading-relaxed mb-4">
+                      {service.description}
+                    </p>
+                    <ul className="space-y-2">
+                      {service.features.map((feature) => (
+                        <li
+                          key={feature}
+                          className="flex items-center gap-2 text-sm text-gray-500"
+                        >
+                          <CheckCircle className="text-[#FF7F00] flex-shrink-0" size={16} />
+                          {feature}
+                        </li>
+                      ))}
+                    </ul>
+                  </CardContent>
+                </Card>
+              </Link>
             </AnimatedSection>
           ))}
         </div>
@@ -568,7 +418,7 @@ function ServicesSection() {
   );
 }
 
-// Stat Item Component (separate so hooks are at top level)
+// Stat Item Component
 function StatItem({
   target,
   suffix,
@@ -681,9 +531,7 @@ function AboutSection() {
               With strategically located offices across six continents, a fleet
               of trusted carrier partners, and proprietary tracking technology,
               we ensure your cargo moves efficiently through every link of the
-              supply chain. Our dedicated teams work around the clock to
-              anticipate challenges, clear customs swiftly, and deliver on our
-              promises — every single time.
+              supply chain.
             </p>
 
             <div className="grid grid-cols-2 gap-4 mb-8">
@@ -704,12 +552,12 @@ function AboutSection() {
               ))}
             </div>
 
-            <a href="#contact">
+            <Link href="/about">
               <Button className="bg-[#005B96] hover:bg-[#003D66] text-white font-semibold px-8 py-6 rounded-full shadow-lg hover:shadow-xl transition-all group">
                 Learn More About Us
                 <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
               </Button>
-            </a>
+            </Link>
           </AnimatedSection>
         </div>
       </div>
@@ -830,10 +678,12 @@ function TrackingSection() {
                   onChange={(e) => setTrackingId(e.target.value)}
                   className="flex-1 h-14 bg-white/10 border-white/20 text-white placeholder:text-white/50 text-lg rounded-full px-6 focus:ring-[#FF7F00]"
                 />
-                <Button className="h-14 bg-[#FF7F00] hover:bg-[#CC6600] text-white font-semibold px-8 rounded-full shadow-lg text-lg group">
-                  Track Now
-                  <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-                </Button>
+                <Link href="/tracking">
+                  <Button className="h-14 bg-[#FF7F00] hover:bg-[#CC6600] text-white font-semibold px-8 rounded-full shadow-lg text-lg group">
+                    Track Now
+                    <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>
@@ -997,7 +847,7 @@ function CTASection() {
             difference.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="#contact">
+            <Link href="/contact">
               <Button
                 size="lg"
                 className="bg-white text-[#FF7F00] hover:bg-gray-100 font-bold px-8 py-6 text-lg rounded-full shadow-xl group"
@@ -1005,7 +855,7 @@ function CTASection() {
                 Get Free Quote
                 <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
               </Button>
-            </a>
+            </Link>
             <a href="tel:+18005571234">
               <Button
                 size="lg"
@@ -1050,7 +900,6 @@ function ContactSection() {
         </AnimatedSection>
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
-          {/* Contact Info */}
           <AnimatedSection className="lg:col-span-2">
             <div className="space-y-6">
               {[
@@ -1103,7 +952,6 @@ function ContactSection() {
             </div>
           </AnimatedSection>
 
-          {/* Contact Form */}
           <AnimatedSection className="lg:col-span-3" delay={0.2}>
             <Card className="border-0 shadow-xl">
               <CardContent className="p-6 sm:p-8">
@@ -1202,142 +1050,20 @@ function ContactSection() {
   );
 }
 
-// Footer
-function Footer() {
-  return (
-    <footer className="bg-[#003D66] text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12">
-          {/* Brand */}
-          <div>
-            <div className="flex items-center gap-3 mb-6">
-              <img
-                src="/logo.jpeg"
-                alt="Sky Port Logistics"
-                className="h-10 w-10 rounded-full object-cover ring-2 ring-[#FF7F00]"
-              />
-              <div>
-                <span className="text-lg font-bold tracking-tight text-white">
-                  SKY PORT
-                </span>
-                <span className="block text-[10px] tracking-[0.3em] uppercase text-[#FF7F00]">
-                  Logistics
-                </span>
-              </div>
-            </div>
-            <p className="text-white/60 text-sm leading-relaxed">
-              Your trusted partner for global shipping and logistics solutions.
-              Connecting businesses to the world with speed, security, and
-              reliability since 2001.
-            </p>
-          </div>
-
-          {/* Quick Links */}
-          <div>
-            <h4 className="font-bold text-white mb-4">Quick Links</h4>
-            <ul className="space-y-3">
-              {["About Us", "Our Services", "Track Shipment", "Careers", "Blog"].map(
-                (link) => (
-                  <li key={link}>
-                    <a
-                      href={`#${link.toLowerCase().replace(" ", "-")}`}
-                      className="text-white/60 hover:text-[#FF7F00] transition-colors text-sm flex items-center gap-2"
-                    >
-                      <ChevronRight size={14} />
-                      {link}
-                    </a>
-                  </li>
-                )
-              )}
-            </ul>
-          </div>
-
-          {/* Services */}
-          <div>
-            <h4 className="font-bold text-white mb-4">Our Services</h4>
-            <ul className="space-y-3">
-              {[
-                "Air Freight",
-                "Ocean Freight",
-                "Road Transport",
-                "Warehousing",
-                "Customs Clearance",
-                "Supply Chain Consulting",
-              ].map((service) => (
-                <li key={service}>
-                  <a
-                    href="#services"
-                    className="text-white/60 hover:text-[#FF7F00] transition-colors text-sm flex items-center gap-2"
-                  >
-                    <ChevronRight size={14} />
-                    {service}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Newsletter */}
-          <div>
-            <h4 className="font-bold text-white mb-4">Stay Updated</h4>
-            <p className="text-white/60 text-sm mb-4">
-              Subscribe to our newsletter for the latest logistics insights and
-              industry updates.
-            </p>
-            <div className="flex gap-2">
-              <Input
-                placeholder="Your email"
-                className="bg-white/10 border-white/20 text-white placeholder:text-white/50 h-10 rounded-full"
-              />
-              <Button className="bg-[#FF7F00] hover:bg-[#CC6600] text-white rounded-full px-4 h-10">
-                <Send size={16} />
-              </Button>
-            </div>
-          </div>
-        </div>
-
-        <div className="border-t border-white/10 mt-12 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-white/40 text-sm">
-            &copy; {new Date().getFullYear()} Sky Port Logistics. All rights
-            reserved.
-          </p>
-          <div className="flex gap-6">
-            {["Privacy Policy", "Terms of Service", "Cookie Policy"].map(
-              (link) => (
-                <a
-                  key={link}
-                  href="#"
-                  className="text-white/40 hover:text-[#FF7F00] transition-colors text-sm"
-                >
-                  {link}
-                </a>
-              )
-            )}
-          </div>
-        </div>
-      </div>
-    </footer>
-  );
-}
-
 // Main Page
 export default function Home() {
   return (
-    <div className="min-h-screen flex flex-col">
-      <Navbar />
-      <main className="flex-1">
-        <HeroSection />
-        <ServicesSection />
-        <StatsSection />
-        <AboutSection />
-        <WhyChooseUs />
-        <TrackingSection />
-        <NetworkSection />
-        <TestimonialsSection />
-        <CTASection />
-        <ContactSection />
-      </main>
-      <Footer />
-    </div>
+    <>
+      <HeroSection />
+      <ServicesSection />
+      <StatsSection />
+      <AboutSection />
+      <WhyChooseUs />
+      <TrackingSection />
+      <NetworkSection />
+      <TestimonialsSection />
+      <CTASection />
+      <ContactSection />
+    </>
   );
 }
