@@ -97,10 +97,28 @@
    PREMIUM ANIMATIONS & EFFECTS
    ======================================== */
 
-/* Hero Ken Burns zoom */
+/* Hero Ken Burns zoom - center */
 @keyframes hero-zoom {
   0% { transform: scale(1); }
   100% { transform: scale(1.12); }
+}
+
+/* Hero Ken Burns zoom - pan right */
+@keyframes hero-zoom-right {
+  0% { transform: scale(1) translateX(0); }
+  100% { transform: scale(1.15) translateX(-2%); }
+}
+
+/* Hero Ken Burns zoom - pan up */
+@keyframes hero-zoom-up {
+  0% { transform: scale(1) translateY(0); }
+  100% { transform: scale(1.15) translateY(-2%); }
+}
+
+/* Hero Ken Burns zoom - pan left */
+@keyframes hero-zoom-left {
+  0% { transform: scale(1) translateX(0); }
+  100% { transform: scale(1.15) translateX(2%); }
 }
 
 /* Floating animation */
@@ -270,8 +288,20 @@
    HERO SLIDER IMAGE EFFECTS
    ======================================== */
 
-.hero-slide-img {
+.hero-slide-img-active {
   animation: hero-zoom 6s ease-out forwards;
+}
+
+.hero-slide-img-right {
+  animation: hero-zoom-right 6s ease-out forwards;
+}
+
+.hero-slide-img-up {
+  animation: hero-zoom-up 6s ease-out forwards;
+}
+
+.hero-slide-img-left {
+  animation: hero-zoom-left 6s ease-out forwards;
 }
 
 /* Embla carousel overrides */
@@ -468,7 +498,16 @@ html {
    ======================================== */
 
 @media (max-width: 768px) {
-  .hero-slide-img {
+  .hero-slide-img-active {
     animation: hero-zoom 8s ease-out forwards;
+  }
+  .hero-slide-img-right {
+    animation: hero-zoom-right 8s ease-out forwards;
+  }
+  .hero-slide-img-up {
+    animation: hero-zoom-up 8s ease-out forwards;
+  }
+  .hero-slide-img-left {
+    animation: hero-zoom-left 8s ease-out forwards;
   }
 }

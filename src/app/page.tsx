@@ -76,10 +76,17 @@ const heroSlides = [
 ];
 
 // =================== HERO SECTION ===================
+const heroZoomClasses = [
+  "hero-slide-img-active",
+  "hero-slide-img-right",
+  "hero-slide-img-up",
+  "hero-slide-img-left",
+];
+
 function HeroSection() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [
-    Autoplay({ delay: 6000, stopOnInteraction: false }),
+    Autoplay({ delay: 6000, stopOnInteraction: false, stopOnMouseEnter: true }),
   ]);
 
   const scrollTo = useCallback((index: number) => emblaApi && emblaApi.scrollTo(index), [emblaApi]);
@@ -101,8 +108,18 @@ function HeroSection() {
         <div className="flex h-full">
           {heroSlides.map((slide, idx) => (
             <div key={idx} className="flex-[0_0_100%] min-w-0 relative h-screen">
-              <img src={slide.image} alt={slide.title.join(" ")} className="w-full h-full object-cover hero-slide-img" />
+              <img
+                key={`img-${idx}-${idx === currentSlide ? "active" : "idle"}`}
+                src={slide.image}
+                alt={slide.title.join(" ")}
+                className={`w-full h-full object-cover ${idx === currentSlide ? heroZoomClasses[idx] : ""}`}
+                style={idx !== currentSlide ? { transform: "scale(1.12)" } : undefined}
+              />
               <div className={`absolute inset-0 bg-gradient-to-r ${slide.gradient}`} />
+              {/* Diagonal light streak */}
+              <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                <div className="absolute -top-1/2 -right-1/4 w-[120%] h-[200%] bg-gradient-to-bl from-white/[0.03] via-transparent to-transparent rotate-12" />
+              </div>
               {/* Animated ambient particles */}
               <div className="absolute inset-0 overflow-hidden pointer-events-none">
                 <motion.div className="absolute top-1/4 right-1/4 w-96 h-96 rounded-full bg-[#FF7F00]/8 blur-[100px]" animate={{ scale: [1, 1.3, 1], opacity: [0.3, 0.5, 0.3] }} transition={{ duration: 6, repeat: Infinity }} />
@@ -117,30 +134,59 @@ function HeroSection() {
       {/* Content Overlay */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 w-full">
         <AnimatePresence mode="wait">
-          <motion.div key={currentSlide} className="max-w-3xl" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.5 }}>
+          <motion.div key={currentSlide} className="max-w-3xl">
             {/* Badge */}
-            <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6, delay: 0.1 }}>
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, y: -15 }}
+              transition={{ duration: 0.5, delay: 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
+            >
               <span className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md text-white border border-white/15 rounded-full px-5 py-2.5 text-sm font-medium mb-8 shadow-lg">
                 {(() => { const Icon = heroSlides[currentSlide].badge.icon; return <Icon size={14} className="text-[#FF7F00]" />; })()}
                 {heroSlides[currentSlide].badge.text}
               </span>
             </motion.div>
 
-            {/* Title */}
-            <motion.h1 className="text-5xl sm:text-6xl lg:text-[5rem] font-extrabold text-white leading-[1.05] mb-8 tracking-tight" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.2 }}>
-              {heroSlides[currentSlide].title[0]}
-              <br />
-              <span className="bg-gradient-to-r from-[#FF7F00] to-[#FFA040] bg-clip-text text-transparent">{heroSlides[currentSlide].title[1]}</span>{" "}
-              {heroSlides[currentSlide].title[2]}
-            </motion.h1>
+            {/* Title with staggered line-by-line reveal */}
+            <h1 className="text-5xl sm:text-6xl lg:text-[5.5rem] font-extrabold text-white leading-[1.05] mb-8 tracking-tight">
+              {heroSlides[currentSlide].title.map((line, lineIdx) => (
+                <div key={lineIdx} className="overflow-hidden">
+                  <motion.div
+                    initial={{ y: "100%" }}
+                    animate={{ y: 0 }}
+                    exit={{ y: "-110%" }}
+                    transition={{ duration: 0.55, delay: 0.2 + lineIdx * 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
+                  >
+                    {lineIdx === 1 ? (
+                      <span className="bg-gradient-to-r from-[#FF7F00] to-[#FFA040] bg-clip-text text-transparent">{line}</span>
+                    ) : (
+                      <span>{line}</span>
+                    )}
+                  </motion.div>
+                </div>
+              ))}
+            </h1>
 
             {/* Description */}
-            <motion.p className="text-lg sm:text-xl text-white/75 mb-10 max-w-2xl leading-relaxed" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.35 }}>
+            <motion.p
+              className="text-lg sm:text-xl text-white/75 mb-10 max-w-2xl leading-relaxed"
+              initial={{ opacity: 0, y: 25 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -15 }}
+              transition={{ duration: 0.5, delay: 0.55, ease: [0.25, 0.46, 0.45, 0.94] }}
+            >
               {heroSlides[currentSlide].description}
             </motion.p>
 
             {/* CTAs */}
-            <motion.div className="flex flex-col sm:flex-row gap-4" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.5 }}>
+            <motion.div
+              className="flex flex-col sm:flex-row gap-4"
+              initial={{ opacity: 0, y: 25 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -15 }}
+              transition={{ duration: 0.5, delay: 0.65, ease: [0.25, 0.46, 0.45, 0.94] }}
+            >
               <Link href={heroSlides[currentSlide].primaryCta.href}>
                 <Button size="lg" className="bg-[#FF7F00] hover:bg-[#CC6600] text-white font-bold px-8 py-7 text-base rounded-xl shadow-xl shadow-[#FF7F00]/25 hover:shadow-[#FF7F00]/40 transition-all btn-glow group">
                   {heroSlides[currentSlide].primaryCta.text}
@@ -156,7 +202,13 @@ function HeroSection() {
             </motion.div>
 
             {/* Trust badges */}
-            <motion.div className="mt-14 flex flex-wrap items-center gap-8" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.7, delay: 0.65 }}>
+            <motion.div
+              className="mt-14 flex flex-wrap items-center gap-8"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.5, delay: 0.8 }}
+            >
               {[
                 { icon: Shield, text: "ISO 9001 Certified" },
                 { icon: Clock, text: "24/7 Support" },
@@ -174,36 +226,98 @@ function HeroSection() {
         </AnimatePresence>
       </div>
 
-      {/* Navigation Arrows */}
-      <div className="absolute z-20 left-4 sm:left-8 top-1/2 -translate-y-1/2">
-        <button onClick={scrollPrev} className="w-12 h-12 rounded-xl glass text-white hover:bg-white/15 transition-all hover:scale-110" aria-label="Previous slide">
-          <ChevronLeft size={24} className="mx-auto" />
+      {/* Vertical side text - company branding */}
+      <div className="hidden xl:flex absolute left-6 top-1/2 -translate-y-1/2 z-20 flex-col items-center gap-4">
+        <div className="w-px h-16 bg-gradient-to-b from-transparent via-white/20 to-transparent" />
+        <span className="text-white/25 text-[10px] font-bold tracking-[0.3em] uppercase [writing-mode:vertical-lr] rotate-180">Sky Port Logistics</span>
+        <div className="w-px h-16 bg-gradient-to-b from-transparent via-white/20 to-transparent" />
+      </div>
+
+      {/* Slide number counter - top right, avoids arrow overlap */}
+      <div className="hidden lg:flex absolute right-8 xl:right-12 top-28 z-20 flex-col items-center gap-2">
+        <div className="relative flex flex-col items-center">
+          <span className="text-white text-2xl xl:text-3xl font-extrabold tabular-nums leading-none">{String(currentSlide + 1).padStart(2, "0")}</span>
+          <div className="w-10 h-px bg-gradient-to-r from-transparent via-[#FF7F00]/60 to-transparent mt-2" />
+        </div>
+        <span className="text-white/35 text-xs font-bold tabular-nums">{String(heroSlides.length).padStart(2, "0")}</span>
+        <div className="mt-1 text-[#FF7F00]/35 text-[9px] font-bold tracking-[0.2em] uppercase [writing-mode:vertical-lr] rotate-180">
+          {heroSlides[currentSlide].badge.text.split(" ").slice(-1)[0]}
+        </div>
+      </div>
+
+      {/* Navigation Arrows - larger, premium glass style */}
+      <div className="absolute z-20 left-3 sm:left-6 lg:left-10 top-1/2 -translate-y-1/2">
+        <button onClick={scrollPrev} className="group w-11 h-11 sm:w-14 sm:h-14 rounded-2xl glass text-white hover:bg-white/15 transition-all duration-300 hover:scale-110 flex items-center justify-center" aria-label="Previous slide">
+          <ChevronLeft size={22} className="group-hover:-translate-x-0.5 transition-transform" />
         </button>
       </div>
-      <div className="absolute z-20 right-4 sm:right-8 top-1/2 -translate-y-1/2">
-        <button onClick={scrollNext} className="w-12 h-12 rounded-xl glass text-white hover:bg-white/15 transition-all hover:scale-110" aria-label="Next slide">
-          <ChevronRight size={24} className="mx-auto" />
+      <div className="absolute z-20 right-3 sm:right-6 lg:right-10 top-1/2 -translate-y-1/2">
+        <button onClick={scrollNext} className="group w-11 h-11 sm:w-14 sm:h-14 rounded-2xl glass text-white hover:bg-white/15 transition-all duration-300 hover:scale-110 flex items-center justify-center" aria-label="Next slide">
+          <ChevronRight size={22} className="group-hover:translate-x-0.5 transition-transform" />
         </button>
       </div>
 
-      {/* Slide indicators */}
-      <div className="absolute z-20 bottom-24 left-1/2 -translate-x-1/2 flex items-center gap-2.5">
+      {/* Bottom navigation bar: indicators + counter */}
+      <div className="absolute z-20 bottom-16 sm:bottom-20 left-1/2 -translate-x-1/2 flex items-center gap-5">
+        {/* Animated pill indicators with fill effect */}
         {heroSlides.map((_, idx) => (
-          <button key={idx} onClick={() => scrollTo(idx)} className={`transition-all duration-500 rounded-full ${currentSlide === idx ? "w-10 h-2.5 bg-[#FF7F00] shadow-lg shadow-[#FF7F00]/40" : "w-2.5 h-2.5 bg-white/30 hover:bg-white/50"}`} aria-label={`Go to slide ${idx + 1}`} />
+          <button
+            key={idx}
+            onClick={() => scrollTo(idx)}
+            className={`relative h-2.5 rounded-full transition-all duration-500 overflow-hidden ${
+              currentSlide === idx
+                ? "w-10 sm:w-12 bg-white/15"
+                : "w-2.5 bg-white/25 hover:bg-white/40"
+            }`}
+            aria-label={`Go to slide ${idx + 1}`}
+          >
+            {currentSlide === idx && (
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-r from-[#FF7F00] to-[#FFA040] rounded-full"
+                initial={{ x: "-100%" }}
+                animate={{ x: "0%" }}
+                transition={{ duration: 6, ease: "linear" }}
+              />
+            )}
+          </button>
         ))}
+
+        {/* Divider + counter */}
+        <div className="hidden sm:flex items-center gap-2 ml-2 pl-4 border-l border-white/10">
+          <span className="text-white text-lg font-extrabold tabular-nums leading-none">{String(currentSlide + 1).padStart(2, "0")}</span>
+          <span className="text-white/25 text-xs">/</span>
+          <span className="text-white/40 text-sm font-bold tabular-nums">{String(heroSlides.length).padStart(2, "0")}</span>
+        </div>
       </div>
 
-      {/* Progress bar */}
-      <div className="absolute z-20 bottom-0 left-0 right-0 h-1 bg-white/5">
-        <motion.div className="h-full bg-gradient-to-r from-[#FF7F00] to-[#FFA040]" initial={{ width: "0%" }} animate={{ width: "100%" }} transition={{ duration: 6, ease: "linear", repeat: Infinity }} key={currentSlide} />
+      {/* Progress bar - thicker with glow */}
+      <div className="absolute z-20 bottom-0 left-0 right-0 h-1.5 bg-white/5">
+        <motion.div
+          className="h-full bg-gradient-to-r from-[#FF7F00] to-[#FFA040] shadow-[0_0_10px_rgba(255,127,0,0.4)]"
+          initial={{ width: "0%" }}
+          animate={{ width: "100%" }}
+          transition={{ duration: 6, ease: "linear" }}
+          key={currentSlide}
+        />
       </div>
 
       {/* Scroll indicator */}
-      <motion.div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20" animate={{ y: [0, 8, 0] }} transition={{ duration: 2, repeat: Infinity }}>
-        <div className="w-7 h-10 rounded-full border-2 border-white/20 flex justify-center pt-2">
-          <div className="w-1 h-2.5 bg-white/50 rounded-full" />
+      <motion.div
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 hidden sm:block"
+        animate={{ y: [0, 6, 0] }}
+        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+      >
+        <div className="w-6 h-9 rounded-full border border-white/15 flex justify-center pt-1.5">
+          <motion.div
+            className="w-0.5 h-2 bg-white/40 rounded-full"
+            animate={{ opacity: [0.4, 1, 0.4], y: [0, 4, 0] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          />
         </div>
       </motion.div>
+
+      {/* Bottom fade for smooth section transition */}
+      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#ffffff] via-[#ffffff]/30 to-transparent z-10 pointer-events-none" />
     </section>
   );
 }
