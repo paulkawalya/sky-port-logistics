@@ -22,7 +22,7 @@ export default function Footer() {
             <div className="lg:col-span-4">
               <Link href="/" className="flex items-center gap-3 mb-6">
                 <div className="relative">
-                  <img src="/logo.jpeg" alt="Sky Port Logistics" className="h-11 w-11 rounded-xl object-cover ring-2 ring-[#FF7F00]/30" />
+                  <img src="/logo.png" alt="Sky Port Logistics" className="h-11 w-11 rounded-xl object-contain" />
                   <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-[#FF7F00] rounded-full border-2 border-[#003D66]" />
                 </div>
                 <div>

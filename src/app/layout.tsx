@@ -33,7 +33,7 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Sky Port Logistics" }],
   icons: {
-    icon: "/logo.jpeg",
+    icon: "/logo.png",
   },
   openGraph: {
     title: "Sky Port Logistics - Global Shipping & Freight Solutions",

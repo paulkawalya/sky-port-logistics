@@ -192,9 +192,9 @@ export default function Header() {
           <Link href="/" className="flex items-center group">
             <div className="relative">
               <img
-                src="/logo.jpeg"
+                src="/logo.png"
                 alt="Sky Port Logistics"
-                className="h-24 w-24 rounded-2xl object-cover ring-2 ring-[#FF7F00]/50 group-hover:ring-[#FF7F00] transition-all shadow-lg"
+                className="h-24 w-24 rounded-2xl object-contain group-hover:scale-105 transition-all"
               />
               <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-[#FF7F00] rounded-full border-2 border-white flex items-center justify-center">
                 <div className="w-1.5 h-1.5 bg-white rounded-full" />
