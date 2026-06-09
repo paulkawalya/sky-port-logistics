@@ -127,7 +127,7 @@
           <!-- Document Header -->
           <div class="p-8 border-bottom bg-gradient">
             <div class="text-center mb-3">
-              <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/app-assets/img/logo/sifcargo_icon.png'))) }}" alt="SIFCARGO TONIGHT" style="width: auto; max-height: 120px;">
+              <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/app-assets/img/logo/skyport.png'))) }}" alt="SKY PORT LOGISTICS LTD" style="width: auto; max-height: 120px;">
             </div>
             <div class="text-center">
               <div class="d-inline-block p-8 bg-white rounded shadow-sm">

@@ -7,7 +7,7 @@
             @include('pages.address')
         </div>
         <div class="col-md-6 text-end">
-            <img width="35%" src="{{asset('/app-assets/img/logo/tonightgroup.jpeg')}}" alt="" class="float-end">
+            <img width="35%" src="{{asset('/app-assets/img/logo/skyport.png')}}" alt="Sky Port Logistics LTD Logo" class="float-end">
         </div>
     </div>
 

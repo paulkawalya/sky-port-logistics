@@ -269,12 +269,12 @@
     </style>
 </head>
 <body>
-    <div class="watermark">SIFCARGO TONIGHT</div>
+    <div class="watermark">SKY PORT LOGISTICS LTD</div>
 
     <div class="document-container">
         <div class="header">
             <div class="tin-number">TIN: 1033561397</div>
-            <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/app-assets/img/logo/sifcargo_icon.png'))) }}" alt="SIFCARGO TONIGHT" style="width: auto; max-width: 550px; max-height: 130px; margin: 0 auto 5px; display: block;">
+            <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/app-assets/img/logo/skyport.png'))) }}" alt="SKY PORT LOGISTICS LTD" style="width: auto; max-width: 550px; max-height: 130px; margin: 0 auto 5px; display: block;">
     
         </div>
 
@@ -438,7 +438,7 @@
 
         <div class="bank-details">
             <div class="bank-details-title">Bank Details</div>
-            <div class="bank-account"><strong>ACCOUNT NAME:</strong> SIF CARGO FORWARDING & CLEARING LIMITED</div>
+            <div class="bank-account"><strong>ACCOUNT NAME:</strong> SKY PORT LOGISTICS LTD</div>
             <div class="bank-account"><strong>BANK:</strong> DFCU</div>
             <div class="bank-account"><strong>ACCOUNT NUMBER (UGX):</strong> 01070011606048</div>
             <div class="bank-account"><strong>ACCOUNT NUMBER (USD):</strong> 02070011606093</div>
@@ -460,7 +460,7 @@
         <div class="footer">
             <div style="font-size: 30px;">This is a secure document generated on: {{ date('d M Y H:i:s') }}</div>
             <div style="font-size: 30px;">This document is for reference only and does not require a signature.</div>
-            <div class="footer-company" style="font-size: 30px;">SIFCARGO - TONIGHT</div>
+            <div class="footer-company" style="font-size: 30px;">SKY PORT LOGISTICS LTD</div>
         </div>
     </div>
 </body>

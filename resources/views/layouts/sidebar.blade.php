@@ -18,16 +18,16 @@
                     <div class="hp-header-logo d-flex align-items-center">
                         <a href="/" class="position-relative">
 
-                            <img class="hp-logo hp-sidebar-visible hp-dark-none" src="https://ik.imagekit.io/kawalya/gruland.png?updatedAt=1748587398384" alt="logo">
-                            <img class="hp-logo hp-sidebar-visible hp-dark-block" src="https://ik.imagekit.io/kawalya/gruland.png?updatedAt=1748587398384" alt="logo">
-                            <img class="hp-logo hp-sidebar-hidden hp-dir-none hp-dark-none" src="https://ik.imagekit.io/kawalya/gruland.png?updatedAt=1748587398384" alt="logo">
-                            <img class="hp-logo hp-sidebar-hidden hp-dir-none hp-dark-block" src="https://ik.imagekit.io/kawalya/gruland.png?updatedAt=1748587398384" alt="logo">
-                            <img class="hp-logo hp-sidebar-hidden hp-dir-block hp-dark-none" src="https://ik.imagekit.io/kawalya/gruland.png?updatedAt=1748587398384" alt="logo">
-                            <img class="hp-logo hp-sidebar-hidden hp-dir-block hp-dark-block" src="https://ik.imagekit.io/kawalya/gruland.png?updatedAt=1748587398384" alt="logo">
+                            <img class="hp-logo hp-sidebar-visible hp-dark-none" src="/app-assets/img/logo/skyport.png" alt="logo">
+                            <img class="hp-logo hp-sidebar-visible hp-dark-block" src="/app-assets/img/logo/skyport.png" alt="logo">
+                            <img class="hp-logo hp-sidebar-hidden hp-dir-none hp-dark-none" src="/app-assets/img/logo/skyport.png" alt="logo">
+                            <img class="hp-logo hp-sidebar-hidden hp-dir-none hp-dark-block" src="/app-assets/img/logo/skyport.png" alt="logo">
+                            <img class="hp-logo hp-sidebar-hidden hp-dir-block hp-dark-none" src="/app-assets/img/logo/skyport.png" alt="logo">
+                            <img class="hp-logo hp-sidebar-hidden hp-dir-block hp-dark-block" src="/app-assets/img/logo/skyport.png" alt="logo">
                         </a>
 
                         <!-- <a href="#" target="_blank" class="d-flex">
-                                <span class="hp-sidebar-hidden hp-caption fw-normal hp-text-color-primary-1">SifCargo</span>
+                                <span class="hp-sidebar-hidden hp-caption fw-normal hp-text-color-primary-1">Sky Port Logistics LTD</span>
                             </a> -->
                     </div>
                 </div>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Sifcargo Tonight</title>
+    <title>Sky Port Logistics LTD</title>
     <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9, user-scalable=0">
     <meta content="We handle cargo of any size" name="description" />
     <meta content="appcellon@gmail.com" name="author" />
@@ -176,7 +176,7 @@
             <footer class="w-100 py-18 px-16 py-sm-24 px-sm-32 hp-bg-color-black-20 hp-bg-color-dark-90">
                 <div class="row">
                     <div class="col-12">
-                        <p class="hp-badge-text fw-semibold mb-0 text-center text-sm-start hp-text-color-dark-30">COPYRIGHT 2024 SifCargo, All rights Reserved</p>
+                        <p class="hp-badge-text fw-semibold mb-0 text-center text-sm-start hp-text-color-dark-30">COPYRIGHT 2024 Sky Port Logistics LTD, All rights Reserved</p>
                     </div>
                 </div>
             </footer>

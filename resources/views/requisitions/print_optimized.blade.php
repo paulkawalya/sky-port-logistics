@@ -238,18 +238,18 @@
     <div class="header">
         <!-- <div style="display: flex; justify-content: space-between; align-items: center;">
             <div class="company-info" style="width: 50%;">
-                <div class="company-name">SIFCARGO - TONIGHT</div>
+                <div class="company-name">SKY PORT LOGISTICS LTD</div>
                 <div>CROWN HOUSE BUILDING, Level 2,</div>
                 <div>ROOM A3, Opp: THOBANI CENTER,</div>
                 <div>Plot A4, Kampala Road, Uganda.</div>
                 <div>Office Line: +256 200 843531</div>
-                <div>Email Address: info@sifcargo.com</div>
+                <div>Email Address: info@skyportlogistics.com</div>
             </div>
             <div style="width: 50%; text-align: right;">
-                <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/app-assets/img/logo/sifcargo_icon.png'))) }}" alt="SIFCARGO TONIGHT">
+                <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/app-assets/img/logo/skyport.png'))) }}" alt="SKY PORT LOGISTICS LTD">
             </div>
         </div> -->
-        <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/app-assets/img/logo/sifcargo_icon.png'))) }}" alt="SIFCARGO TONIGHT" style="width: auto; max-width: 550px; max-height: 130px; margin: 0 auto 5px; display: block;">
+        <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/app-assets/img/logo/skyport.png'))) }}" alt="SKY PORT LOGISTICS LTD" style="width: auto; max-width: 550px; max-height: 130px; margin: 0 auto 5px; display: block;">
     </div>
 
     <hr class="red-line">
