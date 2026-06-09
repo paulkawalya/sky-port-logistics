@@ -187,26 +187,18 @@ export default function Header() {
       </AnimatePresence>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
+        <div className="flex items-center justify-between h-28">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-3 group">
+          <Link href="/" className="flex items-center group">
             <div className="relative">
               <img
                 src="/logo.jpeg"
                 alt="Sky Port Logistics"
-                className="h-20 w-20 rounded-xl object-cover ring-2 ring-[#FF7F00]/50 group-hover:ring-[#FF7F00] transition-all shadow-lg"
+                className="h-24 w-24 rounded-2xl object-cover ring-2 ring-[#FF7F00]/50 group-hover:ring-[#FF7F00] transition-all shadow-lg"
               />
-              <div className="absolute -bottom-0.5 -right-0.5 w-5 h-5 bg-[#FF7F00] rounded-full border-2 border-white flex items-center justify-center">
-                <div className="w-1 h-1 bg-white rounded-full" />
+              <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-[#FF7F00] rounded-full border-2 border-white flex items-center justify-center">
+                <div className="w-1.5 h-1.5 bg-white rounded-full" />
               </div>
-            </div>
-            <div>
-              <span className={`text-3xl font-extrabold tracking-tight transition-colors duration-300 ${isSolid ? "text-[#003D66]" : "text-white"}`}>
-                SKY<span className="text-[#FF7F00]">PORT</span>
-              </span>
-              <span className={`block text-[11px] tracking-[0.35em] uppercase font-medium transition-colors duration-300 ${isSolid ? "text-[#005B96]/60" : "text-white/50"}`}>
-                Logistics
-              </span>
             </div>
           </Link>
 
