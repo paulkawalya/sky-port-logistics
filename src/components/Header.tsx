@@ -371,7 +371,7 @@ export default function Header() {
                 </Button>
               </Link>
               <Link href="/contact">
-                <Button className="bg-[#FF7F00] hover:bg-[#CC6600] text-white font-semibold px-6 rounded-full shadow-lg shadow-[#FF7F00]/25 hover:shadow-[#FF7F00]/40 transition-all btn-glow h-10 text-[13px]">
+                <Button className="!bg-[#FF7F00] hover:!bg-[#CC6600] !text-white font-semibold px-6 rounded-full shadow-lg shadow-[#FF7F00]/25 hover:shadow-[#FF7F00]/40 transition-all btn-glow h-10 text-[13px]">
                   Get a Quote
                 </Button>
               </Link>
@@ -490,12 +490,12 @@ export default function Header() {
               })}
               <div className="pt-4 space-y-3">
                 <Link href="/tracking" onClick={closeMobileMenu}>
-                  <Button variant="outline" className="w-full border-[#005B96]/20 text-[#005B96] font-semibold rounded-xl h-12 hover:bg-[#005B96]/5">
+                  <Button variant="outline" className="w-full !border-[#005B96]/20 !text-[#005B96] font-semibold rounded-xl h-12 hover:!bg-[#005B96]/5">
                     Track Shipment
                   </Button>
                 </Link>
                 <Link href="/contact" onClick={closeMobileMenu}>
-                  <Button className="w-full bg-[#FF7F00] hover:bg-[#CC6600] text-white font-semibold rounded-xl h-12 btn-glow">
+                  <Button className="w-full !bg-[#FF7F00] hover:!bg-[#CC6600] !text-white font-semibold rounded-xl h-12 btn-glow">
                     Get a Quote
                   </Button>
                 </Link>

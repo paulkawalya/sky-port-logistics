@@ -247,13 +247,13 @@ function HeroSection() {
               transition={{ duration: 0.5, delay: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
             >
               <Link href={heroSlides[currentSlide].primaryCta.href}>
-                <Button size="lg" className="bg-[#FF7F00] hover:bg-[#E06F00] text-white font-bold px-7 py-6 text-sm rounded-full shadow-lg shadow-[#FF7F00]/30 hover:shadow-[#FF7F00]/50 transition-all btn-glow group">
+                <Button size="lg" className="!bg-[#FF7F00] hover:!bg-[#E06F00] !text-white font-bold px-7 py-6 text-sm rounded-full shadow-lg shadow-[#FF7F00]/30 hover:shadow-[#FF7F00]/50 transition-all btn-glow group">
                   {heroSlides[currentSlide].primaryCta.text}
                   <ArrowRight className="ml-2 group-hover:translate-x-1.5 transition-transform" size={16} />
                 </Button>
               </Link>
               <Link href={heroSlides[currentSlide].secondaryCta.href}>
-                <Button size="lg" variant="outline" className="border-white/25 text-white hover:bg-white/10 hover:border-white/40 font-semibold px-7 py-6 text-sm rounded-full backdrop-blur-md btn-ghost-premium group">
+                <Button size="lg" variant="outline" className="!border-white/25 !text-white !bg-transparent hover:!bg-white/10 hover:!border-white/40 font-semibold px-7 py-6 text-sm rounded-full backdrop-blur-md btn-ghost-premium group">
                   {heroSlides[currentSlide].secondaryCta.text}
                   {(() => { const Icon = heroSlides[currentSlide].secondaryCta.icon; return <Icon className="ml-2 group-hover:translate-x-1.5 transition-transform" size={16} />; })()}
                 </Button>
@@ -592,7 +592,7 @@ function AboutSection() {
             </div>
 
             <Link href="/about">
-              <Button className="bg-[#005B96] hover:bg-[#004A7A] text-white font-bold px-7 py-5 rounded-full shadow-lg shadow-[#005B96]/20 transition-all btn-glow btn-glow-blue group">
+              <Button className="!bg-[#005B96] hover:!bg-[#004A7A] !text-white font-bold px-7 py-5 rounded-full shadow-lg shadow-[#005B96]/20 transition-all btn-glow btn-glow-blue group">
                 Learn More About Us
                 <ArrowRight className="ml-2 group-hover:translate-x-1.5 transition-transform" size={16} />
               </Button>
@@ -681,7 +681,7 @@ function TrackingSection() {
                   className="flex-1 h-14 bg-white/8 border-white/15 text-white placeholder:text-white/30 text-base rounded-xl px-6 backdrop-blur-sm focus:ring-[#FF7F00]/50"
                 />
                 <Link href="/tracking">
-                  <Button className="h-14 bg-[#FF7F00] hover:bg-[#E06F00] text-white font-bold px-8 rounded-full shadow-lg shadow-[#FF7F00]/30 text-base btn-glow group">
+                  <Button className="h-14 !bg-[#FF7F00] hover:!bg-[#E06F00] !text-white font-bold px-8 rounded-full shadow-lg shadow-[#FF7F00]/30 text-base btn-glow group">
                     Track Now
                     <ArrowRight className="ml-2 group-hover:translate-x-1.5 transition-transform" size={16} />
                   </Button>
@@ -810,13 +810,13 @@ function CTASection() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/contact">
-              <Button size="lg" className="bg-white text-[#FF7F00] hover:bg-gray-50 font-bold px-8 py-6 text-base rounded-full shadow-xl hover:shadow-2xl transition-all btn-ghost-premium group">
+              <Button size="lg" className="!bg-white !text-[#FF7F00] hover:!bg-gray-50 font-bold px-8 py-6 text-base rounded-full shadow-xl hover:shadow-2xl transition-all btn-ghost-premium group">
                 Get Free Quote
                 <ArrowRight className="ml-2 group-hover:translate-x-1.5 transition-transform" size={18} />
               </Button>
             </Link>
             <a href="tel:+18005571234">
-              <Button size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10 hover:border-white/50 font-bold px-8 py-6 text-base rounded-full backdrop-blur-sm btn-ghost-premium">
+              <Button size="lg" variant="outline" className="!border-white/30 !text-white !bg-transparent hover:!bg-white/10 hover:!border-white/50 font-bold px-8 py-6 text-base rounded-full backdrop-blur-sm btn-ghost-premium">
                 <Phone className="mr-2" size={18} />
                 Call Us Now
               </Button>
@@ -901,7 +901,7 @@ function ContactSection() {
                   <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5 block">Message *</label>
                   <Textarea placeholder="Tell us about your shipping needs..." rows={4} value={formData.message} onChange={(e) => setFormData({ ...formData, message: e.target.value })} className="rounded-xl border-gray-200 focus:ring-[#FF7F00]/30" required />
                 </div>
-                <Button type="submit" className="w-full bg-[#FF7F00] hover:bg-[#E06F00] text-white font-bold h-12 rounded-full text-base btn-glow group">
+                <Button type="submit" className="w-full !bg-[#FF7F00] hover:!bg-[#E06F00] !text-white font-bold h-12 rounded-full text-base btn-glow group">
                   Send Message
                   <Send className="ml-2 group-hover:translate-x-1 transition-transform" size={16} />
                 </Button>
