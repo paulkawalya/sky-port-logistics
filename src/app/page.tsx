@@ -34,7 +34,7 @@ function useCounter(target: number, duration: number = 2000, start: boolean = fa
   return count;
 }
 
-// Hero Slide Data
+// Hero Slide Data - 8 unique slides for variety
 const heroSlides = [
   {
     image: "/hero-bg.png",
@@ -72,6 +72,42 @@ const heroSlides = [
     primaryCta: { text: "Air Freight", href: "/services/air-freight" },
     secondaryCta: { text: "Get a Quote", href: "/contact", icon: ArrowRight },
   },
+  {
+    image: "/hero-road.png",
+    gradient: "from-[#003D66]/92 via-[#005B96]/82 to-[#003D66]/68",
+    badge: { icon: Truck, text: "Road Transport Network" },
+    title: ["On the Road,", "Ahead of Schedule", "Every Time"],
+    description: "Efficient road freight and last-mile delivery connecting ports, warehouses, and final destinations. GPS-tracked fleet with cross-border expertise and refrigerated transport options.",
+    primaryCta: { text: "Road Solutions", href: "/services/road-transport" },
+    secondaryCta: { text: "Track Shipment", href: "/tracking", icon: Navigation },
+  },
+  {
+    image: "/hero-rail.png",
+    gradient: "from-[#003D66]/90 via-[#005B96]/85 to-[#003D66]/72",
+    badge: { icon: Container, text: "Rail & Intermodal Freight" },
+    title: ["Across Continents,", "Seamless Connections", "By Rail"],
+    description: "Cost-effective rail freight linking major trade corridors. Intermodal solutions that combine rail, road, and sea for optimal transit times and competitive pricing across landmasses.",
+    primaryCta: { text: "Intermodal Solutions", href: "/services" },
+    secondaryCta: { text: "Get a Quote", href: "/contact", icon: ArrowRight },
+  },
+  {
+    image: "/hero-customs.png",
+    gradient: "from-[#005B96]/88 via-[#0078C8]/82 to-[#003D66]/75",
+    badge: { icon: Shield, text: "Customs & Compliance" },
+    title: ["Clear Borders,", "Clear Customs", "Clear Ahead"],
+    description: "Expert customs brokerage and trade compliance services. We handle documentation, tariffs, and regulatory requirements so your cargo moves through borders without delays.",
+    primaryCta: { text: "Customs Solutions", href: "/services" },
+    secondaryCta: { text: "Get a Quote", href: "/contact", icon: ArrowRight },
+  },
+  {
+    image: "/hero-tech.png",
+    gradient: "from-[#003D66]/93 via-[#005B96]/80 to-[#003D66]/62",
+    badge: { icon: Globe, text: "Smart Tracking Technology" },
+    title: ["Real-Time Visibility,", "Real-Time Control", "Real Results"],
+    description: "Proprietary tracking technology gives you end-to-end visibility across your entire supply chain. Monitor shipments, predict ETAs, and optimize routes from a single intelligent dashboard.",
+    primaryCta: { text: "Track Now", href: "/tracking" },
+    secondaryCta: { text: "Explore Tech", href: "/services", icon: ArrowRight },
+  },
 ];
 
 // =================== HERO SECTION ===================
@@ -80,6 +116,10 @@ const heroZoomClasses = [
   "hero-slide-img-right",
   "hero-slide-img-up",
   "hero-slide-img-left",
+  "hero-slide-img-down",
+  "hero-slide-img-diagonal-tr",
+  "hero-slide-img-diagonal-bl",
+  "hero-slide-img-pulse",
 ];
 
 function HeroSection() {
