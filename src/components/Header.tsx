@@ -194,17 +194,17 @@ export default function Header() {
               <img
                 src="/logo.jpeg"
                 alt="Sky Port Logistics"
-                className="h-11 w-11 rounded-xl object-cover ring-2 ring-[#FF7F00]/50 group-hover:ring-[#FF7F00] transition-all shadow-lg"
+                className="h-14 w-14 rounded-xl object-cover ring-2 ring-[#FF7F00]/50 group-hover:ring-[#FF7F00] transition-all shadow-lg"
               />
-              <div className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-[#FF7F00] rounded-full border-2 border-white flex items-center justify-center">
+              <div className="absolute -bottom-0.5 -right-0.5 w-4 h-4 bg-[#FF7F00] rounded-full border-2 border-white flex items-center justify-center">
                 <div className="w-1 h-1 bg-white rounded-full" />
               </div>
             </div>
             <div>
-              <span className={`text-xl font-extrabold tracking-tight transition-colors duration-300 ${isSolid ? "text-[#003D66]" : "text-white"}`}>
+              <span className={`text-2xl font-extrabold tracking-tight transition-colors duration-300 ${isSolid ? "text-[#003D66]" : "text-white"}`}>
                 SKY<span className="text-[#FF7F00]">PORT</span>
               </span>
-              <span className={`block text-[9px] tracking-[0.35em] uppercase font-medium transition-colors duration-300 ${isSolid ? "text-[#005B96]/60" : "text-white/50"}`}>
+              <span className={`block text-[10px] tracking-[0.35em] uppercase font-medium transition-colors duration-300 ${isSolid ? "text-[#005B96]/60" : "text-white/50"}`}>
                 Logistics
               </span>
             </div>
