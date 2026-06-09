@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class QuotationDetail extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'quotation_id',
+        'particular',
+        'quantity',
+        'unit_price',
+    ];
 }

@@ -164,6 +164,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/quotation/print/{id}', [QuotationController::class, 'printQuotation'])->name('quotation.print');
 
     Route::resource('quotation_details',QuotationDetailController::class);
+    Route::post('quotation_details/import', [QuotationDetailController::class, 'import'])->name('quotation_details.import');
 
     // Example of encrypted route
     Route::get('/quotation/secure/{id}', function($id) {

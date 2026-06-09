@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\QuotationDetail;
 use Illuminate\Http\Request;
+use App\Imports\QuotationDetailsImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class QuotationDetailController extends Controller
 {
@@ -94,5 +96,27 @@ class QuotationDetailController extends Controller
         QuotationDetail::destroy($quotationDetail->id);
 
         return back();
+    }
+
+    /**
+     * Import quotation details from Excel.
+     */
+    public function import(Request $request)
+    {
+        $request->validate([
+            'quotation_id' => 'required|exists:quotations,id',
+            'excel_file'   => 'required|file|mimes:xlsx,xls,csv|max:10240',
+        ]);
+
+        try {
+            Excel::import(
+                new QuotationDetailsImport($request->quotation_id), 
+                $request->file('excel_file')
+            );
+
+            return back()->with('success', 'Quotation items imported successfully.');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Import failed: ' . $e->getMessage());
+        }
     }
 }

@@ -80,6 +80,11 @@
                           <i class="ri-add-line me-8 text-success"></i> Add Item
                         </button>
                       </li>
+                      <li>
+                        <button type="button" class="dropdown-item" data-toggle="modal" data-target="#import_excel">
+                          <i class="ri-file-excel-line me-8 text-success"></i> Import from Excel
+                        </button>
+                      </li>
                     @endif
 
                     <li>
@@ -767,6 +772,7 @@
 </div>
 
 @include("models.add_quote_item")
+@include("models.import_quote_items")
 @include("models.add_quotation_tax")
 
 <!-- Share Options Modal -->
