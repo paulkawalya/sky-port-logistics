@@ -19,7 +19,7 @@ import { Textarea } from "@/components/ui/textarea";
 import AnimatedSection from "@/components/AnimatedSection";
 
 const offices = [
-  { city: "Kampala (HQ)", country: "Uganda", address: "Sky Port Logistics Ltd", phone: "+256 782 843531" },
+  { city: "Kampala (HQ)", country: "Uganda", address: "Crown House, Kampala Road, Level 3", phone: "+256 782 843531" },
   { city: "Mombasa", country: "Kenya", address: "Port Office, Mombasa Port", phone: "+254 700 123 456" },
   { city: "Dar es Salaam", country: "Tanzania", address: "Port House, Dar es Salaam Harbour", phone: "+255 700 123 456" },
   { city: "Kigali", country: "Rwanda", address: "Kigali Logistics Park", phone: "+250 730 123 456" },
@@ -84,7 +84,7 @@ export default function ContactPage() {
                     icon: MapPin,
                     title: "Head Office",
                     lines: [
-                      "Sky Port Logistics Ltd",
+                      "Crown House, Kampala Road, Level 3",
                       "Kampala, Uganda",
                     ],
                   },
@@ -271,7 +271,7 @@ export default function ContactPage() {
           <div className="text-center">
             <MapPin className="text-[#FF7F00] mx-auto mb-3" size={40} />
             <h3 className="text-[#003D66] font-extrabold text-xl mb-1 tracking-tight">Global Headquarters</h3>
-            <p className="text-gray-500">Sky Port Logistics Ltd, Kampala, Uganda</p>
+            <p className="text-gray-500">Crown House, Kampala Road, Level 3, Uganda</p>
           </div>
         </div>
       </section>

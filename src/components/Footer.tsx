@@ -40,7 +40,7 @@ export default function Footer() {
               <div className="space-y-3">
                 <div className="flex items-center gap-3 text-white/50 text-sm">
                   <MapPin size={14} className="text-[#FF7F00] flex-shrink-0" />
-                  <span>Kampala, Uganda</span>
+                  <span>Crown House, Kampala Road, Level 3</span>
                 </div>
                 <a href="https://wa.me/256782843531" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-white/50 text-sm hover:text-[#FF7F00] transition-colors">
                   <Phone size={14} className="text-[#FF7F00] flex-shrink-0" />

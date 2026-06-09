@@ -893,7 +893,7 @@ function ContactSection() {
           <AnimatedSection className="lg:col-span-2">
             <div className="space-y-6">
               {[
-                { icon: MapPin, title: "Head Office", lines: ["Sky Port Logistics Ltd", "Kampala, Uganda"] },
+                { icon: MapPin, title: "Head Office", lines: ["Crown House, Kampala Road, Level 3", "Kampala, Uganda"] },
                 { icon: Phone, title: "WhatsApp / Phone", lines: ["+256 782 843531"] },
                 { icon: Mail, title: "Email", lines: ["info@skyportlogisticsltd.com"] },
                 { icon: Clock, title: "Working Hours", lines: ["Mon – Fri: 8:00 AM – 8:00 PM", "Sat – Sun: Emergency Line Only"] },
