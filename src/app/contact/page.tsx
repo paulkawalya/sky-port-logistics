@@ -19,12 +19,12 @@ import { Textarea } from "@/components/ui/textarea";
 import AnimatedSection from "@/components/AnimatedSection";
 
 const offices = [
-  { city: "Los Angeles (HQ)", country: "USA", address: "1200 Harbor Blvd, Suite 800", phone: "+1 (800) 557-1234" },
-  { city: "London", country: "UK", address: "45 Canary Wharf, Level 12", phone: "+44 20 7946 0958" },
-  { city: "Singapore", country: "Singapore", address: "8 Marina Bay, Tower 3", phone: "+65 6100 4567" },
-  { city: "Shanghai", country: "China", address: "888 Lujiazui, Floor 28", phone: "+86 21 6100 8888" },
+  { city: "Kampala (HQ)", country: "Uganda", address: "Sky Port Logistics Ltd", phone: "+256 782 843531" },
+  { city: "Mombasa", country: "Kenya", address: "Port Office, Mombasa Port", phone: "+254 700 123 456" },
+  { city: "Dar es Salaam", country: "Tanzania", address: "Port House, Dar es Salaam Harbour", phone: "+255 700 123 456" },
+  { city: "Kigali", country: "Rwanda", address: "Kigali Logistics Park", phone: "+250 730 123 456" },
+  { city: "Nairobi", country: "Kenya", address: "JKIA Cargo Centre", phone: "+254 700 456 789" },
   { city: "Dubai", country: "UAE", address: "DIFC, Gate Tower, Office 1502", phone: "+971 4 555 7800" },
-  { city: "São Paulo", country: "Brazil", address: "Av. Paulista 1500, Suite 1205", phone: "+55 11 3555 8900" },
 ];
 
 export default function ContactPage() {
@@ -84,21 +84,20 @@ export default function ContactPage() {
                     icon: MapPin,
                     title: "Head Office",
                     lines: [
-                      "Sky Port Tower, 1200 Harbor Blvd",
-                      "Suite 800, Los Angeles, CA 90012",
+                      "Sky Port Logistics Ltd",
+                      "Kampala, Uganda",
                     ],
                   },
                   {
                     icon: Phone,
-                    title: "Phone",
-                    lines: ["+1 (800) 557-1234 (Toll Free)", "+1 (213) 555-6789"],
+                    title: "WhatsApp / Phone",
+                    lines: ["+256 782 843531"],
                   },
                   {
                     icon: Mail,
                     title: "Email",
                     lines: [
-                      "info@skyportlogistics.com",
-                      "quotes@skyportlogistics.com",
+                      "info@skyportlogisticsltd.com",
                     ],
                   },
                   {
@@ -272,7 +271,7 @@ export default function ContactPage() {
           <div className="text-center">
             <MapPin className="text-[#FF7F00] mx-auto mb-3" size={40} />
             <h3 className="text-[#003D66] font-extrabold text-xl mb-1 tracking-tight">Global Headquarters</h3>
-            <p className="text-gray-500">Sky Port Tower, 1200 Harbor Blvd, Los Angeles, CA 90012</p>
+            <p className="text-gray-500">Sky Port Logistics Ltd, Kampala, Uganda</p>
           </div>
         </div>
       </section>

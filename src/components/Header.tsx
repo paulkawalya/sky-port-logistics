@@ -166,9 +166,9 @@ export default function Header() {
           >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between py-2 text-xs">
               <div className="flex items-center gap-6">
-                <a href="tel:+18005571234" className="flex items-center gap-1.5 hover:text-[#FFA040] transition-colors">
+                <a href="https://wa.me/256782843531" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 hover:text-[#FFA040] transition-colors">
                   <Phone size={12} />
-                  <span>+1 (800) 557-1234</span>
+                  <span>+256 782 843531</span>
                 </a>
                 <span className="hidden sm:flex items-center gap-1.5">
                   <Navigation size={12} />
@@ -187,18 +187,20 @@ export default function Header() {
       </AnimatePresence>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-28">
+        <div className={`flex items-center justify-between transition-all duration-500 ${isScrolled ? "h-20" : "h-36"}`}>
           {/* Logo */}
           <Link href="/" className="flex items-center group">
             <div className="relative">
               <img
                 src="/logo.png"
                 alt="Sky Port Logistics"
-                className="h-24 w-24 rounded-2xl object-contain group-hover:scale-105 transition-all"
+                className={`rounded-2xl object-contain group-hover:scale-105 transition-all duration-500 ${isScrolled ? "h-12 w-12" : "h-28 w-28"}`}
               />
-              <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-[#FF7F00] rounded-full border-2 border-white flex items-center justify-center">
-                <div className="w-1.5 h-1.5 bg-white rounded-full" />
-              </div>
+              {!isScrolled && (
+                <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-[#FF7F00] rounded-full border-2 border-white flex items-center justify-center transition-all duration-500">
+                  <div className="w-1.5 h-1.5 bg-white rounded-full" />
+                </div>
+              )}
             </div>
           </Link>
 

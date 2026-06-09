@@ -893,9 +893,9 @@ function ContactSection() {
           <AnimatedSection className="lg:col-span-2">
             <div className="space-y-6">
               {[
-                { icon: MapPin, title: "Head Office", lines: ["Sky Port Tower, 1200 Harbor Blvd", "Suite 800, Los Angeles, CA 90012"] },
-                { icon: Phone, title: "Phone", lines: ["+1 (800) 557-1234 (Toll Free)", "+1 (213) 555-6789"] },
-                { icon: Mail, title: "Email", lines: ["info@skyportlogistics.com", "quotes@skyportlogistics.com"] },
+                { icon: MapPin, title: "Head Office", lines: ["Sky Port Logistics Ltd", "Kampala, Uganda"] },
+                { icon: Phone, title: "WhatsApp / Phone", lines: ["+256 782 843531"] },
+                { icon: Mail, title: "Email", lines: ["info@skyportlogisticsltd.com"] },
                 { icon: Clock, title: "Working Hours", lines: ["Mon – Fri: 8:00 AM – 8:00 PM", "Sat – Sun: Emergency Line Only"] },
               ].map((item) => (
                 <div key={item.title} className="flex gap-4 bg-gray-50 rounded-xl p-4 border border-gray-100/80">

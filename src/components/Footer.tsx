@@ -40,16 +40,16 @@ export default function Footer() {
               <div className="space-y-3">
                 <div className="flex items-center gap-3 text-white/50 text-sm">
                   <MapPin size={14} className="text-[#FF7F00] flex-shrink-0" />
-                  <span>1200 Harbor Blvd, Los Angeles, CA</span>
+                  <span>Kampala, Uganda</span>
                 </div>
-                <div className="flex items-center gap-3 text-white/50 text-sm">
+                <a href="https://wa.me/256782843531" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-white/50 text-sm hover:text-[#FF7F00] transition-colors">
                   <Phone size={14} className="text-[#FF7F00] flex-shrink-0" />
-                  <span>+1 (800) 557-1234</span>
-                </div>
-                <div className="flex items-center gap-3 text-white/50 text-sm">
+                  <span>+256 782 843531</span>
+                </a>
+                <a href="mailto:info@skyportlogisticsltd.com" className="flex items-center gap-3 text-white/50 text-sm hover:text-[#FF7F00] transition-colors">
                   <Mail size={14} className="text-[#FF7F00] flex-shrink-0" />
-                  <span>info@skyportlogistics.com</span>
-                </div>
+                  <span>info@skyportlogisticsltd.com</span>
+                </a>
               </div>
             </div>
 
