@@ -211,7 +211,7 @@ function HeroSection() {
             </motion.div>
 
             {/* Title with staggered line-by-line reveal */}
-            <h1 className="text-5xl sm:text-6xl lg:text-[5.5rem] font-extrabold text-white leading-[1.05] mb-8 tracking-tight">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-[1.05] mb-8 tracking-tight">
               {heroSlides[currentSlide].title.map((line, lineIdx) => (
                 <div key={lineIdx} className="overflow-hidden">
                   <motion.div
