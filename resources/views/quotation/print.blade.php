@@ -523,10 +523,11 @@
 
     <div class="bank-details" style="margin-top: 10px; padding: 10px; background-color: #f9f9f9; border-radius: 4px; border: 1px solid #e0e0e0;">
         <div style="font-weight: bold; margin-bottom: 5px; font-size: 12px; color: #333;">Bank Details</div>
-        <div style="margin-bottom: 2px; font-size: 12px;"><strong>ACCOUNT NAME:</strong> SKY PORT LOGISTICS LTD </div>
-        <div style="margin-bottom: 2px; font-size: 12px;"><strong>BANK:</strong> EQUITY BANK</div>
-        <div style="margin-bottom: 2px; font-size: 12px;"><strong>ACCOUNT NUMBER (UGX):</strong> 1002201945777</div>
-        <div style="margin-bottom: 2px; font-size: 12px;"><strong>ACCOUNT NUMBER (USD):</strong> 1002201945782</div>
+        <div style="margin-bottom: 2px; font-size: 12px;"><strong>ACCOUNT NAME:</strong> SKY PORT LOGISTICS LIMITED</div>
+        <div style="margin-bottom: 2px; font-size: 12px;"><strong>BANK:</strong> DFCU - BANK</div>
+        <div style="margin-bottom: 2px; font-size: 12px;"><strong>BRANCH:</strong> JINJA - ROAD BRANCH</div>
+        <div style="margin-bottom: 2px; font-size: 12px;"><strong>ACCOUNT NUMBER (UGX):</strong> 01070019884752</div>
+        <div style="margin-bottom: 2px; font-size: 12px;"><strong>ACCOUNT NUMBER (USD):</strong> 01070019884899</div>
         <div style="margin-top: 5px; padding-top: 5px; border-top: 1px solid #e0e0e0; font-style: italic; color: #666; font-size: 10px; line-height: 1.3;">
             All invoices issued by the Company shall be paid by the Client within 2 (two) days of the date of invoice unless otherwise agreed in writing by the Company. Invoices unpaid for more than 30 days after the due date as per invoice will incur a surcharge of 2% per month of the outstanding amount.
         </div>

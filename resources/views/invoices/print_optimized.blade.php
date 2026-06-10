@@ -329,10 +329,11 @@
     <div style="margin-top: 15px; border-top: 1px solid #eee; padding-top: 10px;">
         <div style="font-size: 10px; margin-bottom: 10px;">
             <strong style="color: #555;">Bank Details</strong><br>
-            ACCOUNT NAME: SKY PORT LOGISTICS LTD<br>
-            BANK: EQUITY BANK<br>
-            ACCOUNT NUMBER (UGX): 1002201945777<br>
-            ACCOUNT NUMBER (USD): 1002201945782<br>
+            ACCOUNT NAME: SKY PORT LOGISTICS LIMITED<br>
+            BANK: DFCU - BANK<br>
+            BRANCH: JINJA - ROAD BRANCH<br>
+            ACCOUNT NUMBER (UGX): 01070019884752<br>
+            ACCOUNT NUMBER (USD): 01070019884899<br>
             <div style="font-size: 9px; font-style: italic; margin-top: 5px; color: #666;">
                 All invoices issued by the Company shall be paid by the Client within 2 (two) days of the date of invoice unless otherwise agreed in writing by the Company. Invoices unpaid for more than 30 days after the due date as per invoice will incur a surcharge of 2% per month of the outstanding amount.
             </div>

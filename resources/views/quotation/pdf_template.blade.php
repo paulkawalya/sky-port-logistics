@@ -521,10 +521,11 @@
             <!-- Bank Details -->
             <div style="display: table-cell; width: 50%; vertical-align: top; padding: 10px; background-color: #f9f9f9; border-radius: 4px; border: 1px solid #e0e0e0;">
                 <div style="font-weight: bold; margin-bottom: 5px; font-size: 12px; color: #333;">Bank Details</div>
-                <div style="margin-bottom: 2px; font-size: 11px;"><strong>ACCOUNT NAME:</strong> SKY PORT LOGISTICS LTD</div>
-                <div style="margin-bottom: 2px; font-size: 11px;"><strong>BANK:</strong> DFCU</div>
-                <div style="margin-bottom: 2px; font-size: 11px;"><strong>ACCOUNT NUMBER (UGX):</strong> 01070011606048</div>
-                <div style="margin-bottom: 2px; font-size: 11px;"><strong>ACCOUNT NUMBER (USD):</strong> 02070011606093</div>
+                <div style="margin-bottom: 2px; font-size: 11px;"><strong>ACCOUNT NAME:</strong> SKY PORT LOGISTICS LIMITED</div>
+                <div style="margin-bottom: 2px; font-size: 11px;"><strong>BANK:</strong> DFCU - BANK</div>
+                <div style="margin-bottom: 2px; font-size: 11px;"><strong>BRANCH:</strong> JINJA - ROAD BRANCH</div>
+                <div style="margin-bottom: 2px; font-size: 11px;"><strong>ACCOUNT NUMBER (UGX):</strong> 01070019884752</div>
+                <div style="margin-bottom: 2px; font-size: 11px;"><strong>ACCOUNT NUMBER (USD):</strong> 01070019884899</div>
             </div>
 
             <!-- Payment Terms -->
