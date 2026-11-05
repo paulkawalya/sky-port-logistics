@@ -14,6 +14,22 @@ class Requisition extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'user_id',
+        'date_requisitioned',
+        'status',
+        'remarks',
+        'currency',
+    ];
+
+    /**
+     * Invalidate cached amounts and data
+     */
+    public function invalidateCache()
+    {
+        cache()->forget("requisition_{$this->id}_amount");
+    }
+
     /**
      * The attributes that should be cast.
      *

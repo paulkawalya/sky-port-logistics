@@ -11,6 +11,15 @@ class RequisitionDetail extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'requisition_id',
+        'particular',
+        'reason',
+        'quantity',
+        'estimated_cost',
+        'expense_category_id',
+    ];
+
     /**
      * The "booted" method of the model.
      *

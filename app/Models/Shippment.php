@@ -12,6 +12,34 @@ class Shippment extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'transit_id',
+        'user_id',
+        'customer_id',
+        'agent_id',
+        'shipper',
+        'mark',
+        'bl_packages',
+        'number_of_packages',
+        'unit_of_measure',
+        'weight',
+        'volume',
+        'type',
+        'description',
+        'cbm',
+        'cargo_status',
+        'warehouse_location',
+        'received_in_store_at',
+        'dispatched_at',
+        'receiver_name',
+        'receiver_phone',
+    ];
+
+    protected $casts = [
+        'received_in_store_at' => 'datetime',
+        'dispatched_at' => 'datetime',
+    ];
+
     function user() : BelongsTo {
 
         return $this->belongsTo(User::class);

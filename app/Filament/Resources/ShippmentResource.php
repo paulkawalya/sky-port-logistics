@@ -88,6 +88,38 @@ class ShippmentResource extends Resource
                             ->label('Cargo Description')
                             ->columnSpanFull(),
                     ])->columns(3),
+
+                Forms\Components\Section::make('Store & Warehouse Tracking')
+                    ->description('Track physical cargo status inside the warehouse')
+                    ->schema([
+                        Forms\Components\Select::make('cargo_status')
+                            ->label('Warehouse / Store Status')
+                            ->options([
+                                'In Transit' => 'In Transit',
+                                'Received in Store' => 'Received in Store',
+                                'Sorted & Inspected' => 'Sorted & Inspected',
+                                'Ready for Pickup' => 'Ready for Pickup',
+                                'Dispatched' => 'Dispatched',
+                                'Delivered' => 'Delivered to Customer',
+                            ])
+                            ->default('In Transit')
+                            ->required(),
+                        Forms\Components\TextInput::make('warehouse_location')
+                            ->label('Store Location / Shelf / Bay')
+                            ->placeholder('e.g. Bay 4 - Shelf B2, Kampala Warehouse')
+                            ->maxLength(255),
+                        Forms\Components\DateTimePicker::make('received_in_store_at')
+                            ->label('Received in Store Time'),
+                        Forms\Components\DateTimePicker::make('dispatched_at')
+                            ->label('Dispatched / Delivered Time'),
+                        Forms\Components\TextInput::make('receiver_name')
+                            ->label('Receiver Person Name')
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('receiver_phone')
+                            ->label('Receiver Contact Phone')
+                            ->tel()
+                            ->maxLength(255),
+                    ])->columns(2),
             ]);
     }
 
@@ -105,16 +137,26 @@ class ShippmentResource extends Resource
                     ->label('Customer')
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('agent.name')
-                    ->label('Agent')
-                    ->toggleable()
-                    ->searchable(),
                 Tables\Columns\TextColumn::make('mark')
                     ->label('Mark')
                     ->searchable()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('cargo_status')
+                    ->label('Store Status')
+                    ->badge()
+                    ->colors([
+                        'gray' => 'In Transit',
+                        'warning' => 'Received in Store',
+                        'info' => 'Sorted & Inspected',
+                        'primary' => 'Ready for Pickup',
+                        'success' => 'Delivered',
+                    ])
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('warehouse_location')
+                    ->label('Shelf/Location')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('number_of_packages')
-                    ->label('Packages')
+                    ->label('Pkgs')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('weight')
                     ->label('Weight')
@@ -126,9 +168,20 @@ class ShippmentResource extends Resource
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Date')
                     ->date()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
+                Tables\Filters\SelectFilter::make('cargo_status')
+                    ->options([
+                        'In Transit' => 'In Transit',
+                        'Received in Store' => 'Received in Store',
+                        'Sorted & Inspected' => 'Sorted & Inspected',
+                        'Ready for Pickup' => 'Ready for Pickup',
+                        'Dispatched' => 'Dispatched',
+                        'Delivered' => 'Delivered',
+                    ])
+                    ->label('Filter by Store Status'),
                 Tables\Filters\SelectFilter::make('transit_id')
                     ->relationship('transit', 'number')
                     ->label('Filter by Container'),
@@ -137,6 +190,42 @@ class ShippmentResource extends Resource
                     ->label('Filter by Customer'),
             ])
             ->actions([
+                Tables\Actions\Action::make('receiveInStore')
+                    ->label('Receive in Store')
+                    ->icon('heroicon-o-arrow-down-on-square')
+                    ->color('warning')
+                    ->visible(fn ($record) => $record->cargo_status === 'In Transit')
+                    ->action(fn ($record) => $record->update([
+                        'cargo_status' => 'Received in Store',
+                        'received_in_store_at' => now(),
+                    ])),
+                Tables\Actions\Action::make('markReady')
+                    ->label('Ready for Pickup')
+                    ->icon('heroicon-o-check-badge')
+                    ->color('primary')
+                    ->visible(fn ($record) => in_array($record->cargo_status, ['Received in Store', 'Sorted & Inspected']))
+                    ->action(fn ($record) => $record->update([
+                        'cargo_status' => 'Ready for Pickup',
+                    ])),
+                Tables\Actions\Action::make('markDelivered')
+                    ->label('Release / Deliver')
+                    ->icon('heroicon-o-truck')
+                    ->color('success')
+                    ->visible(fn ($record) => $record->cargo_status === 'Ready for Pickup')
+                    ->form([
+                        Forms\Components\TextInput::make('receiver_name')
+                            ->label('Picked up by (Name)')
+                            ->required(),
+                        Forms\Components\TextInput::make('receiver_phone')
+                            ->label('Phone Number')
+                            ->required(),
+                    ])
+                    ->action(fn ($record, array $data) => $record->update([
+                        'cargo_status' => 'Delivered',
+                        'dispatched_at' => now(),
+                        'receiver_name' => $data['receiver_name'],
+                        'receiver_phone' => $data['receiver_phone'],
+                    ])),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([

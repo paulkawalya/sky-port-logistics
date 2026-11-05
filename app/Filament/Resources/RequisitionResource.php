@@ -27,13 +27,14 @@ class RequisitionResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('Requisition Information')
+                Forms\Components\Section::make('Requisition Header')
                     ->schema([
                         Forms\Components\Select::make('user_id')
                             ->relationship('user', 'name')
                             ->label('Requested By')
                             ->default(fn () => auth()->id())
                             ->searchable()
+                            ->preload()
                             ->required(),
                         Forms\Components\DatePicker::make('date_requisitioned')
                             ->label('Requisition Date')
@@ -57,9 +58,47 @@ class RequisitionResource extends Resource
                             ->default('pending')
                             ->required(),
                         Forms\Components\Textarea::make('remarks')
-                            ->label('Purpose / Remarks')
+                            ->label('General Purpose / Remarks')
                             ->columnSpanFull(),
                     ])->columns(2),
+
+                Forms\Components\Section::make('Requisition Line Items (Budget Breakdown)')
+                    ->description('Specify each expenditure item, quantity, unit cost, and category')
+                    ->schema([
+                        Forms\Components\Repeater::make('details')
+                            ->relationship('details')
+                            ->schema([
+                                Forms\Components\TextInput::make('particular')
+                                    ->label('Item / Expense Description')
+                                    ->required()
+                                    ->columnSpan(2),
+                                Forms\Components\Select::make('expense_category_id')
+                                    ->relationship('category', 'name')
+                                    ->label('Category')
+                                    ->searchable()
+                                    ->preload()
+                                    ->columnSpan(1),
+                                Forms\Components\TextInput::make('quantity')
+                                    ->label('Qty')
+                                    ->default('1')
+                                    ->required()
+                                    ->columnSpan(1),
+                                Forms\Components\TextInput::make('estimated_cost')
+                                    ->label('Unit Cost')
+                                    ->numeric()
+                                    ->prefix('$ / Shs')
+                                    ->required()
+                                    ->columnSpan(1),
+                                Forms\Components\TextInput::make('reason')
+                                    ->label('Justification / Details')
+                                    ->columnSpan(1),
+                            ])
+                            ->columns(6)
+                            ->defaultItems(1)
+                            ->reorderableWithButtons()
+                            ->addActionLabel('Add Item to Requisition')
+                            ->collapsible(),
+                    ]),
             ]);
     }
 
@@ -69,6 +108,8 @@ class RequisitionResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('id')
                     ->label('#REQ')
+                    ->prefix('REQ-')
+                    ->weight('bold')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('user.name')
                     ->label('Requested By')
@@ -81,6 +122,12 @@ class RequisitionResource extends Resource
                 Tables\Columns\TextColumn::make('currency')
                     ->badge()
                     ->color('primary'),
+                Tables\Columns\TextColumn::make('total_amount')
+                    ->label('Total Cost')
+                    ->state(fn ($record) => $record->details()->sum(\DB::raw('quantity * estimated_cost')))
+                    ->money(fn ($record) => $record->currency === 'USD' ? 'USD' : 'UGX')
+                    ->weight('bold')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('status')
                     ->badge()
                     ->colors([
@@ -115,6 +162,31 @@ class RequisitionResource extends Resource
                     ->color('danger')
                     ->visible(fn ($record) => $record->status === 'pending' && in_array(auth()->user()?->user_type, ['Admin', 'MD', 'Manager']))
                     ->action(fn ($record) => $record->update(['status' => 'rejected'])),
+                Tables\Actions\Action::make('convertToExpense')
+                    ->label('Disburse / Post Expense')
+                    ->icon('heroicon-o-banknotes')
+                    ->color('info')
+                    ->visible(fn ($record) => $record->status === 'approved' && in_array(auth()->user()?->user_type, ['Admin', 'Accountant', 'MD', 'Manager']))
+                    ->requiresConfirmation()
+                    ->modalHeading('Post Requisition to Expenses Ledger')
+                    ->modalDescription('This will convert all approved items in this requisition into confirmed business expense entries.')
+                    ->action(function ($record) {
+                        foreach ($record->details as $item) {
+                            \App\Models\Expense::create([
+                                'user_id' => auth()->id(),
+                                'requisition_id' => $record->id,
+                                'particular' => $item->particular,
+                                'reason' => $item->reason,
+                                'quantity' => $item->quantity,
+                                'estimated_cost' => $item->estimated_cost,
+                            ]);
+                        }
+                        \Filament\Notifications\Notification::make()
+                            ->title('Expenses Posted')
+                            ->body('Requisition items have been posted to the Expense Ledger successfully.')
+                            ->success()
+                            ->send();
+                    }),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
