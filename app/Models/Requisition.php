@@ -23,14 +23,6 @@ class Requisition extends Model
     ];
 
     /**
-     * Invalidate cached amounts and data
-     */
-    public function invalidateCache()
-    {
-        cache()->forget("requisition_{$this->id}_amount");
-    }
-
-    /**
      * The attributes that should be cast.
      *
      * @var array
