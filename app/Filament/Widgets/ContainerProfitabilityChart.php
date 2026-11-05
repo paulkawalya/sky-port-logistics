@@ -45,3 +45,4 @@ class ContainerProfitabilityChart extends ChartWidget
         return 'bar';
     }
 }
+

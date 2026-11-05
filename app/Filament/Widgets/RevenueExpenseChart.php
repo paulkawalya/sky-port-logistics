@@ -64,3 +64,4 @@ class RevenueExpenseChart extends ChartWidget
         return 'line';
     }
 }
+

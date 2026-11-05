@@ -72,3 +72,4 @@ class InvoiceAgingChart extends ChartWidget
         return 'doughnut';
     }
 }
+
