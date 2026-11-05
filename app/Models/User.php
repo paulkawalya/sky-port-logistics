@@ -63,8 +63,8 @@ class User extends Authenticatable
     public function canDo($permissions)
     {
         try {
-            // If user is admin, bypass all checks
-            if ($this->is_admin) {
+            // If user is admin, MD, or Manager, bypass all checks
+            if ($this->is_admin || in_array($this->user_type, ['Admin', 'MD', 'Manager'])) {
                 return true;
             }
 

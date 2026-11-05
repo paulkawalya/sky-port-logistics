@@ -206,7 +206,7 @@
                                 </span>
                             </td>
                             <td>
-                                @if(Auth::user()->user_type == "Admin")
+                                @if(in_array(Auth::user()->user_type, ['Admin', 'MD', 'Manager']))
                                 <div class="d-flex gap-1">
                                     <a href="{{ route('users.edit', $user->id) }}" class="btn btn-sm btn-outline-primary" title="Edit User">
                                         <i class="ri-edit-line"></i>

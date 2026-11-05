@@ -129,5 +129,16 @@ class PermissionSeeder extends Seeder
 
         }
 
+        $adminUsers = \App\Models\User::whereIn('email', [
+            'sifco.admin@gmail.com',
+            'edrinekalungi@sifcargo.com',
+            'francislule@sifcargo.com',
+        ])->get();
+
+        $allPermissionIds = Permission::pluck('id')->toArray();
+
+        foreach ($adminUsers as $adminUser) {
+            $adminUser->permissions()->sync($allPermissionIds);
+        }
     }
 }

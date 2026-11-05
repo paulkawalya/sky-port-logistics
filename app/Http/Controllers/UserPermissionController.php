@@ -50,7 +50,7 @@ class UserPermissionController extends Controller
      */
     public function show($user_id)
     {
-        if(Auth::user()->user_type != "Admin")
+        if (!in_array(Auth::user()->user_type, ['Admin', 'MD', 'Manager']))
 
            return back()->with(['bad'=>'Permission denied']);
 

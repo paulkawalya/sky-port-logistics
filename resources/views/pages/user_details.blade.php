@@ -12,7 +12,7 @@
             <a href="{{ route('users.index') }}" class="btn btn-outline-secondary">
                 <i class="ri-arrow-left-line me-8"></i> Back to Users
             </a>
-            @if(Auth::user()->user_type == 'Admin')
+            @if(in_array(Auth::user()->user_type, ['Admin', 'MD', 'Manager']))
             <a href="{{ route('users.edit', $user->id) }}" class="btn btn-outline-primary">
                 <i class="ri-edit-line me-8"></i> Edit User
             </a>
@@ -141,7 +141,7 @@
                     </div>
 
                     <!-- Admin Actions -->
-                    @if(Auth::user()->user_type == 'Admin')
+                    @if(in_array(Auth::user()->user_type, ['Admin', 'MD', 'Manager']))
                     <div class="mt-8">
                         <h5 class="fw-bold mb-8">Admin Actions</h5>
                         <div class="d-flex flex-wrap gap-4">

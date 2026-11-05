@@ -405,7 +405,7 @@
                     </li>
                 @endif
 
-                @if(Auth::user()->user_type == 'Admin')
+                @if(in_array(Auth::user()->user_type, ['Admin', 'MD', 'Manager']))
                     <li>
                         <ul>
                             <li>
@@ -420,7 +420,7 @@
                                 </a>
 
                                 <ul class="submenu-children" data-level="1">
-                                    @if(Auth::user()->canDo(['view_users']) || Auth::user()->user_type == 'Admin')
+                                    @if(Auth::user()->canDo(['view_users']) || in_array(Auth::user()->user_type, ['Admin', 'MD', 'Manager']))
                                         <li>
                                             <a href="{{route('users.index')}}" class="text-dark">
                                                 <div class="tooltip-item in-active" data-bs-toggle="tooltip" data-bs-placement="right" title="" data-bs-original-title="Users" aria-label="Users"></div>
@@ -428,7 +428,7 @@
                                             </a>
                                         </li>
                                     @endif
-                                    @if(Auth::user()->user_type == 'Admin')
+                                    @if(in_array(Auth::user()->user_type, ['Admin', 'MD', 'Manager']))
                                         <li>
                                             <a href="{{route('backup.database')}}" class="text-dark">
                                                 <div class="tooltip-item in-active" data-bs-toggle="tooltip" data-bs-placement="right" title="" data-bs-original-title="Backup Database" aria-label="Backup Database"></div>

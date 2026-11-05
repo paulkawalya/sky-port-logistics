@@ -248,8 +248,8 @@ class Usercontroller extends Controller
      */
     public function resetPassword(Request $request, $id)
     {
-        // Check if user is admin
-        if (Auth::user()->user_type != 'Admin') {
+        // Check if user is admin, MD, or Manager
+        if (!in_array(Auth::user()->user_type, ['Admin', 'MD', 'Manager'])) {
             return redirect()->back()->with('error', 'Permission denied');
         }
 
@@ -274,7 +274,7 @@ class Usercontroller extends Controller
      */
     public function adminSettings()
     {
-        if (Auth::user()->user_type != 'Admin') {
+        if (!in_array(Auth::user()->user_type, ['Admin', 'MD', 'Manager'])) {
             return redirect('home')->with('error', 'Permission denied');
         }
 
@@ -290,7 +290,7 @@ class Usercontroller extends Controller
      */
     public function backupDatabase()
     {
-        if (!Auth::user()->user_type == 'Admin') {
+        if (!in_array(Auth::user()->user_type, ['Admin', 'MD', 'Manager'])) {
             return redirect()->back()->with('error', 'Permission denied');
         }
 
