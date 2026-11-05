@@ -10,22 +10,30 @@ class Transaction extends Model
 {
     use HasFactory;
 
-    function account($payment_account_id){
+    protected $fillable = [
+        'transaction_date',
+        'user_id',
+        'source_payment_account_id',
+        'payment_account_id',
+        'amount',
+        'particular',
+        'transaction_type',
+        'transaction_currency',
+    ];
 
-        if(empty($payment_account_id)) 
-        
-            return;
-        
-        $payment_account = PaymentAccount::find($payment_account_id);
-
-        return $payment_account;
-        
+    public function paymentAccount(): BelongsTo
+    {
+        return $this->belongsTo(PaymentAccount::class, 'payment_account_id');
     }
 
-    function user() : BelongsTo {
+    public function sourcePaymentAccount(): BelongsTo
+    {
+        return $this->belongsTo(PaymentAccount::class, 'source_payment_account_id');
+    }
 
-        return $this->belongsTo(User::class,'user_id');
-        
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public static function saveTransaction($payment_account_id,$amount,$transaction_date,$user_id,$source_payment_account_id,$transaction_type,$particular){

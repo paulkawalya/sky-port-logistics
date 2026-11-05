@@ -11,10 +11,23 @@ class Expense extends Model
 {
     use HasFactory;
 
-    function user() : BelongsTo {
+    protected $fillable = [
+        'user_id',
+        'requisition_id',
+        'particular',
+        'reason',
+        'quantity',
+        'estimated_cost',
+    ];
 
-        return $this->belongsTo(User::class);
-                
+    public function requisition(): BelongsTo
+    {
+        return $this->belongsTo(Requisition::class, 'requisition_id');
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 
 
