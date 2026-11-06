@@ -289,7 +289,7 @@ class Requisition extends Model
 
         $expenses = Expense::where('requisition_id',$requisition_id)->count();
 
-        if($expenses==1)
+        if($expenses >= 1)
 
             return TRUE;
 
@@ -482,6 +482,30 @@ class Requisition extends Model
     public function getHashedIdAttribute()
     {
         return IdHasher::encode($this->id);
+    }
+
+    public function getTotalAmountAttribute()
+    {
+        return (float) $this->details->sum(function ($item) {
+            return ($item->quantity ?? 1) * ($item->estimated_cost ?? 0);
+        });
+    }
+
+    public function getTotalPaidAttribute()
+    {
+        return (float) RequisitionPayment::join('requisition_details', 'requisition_payments.requisition_detail_id', '=', 'requisition_details.id')
+            ->where('requisition_details.requisition_id', $this->id)
+            ->sum('requisition_payments.amount');
+    }
+
+    public function getBalanceAttribute()
+    {
+        return max(0, $this->total_amount - $this->total_paid);
+    }
+
+    public function getIsConvertedAttribute()
+    {
+        return $this->coverted($this->id);
     }
 
     /**

@@ -10,9 +10,20 @@ class RequisitionApprover extends Model
 {
     use HasFactory;
 
-    function user() : BelongsTo {
+    protected $fillable = [
+        'requisition_id',
+        'user_id',
+        'status',
+        'remarks',
+    ];
 
+    public function requisition(): BelongsTo
+    {
+        return $this->belongsTo(Requisition::class);
+    }
+
+    public function user(): BelongsTo
+    {
         return $this->belongsTo(User::class);
-        
     }
 }

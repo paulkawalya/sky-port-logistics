@@ -23,3 +23,4 @@ class CreateManualInvoice extends CreateRecord
         return $this->getResource()::getUrl('index');
     }
 }
+

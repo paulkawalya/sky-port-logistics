@@ -45,3 +45,4 @@ class ListManualInvoices extends ListRecords
         ];
     }
 }
+
