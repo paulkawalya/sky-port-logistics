@@ -13,7 +13,18 @@ class EditQuotation extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
+            Actions\Action::make('print')
+                ->label('Print')
+                ->icon('heroicon-o-printer')
+                ->color('info')
+                ->url(fn () => route('quotations.print', $this->record->id))
+                ->openUrlInNewTab(),
             Actions\DeleteAction::make(),
         ];
+    }
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
     }
 }

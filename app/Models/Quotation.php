@@ -65,24 +65,26 @@ class Quotation extends Model
 
     public function getTotalAmountAttribute()
     {
-        return $this->details->sum(function($detail) {
-            return $detail->quantity * $detail->unit_price;
+        $detailsTotal = $this->details->sum(function($detail) {
+            return ($detail->quantity ?? 1) * ($detail->unit_price ?? 0);
         });
+        $taxesTotal = QuotationTax::taxes($this->id);
+        return $detailsTotal + $taxesTotal;
     }
 
     public function getTotalPaidAttribute()
     {
-        return $this->payments->where('status', 'completed')->sum('amount');
+        return (float) $this->payments->sum('amount_paid');
     }
 
     public function getBalanceAttribute()
     {
-        return $this->total_amount - $this->total_paid;
+        return max(0, $this->total_amount - $this->total_paid);
     }
 
     public function getPaymentStatusAttribute()
     {
-        if ($this->balance <= 0) {
+        if ($this->total_amount > 0 && $this->balance <= 0) {
             return 'Paid';
         } elseif ($this->total_paid > 0) {
             return 'Partial';
