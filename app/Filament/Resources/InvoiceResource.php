@@ -77,9 +77,31 @@ class InvoiceResource extends Resource
                     ->badge()
                     ->color(fn (string $state): string => $state === 'USD' ? 'success' : 'info')
                     ->sortable(),
+                Tables\Columns\TextColumn::make('total_amount')
+                    ->label('Total Billed')
+                    ->money(fn ($record) => $record->transaction_currency ?? 'USD')
+                    ->weight('bold')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('paid_amount')
+                    ->label('Paid')
+                    ->money(fn ($record) => $record->transaction_currency ?? 'USD')
+                    ->color('success'),
+                Tables\Columns\TextColumn::make('balance')
+                    ->label('Balance Due')
+                    ->money(fn ($record) => $record->transaction_currency ?? 'USD')
+                    ->color(fn ($state) => $state > 0 ? 'danger' : 'gray')
+                    ->weight('bold'),
+                Tables\Columns\TextColumn::make('payment_status')
+                    ->label('Status')
+                    ->badge()
+                    ->colors([
+                        'danger' => 'unpaid',
+                        'warning' => 'partially_paid',
+                        'success' => 'paid',
+                    ]),
                 Tables\Columns\TextColumn::make('user.name')
                     ->label('Created By')
-                    ->toggleable(),
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('transaction_currency')
@@ -89,8 +111,25 @@ class InvoiceResource extends Resource
                     ]),
             ])
             ->actions([
+                Tables\Actions\ViewAction::make()
+                    ->slideOver(),
+                Tables\Actions\Action::make('print')
+                    ->label('Print')
+                    ->icon('heroicon-o-printer')
+                    ->color('info')
+                    ->url(fn ($record) => route('invoices.print', $record->id))
+                    ->openUrlInNewTab(),
+                Tables\Actions\Action::make('pdf')
+                    ->label('PDF')
+                    ->icon('heroicon-o-arrow-down-tray')
+                    ->color('gray')
+                    ->url(fn ($record) => route('invoices.pdf', $record->id)),
                 Tables\Actions\EditAction::make(),
             ])
+            ->striped()
+            ->emptyStateHeading('No Freight Invoices Generated')
+            ->emptyStateDescription('Generate an invoice from an existing cargo consignment to bill freight, storage, and clearance charges.')
+            ->emptyStateIcon('heroicon-o-document-currency-dollar')
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),

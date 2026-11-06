@@ -24,10 +24,17 @@ class RevenueExpenseChart extends ChartWidget
             $monthName = $date->format('M Y');
             $months[] = $monthName;
 
-            // Monthly Invoiced Revenue (Quantity * Unit Price)
-            $monthlyRevenue = InvoiceDetail::whereMonth('created_at', $date->month)
+            // Monthly Invoiced Revenue (Freight Invoices + Manual Invoices)
+            $monthlyFreightRevenue = InvoiceDetail::whereMonth('created_at', $date->month)
                 ->whereYear('created_at', $date->year)
                 ->sum(\DB::raw('quantity * unit_price'));
+
+            $monthlyManualRevenue = \App\Models\QuotationDetail::whereHas('quotation', fn ($q) => $q->where('transaction_type', 'invoice'))
+                ->whereMonth('created_at', $date->month)
+                ->whereYear('created_at', $date->year)
+                ->sum(\DB::raw('quantity * unit_price'));
+
+            $monthlyRevenue = $monthlyFreightRevenue + $monthlyManualRevenue;
 
             // Monthly Operational Expenses
             $monthlyExpense = Expense::whereMonth('created_at', $date->month)

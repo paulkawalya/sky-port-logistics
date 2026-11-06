@@ -2,7 +2,13 @@
 
 namespace App\Filament\Widgets;
 
+use App\Filament\Resources\CustomerResource;
+use App\Filament\Resources\ManualInvoiceResource;
+use App\Filament\Resources\RequisitionResource;
+use App\Filament\Resources\ShippmentResource;
+use App\Filament\Resources\TransitResource;
 use App\Models\Customer;
+use App\Models\Quotation;
 use App\Models\Requisition;
 use App\Models\Shippment;
 use App\Models\Transit;
@@ -16,27 +22,48 @@ class StatsOverview extends BaseWidget
     protected function getStats(): array
     {
         $pendingReqs = Requisition::where('status', 'pending')->count();
+        $inStoreShipments = Shippment::where('cargo_status', 'received_in_store')->count();
+        $totalShipments = Shippment::count();
+        $totalCustomers = Customer::count();
+        $totalContainers = Transit::count();
+
+        $unpaidInvoices = Quotation::where('transaction_type', 'invoice')
+            ->get()
+            ->filter(fn ($inv) => $inv->balance > 0)
+            ->count();
 
         return [
-            Stat::make('Total Shipments', Shippment::count())
-                ->description('All recorded consignments')
+            Stat::make('Cargo Shipments', number_format($totalShipments))
+                ->description($inStoreShipments > 0 ? "{$inStoreShipments} in warehouse store" : "All dispatched / in transit")
                 ->descriptionIcon('heroicon-m-truck')
-                ->color('primary'),
+                ->chart([3, 5, 8, 12, 10, 15, $totalShipments > 0 ? $totalShipments : 4])
+                ->color('primary')
+                ->url(ShippmentResource::getUrl('index')),
 
-            Stat::make('Containers & Transits', Transit::count())
-                ->description('Active & arrived shipments')
+            Stat::make('Containers & Transits', number_format($totalContainers))
+                ->description('Active ocean & air freight')
                 ->descriptionIcon('heroicon-m-cube-transparent')
-                ->color('info'),
+                ->chart([2, 4, 3, 5, 4, 6, $totalContainers > 0 ? $totalContainers : 3])
+                ->color('info')
+                ->url(TransitResource::getUrl('index')),
 
-            Stat::make('Total Customers', Customer::count())
-                ->description('Registered client accounts')
+            Stat::make('Client Accounts', number_format($totalCustomers))
+                ->description('Active cargo owners & CRM')
                 ->descriptionIcon('heroicon-m-user-group')
-                ->color('success'),
+                ->color('success')
+                ->url(CustomerResource::getUrl('index')),
 
-            Stat::make('Pending Requisitions', $pendingReqs)
-                ->description($pendingReqs > 0 ? 'Requires management approval' : 'All approved')
+            Stat::make('Pending Requisitions', number_format($pendingReqs))
+                ->description($pendingReqs > 0 ? 'Awaiting management sign-off' : 'All budgets approved')
                 ->descriptionIcon('heroicon-m-clipboard-document-check')
-                ->color($pendingReqs > 0 ? 'warning' : 'success'),
+                ->color($pendingReqs > 0 ? 'warning' : 'success')
+                ->url(RequisitionResource::getUrl('index', ['activeTab' => 'pending'])),
+
+            Stat::make('Unpaid Invoices', number_format($unpaidInvoices))
+                ->description($unpaidInvoices > 0 ? 'Outstanding balance pending' : 'Zero overdue balance')
+                ->descriptionIcon('heroicon-m-banknotes')
+                ->color($unpaidInvoices > 0 ? 'danger' : 'success')
+                ->url(ManualInvoiceResource::getUrl('index', ['activeTab' => 'pending'])),
         ];
     }
 }

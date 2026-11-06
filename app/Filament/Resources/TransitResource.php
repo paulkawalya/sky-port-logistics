@@ -27,6 +27,8 @@ class TransitResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Containers & Transits';
 
+    protected static ?string $recordTitleAttribute = 'number';
+
     protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form
@@ -147,8 +149,14 @@ class TransitResource extends Resource
                     ]),
             ])
             ->actions([
+                Tables\Actions\ViewAction::make()
+                    ->slideOver(),
                 Tables\Actions\EditAction::make(),
             ])
+            ->striped()
+            ->emptyStateHeading('No Containers or Transits Recorded')
+            ->emptyStateDescription('Create a container transit file to track origin, destination, ETA, and consolidate consignments.')
+            ->emptyStateIcon('heroicon-o-cube-transparent')
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),

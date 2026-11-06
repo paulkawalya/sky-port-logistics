@@ -21,6 +21,8 @@ class AgentResource extends Resource
 
     protected static ?string $navigationGroup = 'Partners & CRM';
 
+    protected static ?string $recordTitleAttribute = 'name';
+
     protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form
@@ -64,8 +66,14 @@ class AgentResource extends Resource
                 //
             ])
             ->actions([
+                Tables\Actions\ViewAction::make()
+                    ->slideOver(),
                 Tables\Actions\EditAction::make(),
             ])
+            ->striped()
+            ->emptyStateHeading('No Clearing Agents Found')
+            ->emptyStateDescription('Register cargo clearing, handling, and logistics agents.')
+            ->emptyStateIcon('heroicon-o-identification')
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),

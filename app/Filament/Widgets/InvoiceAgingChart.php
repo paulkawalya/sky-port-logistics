@@ -24,7 +24,7 @@ class InvoiceAgingChart extends ChartWidget
             'Over 90 Days' => 0,
         ];
 
-        // Retrieve invoices with details and payments
+        // Retrieve freight invoices with details and payments
         $invoices = Invoice::with(['details', 'payments'])->get();
 
         foreach ($invoices as $invoice) {
@@ -37,6 +37,32 @@ class InvoiceAgingChart extends ChartWidget
             }
 
             $invoiceDate = Carbon::parse($invoice->date_invoiced ?? $invoice->created_at);
+            $ageInDays = $invoiceDate->diffInDays($now);
+
+            if ($ageInDays <= 30) {
+                $buckets['Current (0-30 Days)'] += $outstanding;
+            } elseif ($ageInDays <= 60) {
+                $buckets['31-60 Days'] += $outstanding;
+            } elseif ($ageInDays <= 90) {
+                $buckets['61-90 Days'] += $outstanding;
+            } else {
+                $buckets['Over 90 Days'] += $outstanding;
+            }
+        }
+
+        // Include manual invoices as well
+        $manualInvoices = \App\Models\Quotation::where('transaction_type', 'invoice')
+            ->with(['details', 'payments'])
+            ->get();
+
+        foreach ($manualInvoices as $manualInvoice) {
+            $outstanding = $manualInvoice->balance;
+
+            if ($outstanding <= 0) {
+                continue;
+            }
+
+            $invoiceDate = Carbon::parse($manualInvoice->date_quoted ?? $manualInvoice->created_at);
             $ageInDays = $invoiceDate->diffInDays($now);
 
             if ($ageInDays <= 30) {

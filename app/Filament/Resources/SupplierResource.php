@@ -21,6 +21,8 @@ class SupplierResource extends Resource
 
     protected static ?string $navigationGroup = 'Partners & CRM';
 
+    protected static ?string $recordTitleAttribute = 'name';
+
     protected static ?int $navigationSort = 3;
 
     public static function form(Form $form): Form
@@ -63,8 +65,14 @@ class SupplierResource extends Resource
                 //
             ])
             ->actions([
+                Tables\Actions\ViewAction::make()
+                    ->slideOver(),
                 Tables\Actions\EditAction::make(),
             ])
+            ->striped()
+            ->emptyStateHeading('No Suppliers or Vendors Found')
+            ->emptyStateDescription('Register logistics suppliers, port authorities, and shipping lines for payouts.')
+            ->emptyStateIcon('heroicon-o-building-office-2')
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),

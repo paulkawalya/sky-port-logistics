@@ -21,6 +21,8 @@ class UserResource extends Resource
 
     protected static ?string $navigationGroup = 'System & Access';
 
+    protected static ?string $recordTitleAttribute = 'name';
+
     protected static ?int $navigationSort = 1;
 
     public static function form(Form $form): Form
@@ -92,8 +94,14 @@ class UserResource extends Resource
                 //
             ])
             ->actions([
+                Tables\Actions\ViewAction::make()
+                    ->slideOver(),
                 Tables\Actions\EditAction::make(),
             ])
+            ->striped()
+            ->emptyStateHeading('No Staff Accounts Found')
+            ->emptyStateDescription('Create staff user accounts with appropriate operational, finance, or administrative roles.')
+            ->emptyStateIcon('heroicon-o-users')
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),

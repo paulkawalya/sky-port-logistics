@@ -45,3 +45,4 @@ class RequisitionStatsOverview extends BaseWidget
         ];
     }
 }
+

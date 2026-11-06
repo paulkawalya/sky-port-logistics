@@ -32,6 +32,8 @@ class ManualInvoiceResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Manual Invoices';
 
+    protected static ?string $recordTitleAttribute = 'container_air_no';
+
     protected static ?int $navigationSort = 2;
 
     public static function getEloquentQuery(): Builder
@@ -203,10 +205,13 @@ class ManualInvoiceResource extends Resource
                     ->preload(),
             ])
             ->actions([
+                Tables\Actions\ViewAction::make()
+                    ->slideOver(),
                 Tables\Actions\Action::make('recordPayment')
                     ->label('Record Payment')
                     ->icon('heroicon-o-credit-card')
                     ->color('success')
+                    ->slideOver()
                     ->visible(fn (Quotation $record) => $record->balance > 0)
                     ->form([
                         Forms\Components\DatePicker::make('payment_date')
@@ -290,7 +295,11 @@ class ManualInvoiceResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->striped()
+            ->emptyStateHeading('No Manual Invoices Created')
+            ->emptyStateDescription('Create direct customer invoices for handling fees, demurrage, local transport, and ad-hoc cargo.')
+            ->emptyStateIcon('heroicon-o-document-text');
     }
 
     public static function getRelations(): array

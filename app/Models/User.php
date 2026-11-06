@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Permission;
 use Filament\Models\Contracts\FilamentUser;
+use Filament\Models\Contracts\HasName;
 use Filament\Panel;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,7 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\UserPermission;
 
-class User extends Authenticatable implements FilamentUser
+class User extends Authenticatable implements FilamentUser, HasName
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -23,6 +24,11 @@ class User extends Authenticatable implements FilamentUser
     public function canAccessPanel(Panel $panel): bool
     {
         return in_array($this->user_type, ['Admin', 'MD', 'Manager', 'Accountant', 'Operations', 'Agent', 'Field']);
+    }
+
+    public function getFilamentName(): string
+    {
+        return "{$this->name} (" . ($this->user_type ?? 'Staff') . ")";
     }
 
     /**

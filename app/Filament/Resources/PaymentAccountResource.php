@@ -75,17 +75,40 @@ class PaymentAccountResource extends Resource
                 Tables\Columns\TextColumn::make('transaction_currency')
                     ->badge()
                     ->color('success'),
+                Tables\Columns\TextColumn::make('balance')
+                    ->label('Available Balance')
+                    ->money(fn ($record) => $record->transaction_currency ?? 'UGX')
+                    ->weight('bold')
+                    ->color(fn ($state) => $state >= 0 ? 'success' : 'danger'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Created')
                     ->date()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('account_type')
+                    ->options([
+                        'Bank' => 'Bank',
+                        'Cash' => 'Cash',
+                        'Mobile Money' => 'Mobile Money',
+                    ]),
+                Tables\Filters\SelectFilter::make('transaction_currency')
+                    ->options([
+                        'UGX' => 'UGX',
+                        'USD' => 'USD',
+                        'EUR' => 'EUR',
+                        'KES' => 'KES',
+                    ]),
             ])
             ->actions([
+                Tables\Actions\ViewAction::make()
+                    ->slideOver(),
                 Tables\Actions\EditAction::make(),
             ])
+            ->striped()
+            ->emptyStateHeading('No Payment Accounts Configured')
+            ->emptyStateDescription('Set up bank accounts, cash safe, and mobile money ledgers.')
+            ->emptyStateIcon('heroicon-o-credit-card')
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),

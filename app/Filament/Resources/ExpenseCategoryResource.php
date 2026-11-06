@@ -57,8 +57,14 @@ class ExpenseCategoryResource extends Resource
                 //
             ])
             ->actions([
+                Tables\Actions\ViewAction::make()
+                    ->slideOver(),
                 Tables\Actions\EditAction::make(),
             ])
+            ->striped()
+            ->emptyStateHeading('No Expense Categories Configured')
+            ->emptyStateDescription('Create accounting categories to organize budget allocations and line-item expenses.')
+            ->emptyStateIcon('heroicon-o-tag')
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),

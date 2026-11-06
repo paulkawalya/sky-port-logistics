@@ -105,8 +105,14 @@ class TransactionResource extends Resource
                     ->label('Account'),
             ])
             ->actions([
+                Tables\Actions\ViewAction::make()
+                    ->slideOver(),
                 Tables\Actions\EditAction::make(),
             ])
+            ->striped()
+            ->emptyStateHeading('No Transactions Logged')
+            ->emptyStateDescription('Ledger entries will appear here as payments and disbursements are posted.')
+            ->emptyStateIcon('heroicon-o-arrows-right-left')
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),

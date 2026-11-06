@@ -31,15 +31,30 @@ class AdminPanelProvider extends PanelProvider
             ->brandLogo(asset('app-assets/img/logo/skyport.png'))
             ->brandLogoHeight('2.4rem')
             ->favicon(asset('app-assets/img/logo/skyport.png'))
+            ->font('Plus Jakarta Sans')
             ->sidebarCollapsibleOnDesktop()
+            ->sidebarWidth('16.5rem')
+            ->collapsedSidebarWidth('4.5rem')
+            ->maxContentWidth(\Filament\Support\Enums\MaxWidth::Full)
+            ->globalSearchKeyBindings(['command+k', 'ctrl+k'])
+            ->darkMode(true)
             ->colors([
-                'primary' => Color::Blue,
+                'primary' => Color::hex('#1e40af'),
+                'gray' => Color::Slate,
+                'info' => Color::Sky,
+                'success' => Color::Emerald,
+                'warning' => Color::Amber,
+                'danger' => Color::Rose,
             ])
             ->navigationGroups([
-                'Operations & Freight',
-                'Finance & Accounting',
-                'Partners & CRM',
-                'System & Access',
+                \Filament\Navigation\NavigationGroup::make('Operations & Freight')
+                    ->icon('heroicon-o-truck'),
+                \Filament\Navigation\NavigationGroup::make('Finance & Accounting')
+                    ->icon('heroicon-o-banknotes'),
+                \Filament\Navigation\NavigationGroup::make('Partners & CRM')
+                    ->icon('heroicon-o-user-group'),
+                \Filament\Navigation\NavigationGroup::make('System & Access')
+                    ->icon('heroicon-o-cog-6-tooth'),
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
@@ -48,6 +63,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
+                \App\Filament\Widgets\GreetingWidget::class,
                 \App\Filament\Widgets\StatsOverview::class,
                 \App\Filament\Widgets\RevenueExpenseChart::class,
                 \App\Filament\Widgets\InvoiceAgingChart::class,

@@ -21,6 +21,8 @@ class CustomerResource extends Resource
 
     protected static ?string $navigationGroup = 'Partners & CRM';
 
+    protected static ?string $recordTitleAttribute = 'name';
+
     protected static ?int $navigationSort = 1;
 
     public static function form(Form $form): Form
@@ -64,8 +66,14 @@ class CustomerResource extends Resource
                 //
             ])
             ->actions([
+                Tables\Actions\ViewAction::make()
+                    ->slideOver(),
                 Tables\Actions\EditAction::make(),
             ])
+            ->striped()
+            ->emptyStateHeading('No Customers Registered')
+            ->emptyStateDescription('Add client accounts to assign cargo consignments, quotations, and billing invoices.')
+            ->emptyStateIcon('heroicon-o-user-group')
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),

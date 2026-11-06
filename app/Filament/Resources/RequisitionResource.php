@@ -243,10 +243,13 @@ class RequisitionResource extends Resource
                     ->preload(),
             ])
             ->actions([
+                Tables\Actions\ViewAction::make()
+                    ->slideOver(),
                 Tables\Actions\Action::make('approve')
                     ->label('Approve')
                     ->icon('heroicon-o-check-circle')
                     ->color('success')
+                    ->slideOver()
                     ->visible(fn (Requisition $record) => $record->status === 'pending')
                     ->form([
                         Forms\Components\Textarea::make('remarks')
@@ -299,6 +302,7 @@ class RequisitionResource extends Resource
                     ->label('Disburse / Payout')
                     ->icon('heroicon-o-banknotes')
                     ->color('success')
+                    ->slideOver()
                     ->visible(fn (Requisition $record) => $record->status === 'approved' && $record->balance > 0)
                     ->form(function (Requisition $record) {
                         return [
@@ -434,7 +438,11 @@ class RequisitionResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->striped()
+            ->emptyStateHeading('No Budget Requisitions Found')
+            ->emptyStateDescription('Create a budget requisition to request funds for operational handling, shipping clearance, or expenses.')
+            ->emptyStateIcon('heroicon-o-clipboard-document-check');
     }
 
     public static function getRelations(): array

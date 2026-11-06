@@ -3,8 +3,11 @@
 namespace App\Filament\Resources\InvoiceResource\Pages;
 
 use App\Filament\Resources\InvoiceResource;
+use App\Models\Invoice;
 use Filament\Actions;
+use Filament\Resources\Components\Tab;
 use Filament\Resources\Pages\ListRecords;
+use Illuminate\Database\Eloquent\Builder;
 
 class ListInvoices extends ListRecords
 {
@@ -13,7 +16,24 @@ class ListInvoices extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            Actions\CreateAction::make()
+                ->label('New Freight Invoice')
+                ->icon('heroicon-o-plus-circle'),
+        ];
+    }
+
+    public function getTabs(): array
+    {
+        return [
+            'all' => Tab::make('All Freight Invoices'),
+            'unpaid' => Tab::make('Unpaid')
+                ->badge(fn () => Invoice::whereDoesntHave('payments')->count())
+                ->badgeColor('danger')
+                ->modifyQueryUsing(fn (Builder $query) => $query->whereDoesntHave('payments')),
+            'paid' => Tab::make('Fully Settled')
+                ->badge(fn () => Invoice::whereHas('payments')->count())
+                ->badgeColor('success')
+                ->modifyQueryUsing(fn (Builder $query) => $query->whereHas('payments')),
         ];
     }
 }

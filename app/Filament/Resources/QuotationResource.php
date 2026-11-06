@@ -184,6 +184,8 @@ class QuotationResource extends Resource
                     ->preload(),
             ])
             ->actions([
+                Tables\Actions\ViewAction::make()
+                    ->slideOver(),
                 Tables\Actions\Action::make('convertToInvoice')
                     ->label('Convert to Manual Invoice')
                     ->icon('heroicon-o-arrow-right-circle')
@@ -221,7 +223,11 @@ class QuotationResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->striped()
+            ->emptyStateHeading('No Quotations Found')
+            ->emptyStateDescription('Create commercial estimates and rate quotations for prospective or existing cargo customers.')
+            ->emptyStateIcon('heroicon-o-calculator');
     }
 
     public static function getRelations(): array

@@ -27,6 +27,8 @@ class ShippmentResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Shipments';
 
+    protected static ?string $recordTitleAttribute = 'mark';
+
     protected static ?int $navigationSort = 1;
 
     public static function form(Form $form): Form
@@ -190,6 +192,8 @@ class ShippmentResource extends Resource
                     ->label('Filter by Customer'),
             ])
             ->actions([
+                Tables\Actions\ViewAction::make()
+                    ->slideOver(),
                 Tables\Actions\Action::make('receiveInStore')
                     ->label('Receive in Store')
                     ->icon('heroicon-o-arrow-down-on-square')
@@ -228,6 +232,10 @@ class ShippmentResource extends Resource
                     ])),
                 Tables\Actions\EditAction::make(),
             ])
+            ->striped()
+            ->emptyStateHeading('No Cargo Consignments Recorded')
+            ->emptyStateDescription('Record incoming sea or air freight cargo to track warehouse inventory and releases.')
+            ->emptyStateIcon('heroicon-o-truck')
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
