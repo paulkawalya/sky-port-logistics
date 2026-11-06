@@ -48,13 +48,31 @@ class ShippmentResource extends Resource
                             ->searchable()
                             ->preload()
                             ->label('Customer')
-                            ->required(),
+                            ->required()
+                            ->createOptionForm([
+                                Forms\Components\TextInput::make('name')
+                                    ->required()
+                                    ->maxLength(255),
+                                Forms\Components\TextInput::make('phone_number')
+                                    ->tel()
+                                    ->required()
+                                    ->maxLength(255),
+                            ]),
                         Forms\Components\Select::make('agent_id')
                             ->relationship('agent', 'name')
                             ->searchable()
                             ->preload()
                             ->label('Agent')
-                            ->required(),
+                            ->required()
+                            ->createOptionForm([
+                                Forms\Components\TextInput::make('name')
+                                    ->required()
+                                    ->maxLength(255),
+                                Forms\Components\TextInput::make('phone_number')
+                                    ->tel()
+                                    ->required()
+                                    ->maxLength(255),
+                            ]),
                         Forms\Components\Hidden::make('user_id')
                             ->default(fn () => auth()->id()),
                         Forms\Components\TextInput::make('shipper')
@@ -125,6 +143,77 @@ class ShippmentResource extends Resource
             ]);
     }
 
+    public static function infolist(\Filament\Infolists\Infolist $infolist): \Filament\Infolists\Infolist
+    {
+        return $infolist
+            ->schema([
+                \Filament\Infolists\Components\Section::make('Cargo & Consignment Overview')
+                    ->schema([
+                        \Filament\Infolists\Components\TextEntry::make('transit.number')
+                            ->label('Container / Transit #')
+                            ->badge()
+                            ->color('info'),
+                        \Filament\Infolists\Components\TextEntry::make('customer.name')
+                            ->label('Client / Consignee')
+                            ->weight('bold'),
+                        \Filament\Infolists\Components\TextEntry::make('customer.phone_number')
+                            ->label('Client Phone'),
+                        \Filament\Infolists\Components\TextEntry::make('agent.name')
+                            ->label('Clearing Agent'),
+                        \Filament\Infolists\Components\TextEntry::make('mark')
+                            ->label('Shipping Mark')
+                            ->weight('bold'),
+                        \Filament\Infolists\Components\TextEntry::make('shipper')
+                            ->label('Shipper / Supplier')
+                            ->placeholder('N/A'),
+                        \Filament\Infolists\Components\TextEntry::make('type')
+                            ->label('Cargo Type')
+                            ->placeholder('N/A'),
+                        \Filament\Infolists\Components\TextEntry::make('number_of_packages')
+                            ->label('Packages')
+                            ->badge()
+                            ->color('primary'),
+                        \Filament\Infolists\Components\TextEntry::make('weight')
+                            ->label('Weight')
+                            ->suffix(' KG'),
+                        \Filament\Infolists\Components\TextEntry::make('cbm')
+                            ->label('CBM')
+                            ->suffix(' m³'),
+                    ])->columns(2),
+
+                \Filament\Infolists\Components\Section::make('Warehouse & Store Status')
+                    ->schema([
+                        \Filament\Infolists\Components\TextEntry::make('cargo_status')
+                            ->label('Store Status')
+                            ->badge()
+                            ->colors([
+                                'gray' => 'In Transit',
+                                'warning' => 'Received in Store',
+                                'info' => 'Sorted & Inspected',
+                                'primary' => 'Ready for Pickup',
+                                'success' => 'Delivered',
+                            ]),
+                        \Filament\Infolists\Components\TextEntry::make('warehouse_location')
+                            ->label('Store Shelf / Location')
+                            ->placeholder('Not assigned yet'),
+                        \Filament\Infolists\Components\TextEntry::make('received_in_store_at')
+                            ->label('Received in Store Time')
+                            ->dateTime()
+                            ->placeholder('N/A'),
+                        \Filament\Infolists\Components\TextEntry::make('dispatched_at')
+                            ->label('Dispatched / Release Time')
+                            ->dateTime()
+                            ->placeholder('Not dispatched'),
+                        \Filament\Infolists\Components\TextEntry::make('receiver_name')
+                            ->label('Received By Person')
+                            ->placeholder('Pending pickup'),
+                        \Filament\Infolists\Components\TextEntry::make('receiver_phone')
+                            ->label('Receiver Phone')
+                            ->placeholder('Pending pickup'),
+                    ])->columns(2),
+            ]);
+    }
+
     public static function table(Table $table): Table
     {
         return $table
@@ -133,14 +222,17 @@ class ShippmentResource extends Resource
                     ->label('Container/Transit')
                     ->badge()
                     ->color('info')
+                    ->placeholder('N/A')
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('customer.name')
                     ->label('Customer')
+                    ->placeholder('N/A')
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('mark')
                     ->label('Mark')
+                    ->placeholder('N/A')
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('cargo_status')
@@ -156,7 +248,12 @@ class ShippmentResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('warehouse_location')
                     ->label('Shelf/Location')
+                    ->placeholder('Unassigned')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('receiver_name')
+                    ->label('Receiver')
+                    ->placeholder('N/A')
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('number_of_packages')
                     ->label('Pkgs')
                     ->sortable(),

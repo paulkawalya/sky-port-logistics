@@ -159,6 +159,61 @@ class RequisitionResource extends Resource
             ]);
     }
 
+    public static function infolist(\Filament\Infolists\Infolist $infolist): \Filament\Infolists\Infolist
+    {
+        return $infolist
+            ->schema([
+                \Filament\Infolists\Components\Section::make('Budget Requisition Summary')
+                    ->schema([
+                        \Filament\Infolists\Components\TextEntry::make('id')
+                            ->label('Requisition #')
+                            ->formatStateUsing(fn ($state) => 'REQ-' . str_pad($state, 4, '0', STR_PAD_LEFT))
+                            ->weight('bold')
+                            ->badge()
+                            ->color('info'),
+                        \Filament\Infolists\Components\TextEntry::make('date_requisitioned')
+                            ->label('Date')
+                            ->date(),
+                        \Filament\Infolists\Components\TextEntry::make('user.name')
+                            ->label('Requested By')
+                            ->weight('bold'),
+                        \Filament\Infolists\Components\TextEntry::make('currency')
+                            ->label('Currency')
+                            ->badge(),
+                        \Filament\Infolists\Components\TextEntry::make('status')
+                            ->label('Approval Status')
+                            ->badge()
+                            ->colors([
+                                'warning' => 'pending',
+                                'success' => 'approved',
+                                'danger' => 'rejected',
+                            ]),
+                        \Filament\Infolists\Components\TextEntry::make('is_converted')
+                            ->label('Expenses Ledger')
+                            ->badge()
+                            ->formatStateUsing(fn (bool $state) => $state ? 'Posted to Expenses' : 'Not Posted')
+                            ->color(fn (bool $state) => $state ? 'info' : 'gray'),
+                        \Filament\Infolists\Components\TextEntry::make('total_amount')
+                            ->label('Total Estimated Budget')
+                            ->money(fn (Requisition $record) => $record->currency ?? 'UGX')
+                            ->weight('bold'),
+                        \Filament\Infolists\Components\TextEntry::make('total_paid')
+                            ->label('Total Disbursed / Paid')
+                            ->money(fn (Requisition $record) => $record->currency ?? 'UGX')
+                            ->color('success'),
+                        \Filament\Infolists\Components\TextEntry::make('balance')
+                            ->label('Remaining Budget Balance')
+                            ->money(fn (Requisition $record) => $record->currency ?? 'UGX')
+                            ->color(fn ($state) => $state > 0 ? 'warning' : 'gray')
+                            ->weight('bold'),
+                        \Filament\Infolists\Components\TextEntry::make('remarks')
+                            ->label('Purpose / Remarks')
+                            ->columnSpanFull()
+                            ->placeholder('No general remarks provided.'),
+                    ])->columns(3),
+            ]);
+    }
+
     public static function table(Table $table): Table
     {
         return $table

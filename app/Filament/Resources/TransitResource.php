@@ -87,6 +87,53 @@ class TransitResource extends Resource
             ]);
     }
 
+    public static function infolist(\Filament\Infolists\Infolist $infolist): \Filament\Infolists\Infolist
+    {
+        return $infolist
+            ->schema([
+                \Filament\Infolists\Components\Section::make('Container & Transit File')
+                    ->schema([
+                        \Filament\Infolists\Components\TextEntry::make('number')
+                            ->label('Container / Flight #')
+                            ->weight('bold')
+                            ->badge()
+                            ->color('info'),
+                        \Filament\Infolists\Components\TextEntry::make('category')
+                            ->label('Category')
+                            ->badge(),
+                        \Filament\Infolists\Components\TextEntry::make('size')
+                            ->label('Container Size')
+                            ->placeholder('N/A'),
+                        \Filament\Infolists\Components\TextEntry::make('payment_status')
+                            ->label('Payment Status')
+                            ->badge()
+                            ->colors([
+                                'danger' => 'not paid',
+                                'warning' => 'partialy paid',
+                                'success' => 'paid',
+                            ]),
+                        \Filament\Infolists\Components\TextEntry::make('departure_place')
+                            ->label('Port / Origin')
+                            ->placeholder('N/A'),
+                        \Filament\Infolists\Components\TextEntry::make('destination_place')
+                            ->label('Destination')
+                            ->placeholder('N/A'),
+                        \Filament\Infolists\Components\TextEntry::make('expected_arrival_time')
+                            ->label('Expected Arrival (ETA)')
+                            ->placeholder('N/A'),
+                        \Filament\Infolists\Components\TextEntry::make('clearing_agent')
+                            ->label('Clearing Agent')
+                            ->placeholder('N/A'),
+                        \Filament\Infolists\Components\TextEntry::make('entry_number')
+                            ->label('Customs Entry Number')
+                            ->placeholder('N/A'),
+                        \Filament\Infolists\Components\TextEntry::make('contact_information')
+                            ->label('Tracking Notes')
+                            ->placeholder('None'),
+                    ])->columns(2),
+            ]);
+    }
+
     public static function table(Table $table): Table
     {
         return $table

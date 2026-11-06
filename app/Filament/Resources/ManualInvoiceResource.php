@@ -139,6 +139,78 @@ class ManualInvoiceResource extends Resource
             ]);
     }
 
+    public static function infolist(\Filament\Infolists\Infolist $infolist): \Filament\Infolists\Infolist
+    {
+        return $infolist
+            ->schema([
+                \Filament\Infolists\Components\Section::make('Invoice Header & Balances')
+                    ->schema([
+                        \Filament\Infolists\Components\TextEntry::make('id')
+                            ->label('Invoice Reference')
+                            ->formatStateUsing(fn ($state) => 'INV-M-' . str_pad($state, 4, '0', STR_PAD_LEFT))
+                            ->weight('bold')
+                            ->badge()
+                            ->color('info'),
+                        \Filament\Infolists\Components\TextEntry::make('date_quoted')
+                            ->label('Invoice Date')
+                            ->date(),
+                        \Filament\Infolists\Components\TextEntry::make('customer.name')
+                            ->label('Customer Name')
+                            ->weight('bold'),
+                        \Filament\Infolists\Components\TextEntry::make('customer.phone_number')
+                            ->label('Contact Phone'),
+                        \Filament\Infolists\Components\TextEntry::make('transaction_currency')
+                            ->label('Billing Currency')
+                            ->badge(),
+                        \Filament\Infolists\Components\TextEntry::make('payment_status')
+                            ->label('Payment Status')
+                            ->badge()
+                            ->color(fn (string $state): string => match ($state) {
+                                'Paid' => 'success',
+                                'Partial' => 'warning',
+                                'Unpaid' => 'danger',
+                                default => 'gray',
+                            }),
+                        \Filament\Infolists\Components\TextEntry::make('total_amount')
+                            ->label('Total Billed')
+                            ->money(fn (Quotation $record) => $record->transaction_currency ?? 'USD')
+                            ->weight('bold'),
+                        \Filament\Infolists\Components\TextEntry::make('total_paid')
+                            ->label('Amount Paid')
+                            ->money(fn (Quotation $record) => $record->transaction_currency ?? 'USD')
+                            ->color('success'),
+                        \Filament\Infolists\Components\TextEntry::make('balance')
+                            ->label('Outstanding Balance Due')
+                            ->money(fn (Quotation $record) => $record->transaction_currency ?? 'USD')
+                            ->color(fn ($state) => $state > 0 ? 'danger' : 'gray')
+                            ->weight('bold'),
+                    ])->columns(3),
+
+                \Filament\Infolists\Components\Section::make('Cargo Specifications')
+                    ->schema([
+                        \Filament\Infolists\Components\TextEntry::make('container_air_no')
+                            ->label('Container / AWB #')
+                            ->placeholder('N/A'),
+                        \Filament\Infolists\Components\TextEntry::make('entry_no')
+                            ->label('Customs Entry #')
+                            ->placeholder('N/A'),
+                        \Filament\Infolists\Components\TextEntry::make('packages')
+                            ->label('Packages')
+                            ->placeholder('N/A'),
+                        \Filament\Infolists\Components\TextEntry::make('weight')
+                            ->label('Weight (KG)')
+                            ->placeholder('N/A'),
+                        \Filament\Infolists\Components\TextEntry::make('volume')
+                            ->label('Volume (CBM)')
+                            ->placeholder('N/A'),
+                        \Filament\Infolists\Components\TextEntry::make('description')
+                            ->label('Notes')
+                            ->columnSpanFull()
+                            ->placeholder('None'),
+                    ])->columns(3)->collapsible(),
+            ]);
+    }
+
     public static function table(Table $table): Table
     {
         return $table

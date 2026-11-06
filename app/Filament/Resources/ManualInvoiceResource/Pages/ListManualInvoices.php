@@ -12,6 +12,13 @@ class ListManualInvoices extends ListRecords
 {
     protected static string $resource = ManualInvoiceResource::class;
 
+    public ?string $activeTab = 'all';
+
+    public function getDefaultActiveTab(): string | int | null
+    {
+        return 'all';
+    }
+
     protected function getHeaderActions(): array
     {
         return [

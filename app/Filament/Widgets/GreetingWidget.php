@@ -12,3 +12,4 @@ class GreetingWidget extends Widget
 
     protected int | string | array $columnSpan = 'full';
 }
+
