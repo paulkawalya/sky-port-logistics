@@ -235,4 +235,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/reports/generate', [App\Http\Controllers\ReportController::class, 'generate'])->name('reports.generate');
     Route::get('/reports/export/{type}', [App\Http\Controllers\ReportController::class, 'export'])->name('reports.export');
 
+    // Warehouse Store Gate Pass
+    Route::get('/warehouse/gate-pass/{id}/print', function ($id) {
+        $shippment = \App\Models\Shippment::with(['customer', 'transit', 'checkedOutBy'])->findOrFail($id);
+        return view('warehouse.gate_pass', compact('shippment'));
+    })->name('warehouse.gate-pass.print');
+
 });

@@ -7,11 +7,14 @@ use App\Filament\Resources\ShippmentResource\RelationManagers;
 use App\Models\Shippment;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\HtmlString;
 
 class ShippmentResource extends Resource
 {
@@ -309,24 +312,84 @@ class ShippmentResource extends Resource
                         'cargo_status' => 'Ready for Pickup',
                     ])),
                 Tables\Actions\Action::make('markDelivered')
-                    ->label('Release / Deliver')
-                    ->icon('heroicon-o-truck')
+                    ->label('Checkout & Release')
+                    ->icon('heroicon-o-arrow-up-tray')
                     ->color('success')
-                    ->visible(fn ($record) => $record->cargo_status === 'Ready for Pickup')
-                    ->form([
-                        Forms\Components\TextInput::make('receiver_name')
-                            ->label('Picked up by (Name)')
-                            ->required(),
-                        Forms\Components\TextInput::make('receiver_phone')
-                            ->label('Phone Number')
-                            ->required(),
-                    ])
-                    ->action(fn ($record, array $data) => $record->update([
-                        'cargo_status' => 'Delivered',
-                        'dispatched_at' => now(),
-                        'receiver_name' => $data['receiver_name'],
-                        'receiver_phone' => $data['receiver_phone'],
-                    ])),
+                    ->slideOver()
+                    ->visible(fn ($record) => in_array($record->cargo_status, ['Received in Store', 'Sorted & Inspected', 'Ready for Pickup']))
+                    ->form(function (Shippment $record) {
+                        return [
+                            Forms\Components\Placeholder::make('invoice_check')
+                                ->label('Billing & Invoice Clearance')
+                                ->content(function () use ($record) {
+                                    $invoices = $record->invoices;
+                                    if ($invoices->isEmpty()) {
+                                        return new HtmlString('<div class="p-2.5 rounded-lg bg-amber-500/10 border border-amber-500/20 text-xs text-amber-600 font-semibold">⚠️ Notice: No freight invoice has been generated for this consignment yet. Confirm customer settlement before release.</div>');
+                                    }
+                                    $unpaid = $invoices->filter(fn ($inv) => $inv->balance > 0)->count();
+                                    if ($unpaid > 0) {
+                                        return new HtmlString('<div class="p-2.5 rounded-lg bg-rose-500/10 border border-rose-500/20 text-xs text-rose-600 font-bold">⚠️ Warning: Customer has an unpaid invoice balance on this shipment! Ensure clearance or manager approval before physical release.</div>');
+                                    }
+                                    return new HtmlString('<div class="p-2.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-xs text-emerald-600 font-bold">✓ Clearance Verified: Invoices are fully paid. Authorized for immediate checkout.</div>');
+                                }),
+
+                            Forms\Components\TextInput::make('receiver_name')
+                                ->label('Authorized Collector Name')
+                                ->default(fn () => $record->receiver_name ?? $record->customer?->name)
+                                ->required(),
+                            Forms\Components\TextInput::make('receiver_phone')
+                                ->label('Collector Phone Number')
+                                ->default(fn () => $record->receiver_phone ?? $record->customer?->phone_number)
+                                ->tel()
+                                ->required(),
+                            Forms\Components\TextInput::make('receiver_id_number')
+                                ->label('National ID / Passport Number')
+                                ->placeholder('e.g. CM89012345ABC')
+                                ->required(),
+                            Forms\Components\TextInput::make('receiver_vehicle_no')
+                                ->label('Transport Vehicle Plate')
+                                ->placeholder('e.g. UBD 450T')
+                                ->required(),
+                            Forms\Components\Textarea::make('checkout_notes')
+                                ->label('Handover Condition & Remarks')
+                                ->default('Packages verified sound, complete count, and released in good condition.')
+                                ->required(),
+                        ];
+                    })
+                    ->action(function (Shippment $record, array $data): void {
+                        $gatePassNo = $record->gate_pass_number ?? Shippment::generateGatePassNumber();
+                        $record->update([
+                            'cargo_status' => 'Delivered',
+                            'dispatched_at' => now(),
+                            'receiver_name' => $data['receiver_name'],
+                            'receiver_phone' => $data['receiver_phone'],
+                            'receiver_id_number' => $data['receiver_id_number'],
+                            'receiver_vehicle_no' => $data['receiver_vehicle_no'],
+                            'gate_pass_number' => $gatePassNo,
+                            'checked_out_by' => Auth::id(),
+                            'checkout_notes' => $data['checkout_notes'],
+                        ]);
+
+                        Notification::make()
+                            ->title('Cargo Released & Gate Pass Issued')
+                            ->body("Gate Pass {$gatePassNo} generated. Goods checked out from warehouse.")
+                            ->success()
+                            ->actions([
+                                \Filament\Notifications\Actions\Action::make('print')
+                                    ->label('Print Gate Pass')
+                                    ->url(route('warehouse.gate-pass.print', $record->id))
+                                    ->openUrlInNewTab(),
+                            ])
+                            ->send();
+                    }),
+
+                Tables\Actions\Action::make('printGatePass')
+                    ->label('Gate Pass')
+                    ->icon('heroicon-o-printer')
+                    ->color('info')
+                    ->visible(fn (Shippment $record) => !empty($record->gate_pass_number) || $record->cargo_status === 'Delivered')
+                    ->url(fn (Shippment $record) => route('warehouse.gate-pass.print', $record->id))
+                    ->openUrlInNewTab(),
                 Tables\Actions\EditAction::make(),
             ])
             ->striped()
