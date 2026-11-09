@@ -96,6 +96,27 @@ class UserResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make()
                     ->slideOver(),
+                Tables\Actions\Action::make('resetPassword')
+                    ->label('Reset Password')
+                    ->icon('heroicon-o-key')
+                    ->color('warning')
+                    ->form([
+                        Forms\Components\TextInput::make('new_password')
+                            ->label('New Password')
+                            ->password()
+                            ->required()
+                            ->minLength(6),
+                    ])
+                    ->action(function (User $record, array $data): void {
+                        $record->password = \Illuminate\Support\Facades\Hash::make($data['new_password']);
+                        $record->save();
+
+                        \Filament\Notifications\Notification::make()
+                            ->title('Password Reset Successful')
+                            ->body("Password for {$record->name} has been updated.")
+                            ->success()
+                            ->send();
+                    }),
                 Tables\Actions\EditAction::make(),
             ])
             ->striped()

@@ -257,6 +257,24 @@ class TransitResource extends Resource
                                 ->send();
                         }
                     }),
+                Tables\Actions\Action::make('markAsPaid')
+                    ->label('Mark as Paid')
+                    ->icon('heroicon-o-check-badge')
+                    ->color('success')
+                    ->visible(fn (Transit $record) => $record->payment_status !== 'paid')
+                    ->requiresConfirmation()
+                    ->modalHeading(fn (Transit $record) => "Mark Container #{$record->number} as Paid")
+                    ->modalDescription('Confirm that all transit shipping charges for this container have been fully settled.')
+                    ->action(function (Transit $record): void {
+                        $record->payment_status = 'paid';
+                        $record->save();
+
+                        Notification::make()
+                            ->title('Container Marked as Paid')
+                            ->body("Container #{$record->number} payment status updated to Paid.")
+                            ->success()
+                            ->send();
+                    }),
                 Tables\Actions\ViewAction::make()
                     ->slideOver(),
                 Tables\Actions\EditAction::make(),

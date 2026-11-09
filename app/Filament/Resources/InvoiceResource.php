@@ -5,13 +5,18 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\InvoiceResource\Pages;
 use App\Filament\Resources\InvoiceResource\RelationManagers;
 use App\Models\Invoice;
+use App\Models\InvoicePayment;
+use App\Models\PaymentAccount;
+use App\Models\Transaction;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Auth;
 
 class InvoiceResource extends Resource
 {
@@ -50,6 +55,35 @@ class InvoiceResource extends Resource
                         Forms\Components\Hidden::make('user_id')
                             ->default(fn () => auth()->id()),
                     ])->columns(2),
+
+                Forms\Components\Section::make('Invoice Line Items & Particulars')
+                    ->description('Itemize ocean/air freight rates, BL fees, port duties, or clearance expenses.')
+                    ->schema([
+                        Forms\Components\Repeater::make('details')
+                            ->relationship('details')
+                            ->schema([
+                                Forms\Components\TextInput::make('particular')
+                                    ->label('Particular / Item Description')
+                                    ->required()
+                                    ->placeholder('e.g. Ocean Freight / Handling / Bill of Lading')
+                                    ->columnSpan(6),
+                                Forms\Components\TextInput::make('quantity')
+                                    ->label('Qty')
+                                    ->numeric()
+                                    ->default(1)
+                                    ->required()
+                                    ->columnSpan(2),
+                                Forms\Components\TextInput::make('unit_price')
+                                    ->label('Rate / Unit Price')
+                                    ->numeric()
+                                    ->prefix(fn (callable $get) => $get('../../transaction_currency') === 'UGX' ? 'UGX' : '$')
+                                    ->required()
+                                    ->columnSpan(4),
+                            ])
+                            ->columns(12)
+                            ->defaultItems(1)
+                            ->addActionLabel('Add Invoice Particular'),
+                    ]),
             ]);
     }
 
@@ -113,6 +147,75 @@ class InvoiceResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make()
                     ->slideOver(),
+                Tables\Actions\Action::make('recordPayment')
+                    ->label('Record Payment')
+                    ->icon('heroicon-o-credit-card')
+                    ->color('success')
+                    ->slideOver()
+                    ->visible(fn (Invoice $record) => $record->balance > 0)
+                    ->form([
+                        Forms\Components\DatePicker::make('payment_date')
+                            ->label('Payment Date')
+                            ->default(now())
+                            ->required(),
+                        Forms\Components\TextInput::make('amount_paid')
+                            ->label('Amount Received')
+                            ->numeric()
+                            ->required()
+                            ->default(fn (Invoice $record) => $record->balance)
+                            ->maxValue(fn (Invoice $record) => $record->balance)
+                            ->prefix(fn (Invoice $record) => $record->transaction_currency ?? 'USD'),
+                        Forms\Components\Select::make('mode_of_payment')
+                            ->label('Mode of Payment')
+                            ->options([
+                                'Cash' => 'Cash',
+                                'Bank' => 'Bank Transfer',
+                                'Mobile Money' => 'Mobile Money',
+                                'Cheque' => 'Cheque',
+                                'Digital' => 'Digital / Card',
+                            ])
+                            ->default('Cash')
+                            ->required(),
+                        Forms\Components\Select::make('payment_account_id')
+                            ->label('Destination Account (Cash/Bank)')
+                            ->options(PaymentAccount::all()->pluck('name', 'id'))
+                            ->searchable()
+                            ->required(),
+                        Forms\Components\Textarea::make('narrative')
+                            ->label('Notes / Remarks')
+                            ->placeholder('e.g. Full settlement for cargo release'),
+                    ])
+                    ->action(function (Invoice $record, array $data): void {
+                        $payment = new InvoicePayment();
+                        $payment->invoice_id = $record->id;
+                        $payment->user_id = Auth::id() ?? 1;
+                        $payment->payment_date = $data['payment_date'];
+                        $payment->amount_paid = $data['amount_paid'];
+                        $payment->mode_of_payment = $data['mode_of_payment'];
+                        $payment->narrative = $data['narrative'] ?? 'Freight Invoice Payment';
+                        $payment->save();
+
+                        if (!empty($data['payment_account_id'])) {
+                            $particular = 'Payment for Freight Invoice INV-' . str_pad($record->id, 4, '0', STR_PAD_LEFT) . ' - ' . ($record->shippment?->customer?->name ?? 'Customer');
+                            Transaction::saveTransaction(
+                                $data['payment_account_id'],
+                                $payment->amount_paid,
+                                $payment->payment_date,
+                                Auth::id() ?? 1,
+                                null,
+                                'credit',
+                                $particular
+                            );
+                        }
+
+                        $record->clearCache();
+
+                        Notification::make()
+                            ->title('Payment Recorded')
+                            ->body("Recorded {$record->transaction_currency} " . number_format($data['amount_paid'], 2) . " for Invoice INV-" . str_pad($record->id, 4, '0', STR_PAD_LEFT))
+                            ->success()
+                            ->send();
+                    }),
                 Tables\Actions\Action::make('print')
                     ->label('Print')
                     ->icon('heroicon-o-printer')
@@ -140,7 +243,7 @@ class InvoiceResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\PaymentsRelationManager::class,
         ];
     }
 
