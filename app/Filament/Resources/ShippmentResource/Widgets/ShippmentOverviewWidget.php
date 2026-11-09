@@ -42,3 +42,4 @@ class ShippmentOverviewWidget extends BaseWidget
         ];
     }
 }
+

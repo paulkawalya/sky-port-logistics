@@ -8,13 +8,12 @@ use Illuminate\Support\Facades\Auth;
 
 class ImportShipment implements ToCollection
 {
-
     public $transit;
+    public int $importedCount = 0;
+    public int $invoicesCount = 0;
 
     public function __construct(Transit $transit) {
-
         $this->transit = $transit;
-
     }
 
 
@@ -70,35 +69,37 @@ class ImportShipment implements ToCollection
             );
 
             if (!empty($saveShipment)) {
+                $this->importedCount++;
 
-            // $agent = Agent::saveAgent($data[6], "Unknmown");
-
-            // $saveShipment = Shippment::saveShipment($this->transit->id,$customer->id,$agent->id,$shipper=$data[2],$mark=$data[5],$bl_packages=$data[7],$number_of_packages=$data[8],$unit_of_measure=$data[9],$weight=$data[10],$volume=$data[11],$type=$data[12],$description=$data[14]);
-
-            // if(!empty($saveShipment)){
-
-                //make Invoice
-
+                // Make Invoice
                 $invoice = Invoice::saveInvoice($saveShipment->id);
+                if ($invoice) {
+                    $this->invoicesCount++;
 
-                $freight = isset($data[15]) ? $data[15] : 0;
-                $bl_fee = isset($data[16]) ? $data[16] : 0;
-                $others = isset($data[17]) ? $data[17] : 0;
+                    $cleanAmount = function ($val) {
+                        if (is_numeric($val)) return (float) $val;
+                        if (is_string($val)) {
+                            $cleaned = preg_replace('/[^0-9.]/', '', $val);
+                            return is_numeric($cleaned) ? (float) $cleaned : 0;
+                        }
+                        return 0;
+                    };
 
-                $invoice_details = [
-                    'Freight' => $freight,
-                    'Bill of Lading' => $bl_fee,
-                    'Others' => $others
-                ];
+                    $freight = $cleanAmount($data[15] ?? 0);
+                    $bl_fee = $cleanAmount($data[16] ?? 0);
+                    $others = $cleanAmount($data[17] ?? 0);
 
-                foreach ($invoice_details as $key => $value) {
+                    $invoice_details = [
+                        'Freight' => $freight,
+                        'Bill of Lading' => $bl_fee,
+                        'Others' => $others,
+                    ];
 
-                    try {
-
-                        InvoiceDetail::saveDetails($invoice->id,$key,1,$value);
-
-                    } catch (\Throwable $th) {}
-
+                    foreach ($invoice_details as $key => $value) {
+                        try {
+                            InvoiceDetail::saveDetails($invoice->id, $key, 1, $value);
+                        } catch (\Throwable $th) {}
+                    }
                 }
             }
 

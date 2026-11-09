@@ -45,3 +45,4 @@ class ExpenseOverviewWidget extends BaseWidget
         ];
     }
 }
+

@@ -47,3 +47,4 @@ class QuotationOverviewWidget extends BaseWidget
         ];
     }
 }
+

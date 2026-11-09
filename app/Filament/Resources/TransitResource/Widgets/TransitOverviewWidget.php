@@ -54,3 +54,4 @@ class TransitOverviewWidget extends BaseWidget
         ];
     }
 }
+

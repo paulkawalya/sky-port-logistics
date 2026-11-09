@@ -4,6 +4,8 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ShippmentResource\Pages;
 use App\Filament\Resources\ShippmentResource\RelationManagers;
+use App\Models\Invoice;
+use App\Models\InvoiceDetail;
 use App\Models\Shippment;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -143,6 +145,33 @@ class ShippmentResource extends Resource
                             ->tel()
                             ->maxLength(255),
                     ])->columns(2),
+
+                Forms\Components\Section::make('Freight Invoicing (Optional)')
+                    ->description('Auto-generate freight invoice immediately for this consignment')
+                    ->schema([
+                        Forms\Components\Toggle::make('auto_generate_invoice')
+                            ->label('Auto-Generate Freight Invoice')
+                            ->reactive()
+                            ->default(false),
+                        Forms\Components\TextInput::make('invoice_freight')
+                            ->label('Ocean / Air Freight ($)')
+                            ->numeric()
+                            ->default(0)
+                            ->visible(fn ($get) => (bool)$get('auto_generate_invoice')),
+                        Forms\Components\TextInput::make('invoice_bl_fee')
+                            ->label('Bill of Lading (BL) Fee ($)')
+                            ->numeric()
+                            ->default(0)
+                            ->visible(fn ($get) => (bool)$get('auto_generate_invoice')),
+                        Forms\Components\TextInput::make('invoice_others')
+                            ->label('Other Port / Clearance Charges ($)')
+                            ->numeric()
+                            ->default(0)
+                            ->visible(fn ($get) => (bool)$get('auto_generate_invoice')),
+                    ])
+                    ->columns(3)
+                    ->collapsible()
+                    ->collapsed(fn (string $operation) => $operation === 'edit'),
             ]);
     }
 
@@ -267,6 +296,38 @@ class ShippmentResource extends Resource
                 Tables\Columns\TextColumn::make('cbm')
                     ->label('CBM')
                     ->sortable(),
+                Tables\Columns\TextColumn::make('invoice_status')
+                    ->label('Freight Invoice')
+                    ->state(function (Shippment $record): string {
+                        $invoices = $record->invoices;
+                        if ($invoices->isEmpty()) {
+                            return 'No Invoice';
+                        }
+                        $first = $invoices->first();
+                        if ($first->balance <= 0 && $first->total > 0) {
+                            return 'Paid ($' . number_format($first->total, 2) . ')';
+                        }
+                        if ($first->paid > 0) {
+                            return 'Partial ($' . number_format($first->balance, 2) . ' due)';
+                        }
+                        return 'Unpaid ($' . number_format($first->total, 2) . ')';
+                    })
+                    ->badge()
+                    ->color(function (Shippment $record): string {
+                        $invoices = $record->invoices;
+                        if ($invoices->isEmpty()) {
+                            return 'danger';
+                        }
+                        $first = $invoices->first();
+                        if ($first->balance <= 0 && $first->total > 0) {
+                            return 'success';
+                        }
+                        if ($first->paid > 0) {
+                            return 'warning';
+                        }
+                        return 'danger';
+                    })
+                    ->toggleable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Date')
                     ->date()
@@ -381,6 +442,56 @@ class ShippmentResource extends Resource
                                     ->openUrlInNewTab(),
                             ])
                             ->send();
+                    }),
+
+                Tables\Actions\Action::make('generateInvoice')
+                    ->label('Generate Invoice')
+                    ->icon('heroicon-o-document-currency-dollar')
+                    ->color('info')
+                    ->visible(fn (Shippment $record) => $record->invoices->isEmpty())
+                    ->modalHeading(fn (Shippment $record) => "Auto-Generate Freight Invoice for {$record->mark}")
+                    ->modalDescription(fn (Shippment $record) => "Consignee: " . ($record->customer->name ?? 'Customer') . ". Enter freight and clearance charges below to create the invoice instantly.")
+                    ->form([
+                        Forms\Components\TextInput::make('freight')
+                            ->label('Ocean / Air Freight ($)')
+                            ->numeric()
+                            ->default(0)
+                            ->required(),
+                        Forms\Components\TextInput::make('bl_fee')
+                            ->label('Bill of Lading (BL) Fee ($)')
+                            ->numeric()
+                            ->default(0)
+                            ->required(),
+                        Forms\Components\TextInput::make('others')
+                            ->label('Other Port / Handling Charges ($)')
+                            ->numeric()
+                            ->default(0)
+                            ->required(),
+                    ])
+                    ->action(function (Shippment $record, array $data): void {
+                        $invoice = Invoice::saveInvoice($record->id);
+                        if ($invoice) {
+                            $freight = (float)($data['freight'] ?? 0);
+                            $bl = (float)($data['bl_fee'] ?? 0);
+                            $others = (float)($data['others'] ?? 0);
+
+                            InvoiceDetail::saveDetails($invoice->id, 'Freight', 1, $freight);
+                            InvoiceDetail::saveDetails($invoice->id, 'Bill of Lading', 1, $bl);
+                            InvoiceDetail::saveDetails($invoice->id, 'Others', 1, $others);
+
+                            Notification::make()
+                                ->title('Freight Invoice Generated')
+                                ->body("Invoice #{$invoice->id} created with total $" . number_format($freight + $bl + $others, 2))
+                                ->success()
+                                ->actions([
+                                    \Filament\Notifications\Actions\Action::make('print')
+                                        ->label('Print Invoice')
+                                        ->button()
+                                        ->url(route('invoices.print', $invoice->id))
+                                        ->openUrlInNewTab(),
+                                ])
+                                ->send();
+                        }
                     }),
 
                 Tables\Actions\Action::make('printGatePass')

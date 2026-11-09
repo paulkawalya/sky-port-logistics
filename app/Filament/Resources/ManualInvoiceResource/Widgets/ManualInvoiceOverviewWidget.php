@@ -44,3 +44,4 @@ class ManualInvoiceOverviewWidget extends BaseWidget
         ];
     }
 }
+

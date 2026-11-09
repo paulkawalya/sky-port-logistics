@@ -267,7 +267,7 @@ class Invoice extends Model
     {
         $invoice = new self([
             'shippment_id' => $shippment_id,
-            'user_id' => Auth::id(),
+            'user_id' => Auth::id() ?? 1,
             'date_invoiced' => now(),
         ]);
 

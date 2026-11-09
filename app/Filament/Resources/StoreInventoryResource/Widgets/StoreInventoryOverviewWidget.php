@@ -51,3 +51,4 @@ class StoreInventoryOverviewWidget extends BaseWidget
         ];
     }
 }
+

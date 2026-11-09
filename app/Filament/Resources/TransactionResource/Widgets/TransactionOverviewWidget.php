@@ -42,3 +42,4 @@ class TransactionOverviewWidget extends BaseWidget
         ];
     }
 }
+

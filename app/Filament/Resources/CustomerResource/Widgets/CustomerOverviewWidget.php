@@ -42,3 +42,4 @@ class CustomerOverviewWidget extends BaseWidget
         ];
     }
 }
+
