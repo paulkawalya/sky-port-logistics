@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\TransactionResource\Pages;
 
 use App\Filament\Resources\TransactionResource;
+use App\Filament\Resources\TransactionResource\Widgets\TransactionOverviewWidget;
 use App\Models\Transaction;
 use Filament\Actions;
 use Filament\Resources\Components\Tab;
@@ -26,6 +27,13 @@ class ListTransactions extends ListRecords
             Actions\CreateAction::make()
                 ->label('New Transaction')
                 ->icon('heroicon-o-plus-circle'),
+        ];
+    }
+
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            TransactionOverviewWidget::class,
         ];
     }
 

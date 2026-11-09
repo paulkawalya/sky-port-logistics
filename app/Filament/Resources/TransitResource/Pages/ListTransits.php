@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\TransitResource\Pages;
 
 use App\Filament\Resources\TransitResource;
+use App\Filament\Resources\TransitResource\Widgets\TransitOverviewWidget;
 use App\Models\Transit;
 use Filament\Actions;
 use Filament\Resources\Components\Tab;
@@ -26,6 +27,13 @@ class ListTransits extends ListRecords
             Actions\CreateAction::make()
                 ->label('New Container / Transit')
                 ->icon('heroicon-o-plus-circle'),
+        ];
+    }
+
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            TransitOverviewWidget::class,
         ];
     }
 

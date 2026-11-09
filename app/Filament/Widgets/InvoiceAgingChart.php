@@ -3,14 +3,22 @@
 namespace App\Filament\Widgets;
 
 use App\Models\Invoice;
+use App\Models\Quotation;
 use Filament\Widgets\ChartWidget;
 use Illuminate\Support\Carbon;
 
 class InvoiceAgingChart extends ChartWidget
 {
-    protected static ?string $heading = 'Unpaid Invoices Aging Analysis';
+    protected static ?string $heading = 'Unpaid Receivables Aging';
 
     protected static ?int $sort = 3;
+
+    protected static ?string $maxHeight = '290px';
+
+    protected int | string | array $columnSpan = [
+        'default' => 'full',
+        'lg' => 1,
+    ];
 
     protected function getData(): array
     {
@@ -18,7 +26,7 @@ class InvoiceAgingChart extends ChartWidget
 
         // Buckets for outstanding balances
         $buckets = [
-            'Current (0-30 Days)' => 0,
+            'Current (0-30d)' => 0,
             '31-60 Days' => 0,
             '61-90 Days' => 0,
             'Over 90 Days' => 0,
@@ -40,7 +48,7 @@ class InvoiceAgingChart extends ChartWidget
             $ageInDays = $invoiceDate->diffInDays($now);
 
             if ($ageInDays <= 30) {
-                $buckets['Current (0-30 Days)'] += $outstanding;
+                $buckets['Current (0-30d)'] += $outstanding;
             } elseif ($ageInDays <= 60) {
                 $buckets['31-60 Days'] += $outstanding;
             } elseif ($ageInDays <= 90) {
@@ -51,7 +59,7 @@ class InvoiceAgingChart extends ChartWidget
         }
 
         // Include manual invoices as well
-        $manualInvoices = \App\Models\Quotation::where('transaction_type', 'invoice')
+        $manualInvoices = Quotation::where('transaction_type', 'invoice')
             ->with(['details', 'payments'])
             ->get();
 
@@ -66,7 +74,7 @@ class InvoiceAgingChart extends ChartWidget
             $ageInDays = $invoiceDate->diffInDays($now);
 
             if ($ageInDays <= 30) {
-                $buckets['Current (0-30 Days)'] += $outstanding;
+                $buckets['Current (0-30d)'] += $outstanding;
             } elseif ($ageInDays <= 60) {
                 $buckets['31-60 Days'] += $outstanding;
             } elseif ($ageInDays <= 90) {
@@ -79,13 +87,13 @@ class InvoiceAgingChart extends ChartWidget
         return [
             'datasets' => [
                 [
-                    'label' => 'Unpaid Balance ($)',
+                    'label' => 'Unpaid ($)',
                     'data' => array_values($buckets),
                     'backgroundColor' => [
                         '#10b981', // green for 0-30
                         '#f59e0b', // amber for 31-60
                         '#f97316', // orange for 61-90
-                        '#ef4444', // red for 90+
+                        '#ed1c24', // brand red for 90+
                     ],
                 ],
             ],
@@ -98,4 +106,3 @@ class InvoiceAgingChart extends ChartWidget
         return 'doughnut';
     }
 }
-

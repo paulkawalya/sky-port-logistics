@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\InvoiceResource\Pages;
 
 use App\Filament\Resources\InvoiceResource;
+use App\Filament\Resources\InvoiceResource\Widgets\InvoiceOverviewWidget;
 use App\Models\Invoice;
 use Filament\Actions;
 use Filament\Resources\Components\Tab;
@@ -26,6 +27,13 @@ class ListInvoices extends ListRecords
             Actions\CreateAction::make()
                 ->label('New Freight Invoice')
                 ->icon('heroicon-o-plus-circle'),
+        ];
+    }
+
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            InvoiceOverviewWidget::class,
         ];
     }
 

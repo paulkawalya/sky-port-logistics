@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\ShippmentResource\Pages;
 
 use App\Filament\Resources\ShippmentResource;
+use App\Filament\Resources\ShippmentResource\Widgets\ShippmentOverviewWidget;
 use App\Models\Shippment;
 use Filament\Actions;
 use Filament\Resources\Components\Tab;
@@ -26,6 +27,13 @@ class ListShippments extends ListRecords
             Actions\CreateAction::make()
                 ->label('New Consignment')
                 ->icon('heroicon-o-plus-circle'),
+        ];
+    }
+
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            ShippmentOverviewWidget::class,
         ];
     }
 

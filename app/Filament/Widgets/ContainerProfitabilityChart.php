@@ -7,9 +7,13 @@ use Filament\Widgets\ChartWidget;
 
 class ContainerProfitabilityChart extends ChartWidget
 {
-    protected static ?string $heading = 'Container Volume & Consignment Density';
+    protected static ?string $heading = 'Recent Containers & Cargo Density';
 
     protected static ?int $sort = 4;
+
+    protected static ?string $maxHeight = '260px';
+
+    protected int | string | array $columnSpan = 'full';
 
     protected function getData(): array
     {
@@ -32,7 +36,7 @@ class ContainerProfitabilityChart extends ChartWidget
                 [
                     'label' => 'Consignments Loaded',
                     'data' => $shipmentCounts,
-                    'backgroundColor' => '#6366f1',
+                    'backgroundColor' => '#ed1c24',
                     'borderRadius' => 6,
                 ],
             ],
@@ -45,4 +49,3 @@ class ContainerProfitabilityChart extends ChartWidget
         return 'bar';
     }
 }
-

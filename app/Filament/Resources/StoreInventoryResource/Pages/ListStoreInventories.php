@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\StoreInventoryResource\Pages;
 
 use App\Filament\Resources\StoreInventoryResource;
+use App\Filament\Resources\StoreInventoryResource\Widgets\StoreInventoryOverviewWidget;
 use App\Models\Shippment;
 use Filament\Actions;
 use Filament\Resources\Components\Tab;
@@ -26,6 +27,13 @@ class ListStoreInventories extends ListRecords
             Actions\CreateAction::make()
                 ->label('Intake Inventory')
                 ->icon('heroicon-o-plus-circle'),
+        ];
+    }
+
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            StoreInventoryOverviewWidget::class,
         ];
     }
 

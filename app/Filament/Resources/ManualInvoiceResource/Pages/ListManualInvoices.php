@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\ManualInvoiceResource\Pages;
 
 use App\Filament\Resources\ManualInvoiceResource;
+use App\Filament\Resources\ManualInvoiceResource\Widgets\ManualInvoiceOverviewWidget;
 use Filament\Actions;
 use Filament\Resources\Components\Tab;
 use Filament\Resources\Pages\ListRecords;
@@ -23,7 +24,15 @@ class ListManualInvoices extends ListRecords
     {
         return [
             Actions\CreateAction::make()
-                ->label('New Manual Invoice'),
+                ->label('New Manual Invoice')
+                ->icon('heroicon-o-plus-circle'),
+        ];
+    }
+
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            ManualInvoiceOverviewWidget::class,
         ];
     }
 

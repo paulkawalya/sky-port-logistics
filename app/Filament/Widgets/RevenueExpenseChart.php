@@ -11,9 +11,16 @@ use Illuminate\Support\Facades\DB;
 
 class RevenueExpenseChart extends ChartWidget
 {
-    protected static ?string $heading = 'Revenue vs. Expenses (Last 6 Months)';
+    protected static ?string $heading = 'Revenue vs. Operational Expenses (Last 6 Months)';
 
     protected static ?int $sort = 2;
+
+    protected static ?string $maxHeight = '290px';
+
+    protected int | string | array $columnSpan = [
+        'default' => 'full',
+        'lg' => 2,
+    ];
 
     protected function getData(): array
     {
@@ -52,16 +59,18 @@ class RevenueExpenseChart extends ChartWidget
                 [
                     'label' => 'Billed Revenue ($)',
                     'data' => $revenueData,
-                    'borderColor' => '#3b82f6',
-                    'backgroundColor' => 'rgba(59, 130, 246, 0.2)',
+                    'borderColor' => '#ed1c24',
+                    'backgroundColor' => 'rgba(237, 28, 36, 0.1)',
                     'fill' => true,
+                    'tension' => 0.3,
                 ],
                 [
                     'label' => 'Operational Expenses ($)',
                     'data' => $expenseData,
-                    'borderColor' => '#ef4444',
-                    'backgroundColor' => 'rgba(239, 68, 68, 0.2)',
+                    'borderColor' => '#64748b',
+                    'backgroundColor' => 'rgba(100, 116, 139, 0.1)',
                     'fill' => true,
+                    'tension' => 0.3,
                 ],
             ],
             'labels' => $months,
