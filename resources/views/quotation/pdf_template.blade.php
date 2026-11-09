@@ -372,7 +372,7 @@
 </head>
 <body>
     <div class="header">
-        <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/app-assets/img/logo/skyport.png'))) }}" alt="SKY PORT LOGISTICS LTD" style="width: auto; max-width: 650px; max-height: 150px; margin: 5px auto; display: block;">
+        <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/app-assets/img/logo/sifcargo.png'))) }}" alt="SKY PORT LOGISTICS LTD" style="width: auto; max-width: 650px; max-height: 150px; margin: 5px auto; display: block;">
     </div>
 
     <div class="tin-number" style="margin-bottom: 2px;">TIN: 1033561397</div>

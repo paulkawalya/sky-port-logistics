@@ -246,10 +246,10 @@
                 <div>Email Address: info@skyportlogistics.com</div>
             </div>
             <div style="width: 50%; text-align: right;">
-                <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/app-assets/img/logo/skyport.png'))) }}" alt="SKY PORT LOGISTICS LTD">
+                <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/app-assets/img/logo/sifcargo.png'))) }}" alt="SKY PORT LOGISTICS LTD">
             </div>
         </div> -->
-        <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/app-assets/img/logo/skyport.png'))) }}" alt="SKY PORT LOGISTICS LTD" style="width: auto; max-width: 550px; max-height: 130px; margin: 0 auto 5px; display: block;">
+        <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/app-assets/img/logo/sifcargo.png'))) }}" alt="SKY PORT LOGISTICS LTD" style="width: auto; max-width: 550px; max-height: 130px; margin: 0 auto 5px; display: block;">
     </div>
 
     <hr class="red-line">

@@ -10,7 +10,7 @@
           </div>              
 
           <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
-            <img width="75%" src="{{asset('/app-assets/img/logo/skyport.png')}}" alt="SKY PORT LOGISTICS LTD" class="rounded float-end">                         
+            <img width="75%" src="{{asset('/app-assets/img/logo/sifcargo.png')}}" alt="SKY PORT LOGISTICS LTD" class="rounded float-end">                         
           </div>
       </div>    
 

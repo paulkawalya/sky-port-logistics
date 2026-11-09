@@ -7,7 +7,7 @@
 </head>
 <body>
     <center>
-        <img width="50%" src="{{asset('/app-assets/img/logo/skyport.png')}}" alt="Sky Port Logistics LTDLogo">
+        <img width="50%" src="{{asset('/app-assets/img/logo/sifcargo.png')}}" alt="Sky Port Logistics LTDLogo">
     </center>
 
     {!! $reMessage !!}

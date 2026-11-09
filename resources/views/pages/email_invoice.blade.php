@@ -7,7 +7,7 @@
 </head>
 <body>
 
-    <img width="35%" src="{{asset('/app-assets/img/logo/skyport.png')}}" alt="Sky Port Logistics LTD Logo" class="rounded float-end"> <br>                         
+    <img width="35%" src="{{asset('/app-assets/img/logo/sifcargo.png')}}" alt="Sky Port Logistics LTD Logo" class="rounded float-end"> <br>                         
     @include('pages.address')
 
     <center> <h3><b>INVOICE</b></h3></center>

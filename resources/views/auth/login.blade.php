@@ -5,7 +5,7 @@
     <div class="row justify-content-center align-items-center min-vh-100">
         <div class="col-md-6 col-lg-5 col-xl-4 py-5">
             <div class="text-center mb-4">
-                <img src="{{ asset('app-assets/img/logo/skyport.png') }}" alt="Logo" style="max-height: 100px;">
+                <img src="{{ asset('app-assets/img/logo/sifcargo.png') }}" alt="SIFCARGO TONIGHT" style="max-height: 120px; max-width: 100%; object-fit: contain;">
             </div>
             
             <form method="POST" action="{{ route('login') }}">
@@ -46,7 +46,7 @@
                 </div>
 
                 <div class="d-grid">
-                    <button type="submit" class="btn btn-primary btn-lg">
+                    <button type="submit" class="btn btn-lg text-white" style="background-color: #ed1c24; border-color: #ed1c24; font-weight: 600;">
                         {{ __('Login') }}
                     </button>
                 </div>

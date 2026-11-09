@@ -10,8 +10,8 @@
 
               <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
                 <center>
-                  <!-- <img width="50%" src="{{asset('/app-assets/img/logo/skyport.png')}}" alt="SKY PORT LOGISTICS LTD"> -->
-                  <img width="35%" src="{{asset('/app-assets/img/logo/skyport.png')}}" alt="SKY PORT LOGISTICS LTD" class="rounded float-end">
+                  <!-- <img width="50%" src="{{asset('/app-assets/img/logo/sifcargo.png')}}" alt="SKY PORT LOGISTICS LTD"> -->
+                  <img width="35%" src="{{asset('/app-assets/img/logo/sifcargo.png')}}" alt="SKY PORT LOGISTICS LTD" class="rounded float-end">
                 </center>   
               </div>
           </div>    

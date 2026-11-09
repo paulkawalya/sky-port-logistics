@@ -419,12 +419,12 @@
             <div class="hp-header-logo d-flex align-items-center">
                 <a href="/" class="position-relative">
 
-                    <img class="hp-logo hp-sidebar-visible hp-dark-none" src="/app-assets/img/logo/skyport.png" alt="logo">
-                    <img class="hp-logo hp-sidebar-visible hp-dark-block" src="/app-assets/img/logo/skyport.png" alt="logo">
-                    <img class="hp-logo hp-sidebar-hidden hp-dir-none hp-dark-none" src="/app-assets/img/logo/skyport.png" alt="logo">
-                    <img class="hp-logo hp-sidebar-hidden hp-dir-none hp-dark-block" src="/app-assets/img/logo/skyport.png" alt="logo">
-                    <img class="hp-logo hp-sidebar-hidden hp-dir-block hp-dark-none" src="/app-assets/img/logo/skyport.png" alt="logo">
-                    <img class="hp-logo hp-sidebar-hidden hp-dir-block hp-dark-block" src="/app-assets/img/logo/skyport.png" alt="logo">
+                    <img class="hp-logo hp-sidebar-visible hp-dark-none" src="/app-assets/img/logo/sifcargo.png" alt="logo">
+                    <img class="hp-logo hp-sidebar-visible hp-dark-block" src="/app-assets/img/logo/sifcargo.png" alt="logo">
+                    <img class="hp-logo hp-sidebar-hidden hp-dir-none hp-dark-none" src="/app-assets/img/logo/sifcargo.png" alt="logo">
+                    <img class="hp-logo hp-sidebar-hidden hp-dir-none hp-dark-block" src="/app-assets/img/logo/sifcargo.png" alt="logo">
+                    <img class="hp-logo hp-sidebar-hidden hp-dir-block hp-dark-none" src="/app-assets/img/logo/sifcargo.png" alt="logo">
+                    <img class="hp-logo hp-sidebar-hidden hp-dir-block hp-dark-block" src="/app-assets/img/logo/sifcargo.png" alt="logo">
                 </a>
             </div>
         </div>
@@ -453,12 +453,12 @@
                         <div class="hp-header-logo d-flex align-items-center">
                             <a href="/" class="position-relative">
 
-                                <img class="hp-logo hp-sidebar-visible hp-dark-none" src="/app-assets/img/logo/skyport.png" alt="logo">
-                                <img class="hp-logo hp-sidebar-visible hp-dark-block" src="/app-assets/img/logo/skyport.png" alt="logo">
-                                <img class="hp-logo hp-sidebar-hidden hp-dir-none hp-dark-none" src="/app-assets/img/logo/skyport.png" alt="logo">
-                                <img class="hp-logo hp-sidebar-hidden hp-dir-none hp-dark-block" src="/app-assets/img/logo/skyport.png" alt="logo">
-                                <img class="hp-logo hp-sidebar-hidden hp-dir-block hp-dark-none" src="/app-assets/img/logo/skyport.png" alt="logo">
-                                <img class="hp-logo hp-sidebar-hidden hp-dir-block hp-dark-block" src="/app-assets/img/logo/skyport.png" alt="logo">
+                                <img class="hp-logo hp-sidebar-visible hp-dark-none" src="/app-assets/img/logo/sifcargo.png" alt="logo">
+                                <img class="hp-logo hp-sidebar-visible hp-dark-block" src="/app-assets/img/logo/sifcargo.png" alt="logo">
+                                <img class="hp-logo hp-sidebar-hidden hp-dir-none hp-dark-none" src="/app-assets/img/logo/sifcargo.png" alt="logo">
+                                <img class="hp-logo hp-sidebar-hidden hp-dir-none hp-dark-block" src="/app-assets/img/logo/sifcargo.png" alt="logo">
+                                <img class="hp-logo hp-sidebar-hidden hp-dir-block hp-dark-none" src="/app-assets/img/logo/sifcargo.png" alt="logo">
+                                <img class="hp-logo hp-sidebar-hidden hp-dir-block hp-dark-block" src="/app-assets/img/logo/sifcargo.png" alt="logo">
                             </a>
                         </div>
                     </div>

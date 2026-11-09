@@ -7,7 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9, user-scalable=0">
         <meta content="For the Freight" name="description" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <!-- <link rel="shortcut icon" href="{{asset('assets/images/logo.png')}}"> -->
+        <link rel="shortcut icon" href="{{ asset('app-assets/img/logo/sifcargo-icon.png') }}">
 
         <!-- Force browser zoom to 90% -->
         <style>
