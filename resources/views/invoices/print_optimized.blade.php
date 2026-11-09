@@ -203,7 +203,7 @@
 </head>
 <body>
     <div style="text-align: center; margin-bottom: 10px;">
-        <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/app-assets/img/logo/skyport.png'))) }}" alt="SKY PORT LOGISTICS LTD" style="width: auto; max-width: 650px; max-height: 150px; margin: 0 auto 5px; display: block;">
+        <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/app-assets/img/logo/sifcargo.png'))) }}" alt="SIFCARGO TONIGHT" style="width: auto; max-width: 650px; max-height: 150px; margin: 0 auto 5px; display: block;">
         <h3 style="font-weight: bold; font-size: 14px; margin: 5px 0; text-transform: uppercase;">INVOICE</h3>
         <hr style="height: 1px; border: none; background-color: #dc0000; margin: 5px 0 10px;">
     </div>
@@ -329,7 +329,7 @@
     <div style="margin-top: 15px; border-top: 1px solid #eee; padding-top: 10px;">
         <div style="font-size: 10px; margin-bottom: 10px;">
             <strong style="color: #555;">Bank Details</strong><br>
-            ACCOUNT NAME: SKY PORT LOGISTICS LIMITED<br>
+            ACCOUNT NAME: SIFCARGO TONIGHT LIMITED<br>
             BANK: DFCU - BANK<br>
             BRANCH: JINJA - ROAD BRANCH<br>
             ACCOUNT NUMBER (UGX): 01070019884752<br>

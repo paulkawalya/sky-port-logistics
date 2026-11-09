@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gate Pass #{{ $shippment->gate_pass_number ?? ('GP-' . $shippment->id) }} - Sky Port Logistics</title>
+    <title>Gate Pass #{{ $shippment->gate_pass_number ?? ('GP-' . $shippment->id) }} - SIFCARGO TONIGHT</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
@@ -40,7 +40,7 @@
             justify-content: space-between;
             align-items: flex-start;
             padding-bottom: 24px;
-            border-bottom: 2px solid #1e40af;
+            border-bottom: 2px solid #ed1c24;
             margin-bottom: 24px;
         }
 
@@ -58,7 +58,7 @@
         .company-info h2 {
             font-size: 20px;
             font-weight: 800;
-            color: #1e40af;
+            color: #ed1c24;
             letter-spacing: -0.5px;
         }
 
@@ -73,7 +73,7 @@
 
         .pass-badge {
             display: inline-block;
-            background: #1e40af;
+            background: #ed1c24;
             color: #ffffff;
             font-size: 14px;
             font-weight: 700;
@@ -274,12 +274,12 @@
         <!-- Header -->
         <div class="header">
             <div class="logo-section">
-                <img src="{{ asset('app-assets/img/logo/skyport.png') }}" alt="Sky Port Logistics">
+                <img src="{{ asset('app-assets/img/logo/sifcargo.png') }}" alt="SIFCARGO TONIGHT">
                 <div class="company-info">
-                    <h2>SKY PORT LOGISTICS LTD</h2>
-                    <p>International Sea & Air Cargo Terminal</p>
-                    <p>Kampala Bonded Store & Distribution Warehouse</p>
-                    <p>Phone: +256 700 000 000 | Email: info@skyportlogisticsltd.com</p>
+                    <h2>SIFCARGO TONIGHT</h2>
+                    <p>Forwarding &amp; Clearing - Sea &amp; Air Cargo Terminal</p>
+                    <p>Kampala Bonded Store &amp; Freight Distribution Warehouse</p>
+                    <p>Phone: +256 700 000 000 | Email: info@sifcargo.com</p>
                 </div>
             </div>
             <div class="pass-meta">

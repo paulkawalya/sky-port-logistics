@@ -53,7 +53,7 @@
             </form>
 
             <div class="text-center mt-5">
-                <p class="text-muted small">Copyright &copy; {{ date('Y') }} Sky Port Logistics LTD.</p>
+                <p class="text-muted small">Copyright &copy; {{ date('Y') }} SIFCARGO TONIGHT.</p>
             </div>
         </div>
     </div>

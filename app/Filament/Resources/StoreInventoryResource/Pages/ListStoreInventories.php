@@ -53,3 +53,4 @@ class ListStoreInventories extends ListRecords
         ];
     }
 }
+

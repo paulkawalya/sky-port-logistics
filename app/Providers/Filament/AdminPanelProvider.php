@@ -27,10 +27,10 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
-            ->brandName('Sky Port Logistics LTD')
-            ->brandLogo(asset('app-assets/img/logo/skyport.png'))
-            ->brandLogoHeight('2.4rem')
-            ->favicon(asset('app-assets/img/logo/skyport.png'))
+            ->brandName('SIFCARGO TONIGHT')
+            ->brandLogo(asset('app-assets/img/logo/sifcargo.png'))
+            ->brandLogoHeight('2.6rem')
+            ->favicon(asset('app-assets/img/logo/sifcargo-icon.png'))
             ->font('Plus Jakarta Sans')
             ->sidebarCollapsibleOnDesktop()
             ->sidebarWidth('16.5rem')
@@ -39,12 +39,12 @@ class AdminPanelProvider extends PanelProvider
             ->globalSearchKeyBindings(['command+k', 'ctrl+k'])
             ->darkMode(true)
             ->colors([
-                'primary' => Color::hex('#1e40af'),
+                'primary' => Color::hex('#ed1c24'),
                 'gray' => Color::Slate,
                 'info' => Color::Sky,
                 'success' => Color::Emerald,
                 'warning' => Color::Amber,
-                'danger' => Color::Rose,
+                'danger' => Color::hex('#b91c1c'),
             ])
             ->navigationGroups([
                 \Filament\Navigation\NavigationGroup::make('Operations & Freight')

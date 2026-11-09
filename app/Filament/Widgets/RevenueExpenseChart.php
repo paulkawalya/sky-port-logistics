@@ -4,8 +4,10 @@ namespace App\Filament\Widgets;
 
 use App\Models\Expense;
 use App\Models\InvoiceDetail;
+use App\Models\QuotationDetail;
 use Filament\Widgets\ChartWidget;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class RevenueExpenseChart extends ChartWidget
 {
@@ -27,12 +29,12 @@ class RevenueExpenseChart extends ChartWidget
             // Monthly Invoiced Revenue (Freight Invoices + Manual Invoices)
             $monthlyFreightRevenue = InvoiceDetail::whereMonth('created_at', $date->month)
                 ->whereYear('created_at', $date->year)
-                ->sum(\DB::raw('quantity * unit_price'));
+                ->sum(DB::raw('quantity * unit_price'));
 
-            $monthlyManualRevenue = \App\Models\QuotationDetail::whereHas('quotation', fn ($q) => $q->where('transaction_type', 'invoice'))
+            $monthlyManualRevenue = QuotationDetail::whereHas('quotation', fn ($q) => $q->where('transaction_type', 'invoice'))
                 ->whereMonth('created_at', $date->month)
                 ->whereYear('created_at', $date->year)
-                ->sum(\DB::raw('quantity * unit_price'));
+                ->sum(DB::raw('quantity * unit_price'));
 
             $monthlyRevenue = $monthlyFreightRevenue + $monthlyManualRevenue;
 
@@ -71,4 +73,3 @@ class RevenueExpenseChart extends ChartWidget
         return 'line';
     }
 }
-

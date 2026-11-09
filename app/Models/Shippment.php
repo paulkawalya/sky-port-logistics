@@ -54,7 +54,7 @@ class Shippment extends Model
             if (empty($shipment->agent_id)) {
                 $firstAgent = Agent::first();
                 if (!$firstAgent) {
-                    $firstAgent = Agent::create(['name' => 'Sky Port Direct', 'phone_number' => '+256700000000']);
+                    $firstAgent = Agent::create(['name' => 'Sifcargo Direct', 'phone_number' => '+256700000000']);
                 }
                 $shipment->agent_id = $firstAgent->id;
             }

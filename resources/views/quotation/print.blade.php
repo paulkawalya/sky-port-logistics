@@ -372,7 +372,7 @@
 </head>
 <body>
     <div class="header">
-        <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/app-assets/img/logo/skyport.png'))) }}" alt="SKY PORT LOGISTICS LTD" style="width: auto; max-width: 650px; max-height: 150px; margin: 5px auto; display: block;">
+        <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/app-assets/img/logo/sifcargo.png'))) }}" alt="SIFCARGO TONIGHT" style="width: auto; max-width: 650px; max-height: 150px; margin: 5px auto; display: block;">
     </div>
 
     <div class="tin-number" style="margin-bottom: 2px;">TIN: 1033561397</div>
@@ -523,7 +523,7 @@
 
     <div class="bank-details" style="margin-top: 10px; padding: 10px; background-color: #f9f9f9; border-radius: 4px; border: 1px solid #e0e0e0;">
         <div style="font-weight: bold; margin-bottom: 5px; font-size: 12px; color: #333;">Bank Details</div>
-        <div style="margin-bottom: 2px; font-size: 12px;"><strong>ACCOUNT NAME:</strong> SKY PORT LOGISTICS LIMITED</div>
+        <div style="margin-bottom: 2px; font-size: 12px;"><strong>ACCOUNT NAME:</strong> SIFCARGO TONIGHT LIMITED</div>
         <div style="margin-bottom: 2px; font-size: 12px;"><strong>BANK:</strong> DFCU - BANK</div>
         <div style="margin-bottom: 2px; font-size: 12px;"><strong>BRANCH:</strong> JINJA - ROAD BRANCH</div>
         <div style="margin-bottom: 2px; font-size: 12px;"><strong>ACCOUNT NUMBER (UGX):</strong> 01070019884752</div>
