@@ -103,3 +103,4 @@ class ShippmentsRelationManager extends RelationManager
             ]);
     }
 }
+

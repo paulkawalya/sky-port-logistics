@@ -102,3 +102,4 @@ class QuotationsRelationManager extends RelationManager
             ]);
     }
 }
+

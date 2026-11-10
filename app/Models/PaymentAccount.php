@@ -9,6 +9,8 @@ class PaymentAccount extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     protected $appends = ['balance'];
 
     /**

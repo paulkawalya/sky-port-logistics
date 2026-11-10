@@ -21,6 +21,7 @@ class QuotationPayment extends Model
         'payment_date',
         'amount_paid',
         'mode_of_payment',
+        'narrative',
         'payment_account_id',
     ];
 

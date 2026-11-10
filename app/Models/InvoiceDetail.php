@@ -9,6 +9,8 @@ class InvoiceDetail extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
 
     public static function saveDetails($invoice_id,$particular,$quantity,$unit_price) {
 

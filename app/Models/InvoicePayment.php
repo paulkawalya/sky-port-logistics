@@ -10,6 +10,8 @@ class InvoicePayment extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     function user() : BelongsTo {
 
         return $this->belongsTo(User::class);
