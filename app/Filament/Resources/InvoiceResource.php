@@ -66,21 +66,21 @@ class InvoiceResource extends Resource
                                     ->label('Particular / Item Description')
                                     ->required()
                                     ->placeholder('e.g. Ocean Freight / Handling / Bill of Lading')
-                                    ->columnSpan(6),
+                                    ->columnSpan(['default' => 12, 'md' => 6]),
                                 Forms\Components\TextInput::make('quantity')
                                     ->label('Qty')
                                     ->numeric()
                                     ->default(1)
                                     ->required()
-                                    ->columnSpan(2),
+                                    ->columnSpan(['default' => 6, 'md' => 2]),
                                 Forms\Components\TextInput::make('unit_price')
                                     ->label('Rate / Unit Price')
                                     ->numeric()
                                     ->prefix(fn (callable $get) => $get('../../transaction_currency') === 'UGX' ? 'UGX' : '$')
                                     ->required()
-                                    ->columnSpan(4),
+                                    ->columnSpan(['default' => 6, 'md' => 4]),
                             ])
-                            ->columns(12)
+                            ->columns(['default' => 1, 'sm' => 2, 'md' => 12])
                             ->defaultItems(1)
                             ->addActionLabel('Add Invoice Particular'),
                     ]),

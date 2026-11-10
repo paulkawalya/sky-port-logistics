@@ -111,21 +111,21 @@ class QuotationResource extends Resource
                                     ->label('Description / Particular')
                                     ->required()
                                     ->placeholder('e.g. Freight handling fee / Inspection charge')
-                                    ->columnSpan(6),
+                                    ->columnSpan(['default' => 12, 'md' => 6]),
                                 Forms\Components\TextInput::make('quantity')
                                     ->label('Qty')
                                     ->numeric()
                                     ->default(1)
                                     ->required()
-                                    ->columnSpan(2),
+                                    ->columnSpan(['default' => 6, 'md' => 2]),
                                 Forms\Components\TextInput::make('unit_price')
                                     ->label('Estimated Unit Price')
                                     ->numeric()
                                     ->prefix(fn (callable $get) => $get('../../transaction_currency') === 'UGX' ? 'UGX' : '$')
                                     ->required()
-                                    ->columnSpan(4),
+                                    ->columnSpan(['default' => 6, 'md' => 4]),
                             ])
-                            ->columns(12)
+                            ->columns(['default' => 1, 'sm' => 2, 'md' => 12])
                             ->defaultItems(1)
                             ->addActionLabel('Add Item to Quotation'),
                     ]),

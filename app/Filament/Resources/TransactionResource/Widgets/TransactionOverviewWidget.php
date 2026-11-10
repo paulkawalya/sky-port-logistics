@@ -8,6 +8,11 @@ use Filament\Widgets\StatsOverviewWidget\Stat;
 
 class TransactionOverviewWidget extends BaseWidget
 {
+    protected function getColumns(): int
+    {
+        return 4;
+    }
+
     protected function getStats(): array
     {
         $credits = Transaction::where('transaction_type', 'credit')->sum('amount');

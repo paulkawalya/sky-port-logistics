@@ -67,7 +67,7 @@ class TransitResource extends Resource
                             ->required(),
                         Forms\Components\Hidden::make('user_id')
                             ->default(fn () => auth()->id()),
-                    ])->columns(2),
+                    ])->columns(['default' => 1, 'md' => 2]),
 
                 Forms\Components\Section::make('Route & Customs Information')
                     ->schema([
@@ -88,7 +88,7 @@ class TransitResource extends Resource
                         Forms\Components\TextInput::make('contact_information')
                             ->label('Contact / Tracking Notes')
                             ->maxLength(255),
-                    ])->columns(2),
+                    ])->columns(['default' => 1, 'md' => 2]),
             ]);
     }
 

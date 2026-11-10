@@ -29,36 +29,39 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('phone_number')
-                    ->tel()
-                    ->maxLength(255)
-                    ->default(null),
-                Forms\Components\TextInput::make('email')
-                    ->email()
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\Select::make('user_type')
-                    ->options([
-                        'Admin' => 'Admin',
-                        'MD' => 'MD',
-                        'Manager' => 'Manager',
-                        'Accountant' => 'Accountant',
-                        'Operations' => 'Operations',
-                        'Store' => 'Store',
-                        'Agent' => 'Agent',
-                        'Field' => 'Field',
-                        'freight' => 'Freight',
-                    ])
-                    ->required(),
-                Forms\Components\TextInput::make('password')
-                    ->password()
-                    ->dehydrateStateUsing(fn ($state) => \Illuminate\Support\Facades\Hash::make($state))
-                    ->dehydrated(fn ($state) => filled($state))
-                    ->required(fn (string $context): bool => $context === 'create')
-                    ->maxLength(255),
+                Forms\Components\Section::make('User Account & Security')
+                    ->schema([
+                        Forms\Components\TextInput::make('name')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('phone_number')
+                            ->tel()
+                            ->maxLength(255)
+                            ->default(null),
+                        Forms\Components\TextInput::make('email')
+                            ->email()
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\Select::make('user_type')
+                            ->options([
+                                'Admin' => 'Admin',
+                                'MD' => 'MD',
+                                'Manager' => 'Manager',
+                                'Accountant' => 'Accountant',
+                                'Operations' => 'Operations',
+                                'Store' => 'Store',
+                                'Agent' => 'Agent',
+                                'Field' => 'Field',
+                                'freight' => 'Freight',
+                            ])
+                            ->required(),
+                        Forms\Components\TextInput::make('password')
+                            ->password()
+                            ->dehydrateStateUsing(fn ($state) => \Illuminate\Support\Facades\Hash::make($state))
+                            ->dehydrated(fn ($state) => filled($state))
+                            ->required(fn (string $context): bool => $context === 'create')
+                            ->maxLength(255),
+                    ])->columns(['default' => 1, 'md' => 2]),
             ]);
     }
 

@@ -111,7 +111,7 @@ class StoreInventoryResource extends Resource
                         Forms\Components\DateTimePicker::make('received_in_store_at')
                             ->label('Intake Date & Time')
                             ->default(now()),
-                    ])->columns(2),
+                    ])->columns(['default' => 1, 'md' => 2]),
 
                 Forms\Components\Section::make('Checkout & Gate Pass Release')
                     ->description('Details of the authorized person and vehicle collecting cargo from the warehouse.')
@@ -140,7 +140,7 @@ class StoreInventoryResource extends Resource
                             ->label('Condition of Goods on Release')
                             ->placeholder('e.g. All packages verified sound and intact.')
                             ->columnSpanFull(),
-                    ])->columns(2)->collapsible(),
+                    ])->columns(['default' => 1, 'md' => 2])->collapsible(),
             ]);
     }
 

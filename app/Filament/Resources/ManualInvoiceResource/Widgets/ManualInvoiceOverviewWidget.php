@@ -8,6 +8,11 @@ use Filament\Widgets\StatsOverviewWidget\Stat;
 
 class ManualInvoiceOverviewWidget extends BaseWidget
 {
+    protected function getColumns(): int
+    {
+        return 4;
+    }
+
     protected function getStats(): array
     {
         $invoices = Quotation::where('transaction_type', 'invoice')->with(['details', 'payments'])->get();

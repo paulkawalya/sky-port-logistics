@@ -721,3 +721,4 @@ class DemoDataSeeder extends Seeder
         }
     }
 }
+

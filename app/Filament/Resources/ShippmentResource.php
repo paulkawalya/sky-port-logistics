@@ -89,7 +89,7 @@ class ShippmentResource extends Resource
                         Forms\Components\TextInput::make('type')
                             ->label('Cargo Type (e.g. FCL, LCL, Air)')
                             ->maxLength(255),
-                    ])->columns(2),
+                    ])->columns(['default' => 1, 'md' => 2]),
 
                 Forms\Components\Section::make('Measurements & Cargo Specs')
                     ->schema([
@@ -112,7 +112,7 @@ class ShippmentResource extends Resource
                         Forms\Components\Textarea::make('description')
                             ->label('Cargo Description')
                             ->columnSpanFull(),
-                    ])->columns(3),
+                    ])->columns(['default' => 1, 'sm' => 2, 'md' => 3]),
 
                 Forms\Components\Section::make('Store & Warehouse Tracking')
                     ->description('Track physical cargo status inside the warehouse')
@@ -144,7 +144,7 @@ class ShippmentResource extends Resource
                             ->label('Receiver Contact Phone')
                             ->tel()
                             ->maxLength(255),
-                    ])->columns(2),
+                    ])->columns(['default' => 1, 'md' => 2]),
 
                 Forms\Components\Section::make('Freight Invoicing (Optional)')
                     ->description('Auto-generate freight invoice immediately for this consignment')
@@ -169,7 +169,7 @@ class ShippmentResource extends Resource
                             ->default(0)
                             ->visible(fn ($get) => (bool)$get('auto_generate_invoice')),
                     ])
-                    ->columns(3)
+                    ->columns(['default' => 1, 'sm' => 2, 'md' => 3])
                     ->collapsible()
                     ->collapsed(fn (string $operation) => $operation === 'edit'),
             ]);

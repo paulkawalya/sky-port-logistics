@@ -19,7 +19,9 @@ class RevenueExpenseChart extends ChartWidget
 
     protected int | string | array $columnSpan = [
         'default' => 'full',
-        'lg' => 2,
+        'sm' => 'full',
+        'md' => 'full',
+        'xl' => 2,
     ];
 
     protected function getData(): array

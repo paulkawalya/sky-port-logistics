@@ -8,6 +8,11 @@ use Filament\Widgets\StatsOverviewWidget\Stat;
 
 class StoreInventoryOverviewWidget extends BaseWidget
 {
+    protected function getColumns(): int
+    {
+        return 4;
+    }
+
     protected function getStats(): array
     {
         $inStore = Shippment::whereIn('cargo_status', ['Received in Store', 'Sorted & Inspected'])->count();

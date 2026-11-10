@@ -40,21 +40,21 @@
             </div>
 
             <!-- Right Action Buttons -->
-            <div class="flex flex-wrap items-center gap-2.5">
+            <div class="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-2.5 w-full lg:w-auto">
                 <a href="{{ \App\Filament\Resources\ShippmentResource::getUrl('create') }}" 
-                   class="inline-flex items-center gap-1.5 rounded-lg bg-red-600 px-3.5 py-2 text-xs font-medium text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 transition-colors">
+                   class="inline-flex items-center justify-center gap-1.5 rounded-lg bg-red-600 px-3.5 py-2 text-xs font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 transition-colors">
                     <x-heroicon-m-plus-circle class="h-4 w-4" />
                     <span>New Consignment</span>
                 </a>
 
                 <a href="{{ \App\Filament\Resources\ManualInvoiceResource::getUrl('create') }}" 
-                   class="inline-flex items-center gap-1.5 rounded-lg border border-gray-300 bg-white px-3.5 py-2 text-xs font-medium text-gray-700 shadow-sm hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-750 transition-colors">
+                   class="inline-flex items-center justify-center gap-1.5 rounded-lg border border-gray-300 bg-white px-3.5 py-2 text-xs font-semibold text-gray-700 shadow-sm hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-750 transition-colors">
                     <x-heroicon-m-document-currency-dollar class="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
                     <span>Manual Invoice</span>
                 </a>
 
                 <a href="{{ \App\Filament\Resources\RequisitionResource::getUrl('create') }}" 
-                   class="inline-flex items-center gap-1.5 rounded-lg border border-gray-300 bg-white px-3.5 py-2 text-xs font-medium text-gray-700 shadow-sm hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-750 transition-colors">
+                   class="inline-flex items-center justify-center gap-1.5 rounded-lg border border-gray-300 bg-white px-3.5 py-2 text-xs font-semibold text-gray-700 shadow-sm hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-750 transition-colors">
                     <x-heroicon-m-clipboard-document-check class="h-4 w-4 text-amber-600 dark:text-amber-400" />
                     <span>Budget Request</span>
                 </a>

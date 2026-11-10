@@ -92,7 +92,7 @@ class RequisitionResource extends Resource
                                     ->label('Item / Expense Particular')
                                     ->required()
                                     ->placeholder('e.g. Clearance handling fee / Office supplies')
-                                    ->columnSpan(4),
+                                    ->columnSpan(['default' => 12, 'md' => 4]),
                                 Forms\Components\Select::make('expense_category_id')
                                     ->relationship('category', 'name')
                                     ->label('Category')
@@ -107,25 +107,25 @@ class RequisitionResource extends Resource
                                             ->label('Particular / Description')
                                             ->maxLength(255),
                                     ])
-                                    ->columnSpan(3),
+                                    ->columnSpan(['default' => 12, 'md' => 3]),
                                 Forms\Components\TextInput::make('quantity')
                                     ->label('Qty')
                                     ->default(1)
                                     ->numeric()
                                     ->required()
-                                    ->columnSpan(2),
+                                    ->columnSpan(['default' => 6, 'md' => 2]),
                                 Forms\Components\TextInput::make('estimated_cost')
                                     ->label('Unit Cost')
                                     ->numeric()
                                     ->required()
                                     ->prefix(fn (callable $get) => $get('../../currency') === 'USD' ? '$' : 'Shs')
-                                    ->columnSpan(3),
+                                    ->columnSpan(['default' => 6, 'md' => 3]),
                                 Forms\Components\TextInput::make('reason')
                                     ->label('Line Item Justification / Notes')
                                     ->placeholder('Optional notes on this specific expenditure')
                                     ->columnSpanFull(),
                             ])
-                            ->columns(12)
+                            ->columns(['default' => 1, 'sm' => 2, 'md' => 12])
                             ->defaultItems(1)
                             ->addActionLabel('Add Expense Line Item')
                             ->collapsible(),
@@ -141,18 +141,18 @@ class RequisitionResource extends Resource
                                     ->label('Document Title / Description')
                                     ->placeholder('e.g. Supplier Proforma / Quotation')
                                     ->required()
-                                    ->columnSpan(6),
+                                    ->columnSpan(['default' => 12, 'md' => 6]),
                                 Forms\Components\FileUpload::make('file_url')
                                     ->label('File Attachment')
                                     ->disk('public')
                                     ->directory('documents')
                                     ->visibility('public')
                                     ->required()
-                                    ->columnSpan(6),
+                                    ->columnSpan(['default' => 12, 'md' => 6]),
                                 Forms\Components\Hidden::make('user_id')
                                     ->default(fn () => Auth::id()),
                             ])
-                            ->columns(12)
+                            ->columns(['default' => 1, 'md' => 12])
                             ->addActionLabel('Attach Supporting Document')
                             ->collapsible(),
                     ])->collapsible(),

@@ -17,7 +17,9 @@ class InvoiceAgingChart extends ChartWidget
 
     protected int | string | array $columnSpan = [
         'default' => 'full',
-        'lg' => 1,
+        'sm' => 'full',
+        'md' => 'full',
+        'xl' => 1,
     ];
 
     protected function getData(): array

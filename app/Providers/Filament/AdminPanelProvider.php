@@ -46,6 +46,35 @@ class AdminPanelProvider extends PanelProvider
                 'warning' => Color::Amber,
                 'danger' => Color::hex('#b91c1c'),
             ])
+            ->renderHook(
+                \Filament\View\PanelsRenderHook::HEAD_END,
+                fn (): \Illuminate\Support\HtmlString => new \Illuminate\Support\HtmlString('
+                    <style>
+                        /* Touch smooth scrolling for tables */
+                        .fi-ta-content {
+                            -webkit-overflow-scrolling: touch;
+                            overflow-x: auto;
+                        }
+                        /* Responsive adjustments for mobile / small screens */
+                        @media (max-width: 768px) {
+                            .fi-topbar {
+                                position: sticky;
+                                top: 0;
+                                z-index: 20;
+                            }
+                            .fi-modal-window {
+                                width: 95vw !important;
+                                max-width: 95vw !important;
+                                margin: 0.5rem auto !important;
+                            }
+                            .fi-ta-header-actions {
+                                flex-wrap: wrap !important;
+                                gap: 0.5rem !important;
+                            }
+                        }
+                    </style>
+                ')
+            )
             ->navigationGroups([
                 \Filament\Navigation\NavigationGroup::make('Operations & Freight')
                     ->icon('heroicon-o-truck'),
@@ -59,7 +88,7 @@ class AdminPanelProvider extends PanelProvider
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
-                Pages\Dashboard::class,
+                \App\Filament\Pages\Dashboard::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
