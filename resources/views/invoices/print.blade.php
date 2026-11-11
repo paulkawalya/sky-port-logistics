@@ -308,7 +308,7 @@
 </head>
 <body>
     <div class="header">
-        <img src="{{ asset('/app-assets/img/logo/sifcargo.png') }}" alt="SKY PORT LOGISTICS LTD">
+        <img src="{{ asset('/app-assets/img/logo/sifcargo.png') }}" alt="SIFCARGO TONIGHT">
     </div>
 
     <div class="tin-number" style="margin-bottom: 2px;">TIN: 1033561397</div>

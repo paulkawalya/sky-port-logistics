@@ -134,10 +134,10 @@
     </style>
 </head>
 <body>
-    <div class="watermark">SKY PORT LOGISTICS LTD</div>
+    <div class="watermark">SIFCARGO TONIGHT</div>
     
     <div class="header">
-        <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/app-assets/img/logo/sifcargo.png'))) }}" alt="SKY PORT LOGISTICS LTD" style="width: auto; max-width: 550px; max-height: 130px; margin: 0 auto 5px; display: block;">
+        <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/app-assets/img/logo/sifcargo.png'))) }}" alt="SIFCARGO TONIGHT" style="width: auto; max-width: 550px; max-height: 130px; margin: 0 auto 5px; display: block;">
     </div>
 
     <hr class="red-line">
@@ -284,7 +284,7 @@
     <div class="footer">
         <div>This is a secure document generated on: {{ $current_date }}</div>
         <div>This document is for reference only and does not require a signature.</div>
-        <div style="color: #dc0000; font-weight: bold;">SKY PORT LOGISTICS LTD</div>
+        <div style="color: #dc0000; font-weight: bold;">SIFCARGO TONIGHT</div>
     </div>
 </body>
 </html>

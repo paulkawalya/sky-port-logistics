@@ -108,7 +108,7 @@
                 <div class="card-body p-16">
                     <!-- Requisition Header -->
                     <div class="text-center mb-8">
-                        <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/app-assets/img/logo/sifcargo.png'))) }}" alt="SKY PORT LOGISTICS LTD" style="width: auto; max-width: 360px; max-height: 180px; margin: 0 auto 16px; display: block;">
+                        <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/app-assets/img/logo/sifcargo.png'))) }}" alt="SIFCARGO TONIGHT" style="width: auto; max-width: 360px; max-height: 180px; margin: 0 auto 16px; display: block;">
                         <h4 class="fw-bold mb-0">REQUISITION</h4>
                         <div class="border-bottom border-2 border-primary w-25 mx-auto mt-2 mb-4"></div>
                     </div>
